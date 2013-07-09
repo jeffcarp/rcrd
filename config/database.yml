@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  database: rcrd 
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: rcrd_test 
+  host: localhost

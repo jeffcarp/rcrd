@@ -1,0 +1,210 @@
+// Attempting to have a modular CSS base style framework like BH
+
+
+// ELEMENTS
+table { width: 100%; }
+h1, h2, h3, h4, h5 { margin-bottom: 0.3em; }
+h1 { font-size: 1.6em; }
+h2 { font-size: 1.2em; }
+p { margin-bottom: 0.6em; line-height: 1.5em; }
+
+.margin-y { margin-top: 2em; margin-bottom: 2em; }
+
+.margin-top { margin-top: 2em; }
+.margin-top-l { margin-top: 4em; }
+.margin-top-s { margin-top: 0.8em; }
+
+.margin-bottom { margin-bottom: 2em; }
+.margin-bottom-s { margin-bottom: 0.8em; }
+.margin-bottom-l { margin-bottom: 4em; }
+
+.margin-right { margin-right: 1em; }
+
+.margin-left { margin-left: 1em; }
+
+.margin-all { padding: 0.8em 1em; }
+
+.padding-all { padding: 0.8em 1em; }
+.padding-all-s { padding: 0.8em 1em; }
+
+.bg-grey { background-color: #f2f2f2; }
+
+.fixed-width-6 { width: 6em; }
+
+.hefty { font-size: 24px; }
+.large { font-size: 18px; }
+.medium { font-size: 16px; }
+.small { font-size: 12px; }
+.tiny { font-size: 10px; }
+
+// Text
+.white { color: white; }
+.green { color: #42c432; }
+.grey { color: #777; }
+
+.normal { font-weight: normal; }
+.bold { font-weight: bold; }
+
+// Layout
+.left { float: left; }
+.right { float: right; }
+
+
+.input-wrap {
+  label {
+    display: block;
+    margin: 0 0 .2em;
+  }
+  input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: .4em;
+    margin: 0;
+    border: solid 1px #ccc;
+  }
+}
+
+.span {
+  padding: 12px 0;
+  margin: 0 0 18px;
+  border-bottom: solid 1px #ccc;
+}
+
+
+
+
+/* one-off styles */
+
+h1.logo {
+  font-family: "Myriad Pro", sans-serif;
+  font-weight: 600;
+  font-size: 48px;
+  letter-spacing: -2px;
+  margin: 0;
+  a {
+    color: #444;
+  }
+}
+
+
+#everything {
+  font-family: "Lucida Grande", "Verdana", sans-serif;
+  padding: 18px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+header {
+  border-bottom: solid 1px #ccc;
+  padding: 18px 0 6px;
+  margin: 0 0 18px;
+  h1 {
+    float: left;
+    img {
+      width: 88px;
+      height: 44px;
+    }
+  }
+  ul {
+    padding: 32px 0 0;
+    font-size: 12px;
+    float: right;
+    li {
+      display: inline-block;
+      margin: 0 0 0 12px;
+      a {
+        color: #777;
+      }
+    }
+  }
+}
+
+div.boxes {
+  margin: 0px 0;
+  div.blocks {
+    position: relative;
+    width: 100%;
+    div.day {
+      width: 8px;
+      height: 8px;
+      margin: 0 2px 2px 0;
+      padding: 0;
+      float: left;
+      background-color: #eaeaea;
+      &.red {
+        background-color: #d4150d;
+      }
+      &.green {
+        background-color: green;
+      }
+      &.purple {
+        background-color: purple;
+      }
+      &.blue {
+        background-color: #06a6bf;
+      }
+      &.light-blue {
+        background-color: aqua;
+      }
+    }
+  }
+}
+
+.cat {
+  display: inline-block;
+  color: white;
+  text-shadow: 0 -1px 1px rgba(1, 1, 1, 0.5);
+  border-top: solid 2px rgba(0, 0, 0, 0); 
+  border-left: solid 2px rgba(0, 0, 0, 0); 
+  border-right: solid 2px rgba(0, 0, 0, 0); 
+  border-bottom: solid 2px hsl(230, 80%, 20%); 
+  border-radius: 4px;
+  padding: .6em 0;
+  margin: 0 .6em .8em 0;
+  -webkit-user-select: none;
+  user-select: none;
+  i {
+    font-style: normal;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background-color: rgba(1, 1, 1, 0.2); 
+    border-right: rgba(0, 0, 0, 0.5); 
+    border-left: black; 
+    padding: 10px 8px;
+    margin: 0 -.2em 0 0;
+  }
+  &:hover {
+    cursor: pointer;
+    color: #eee;
+  }
+  &:active {
+    border-top: solid 2px rgba(0, 0, 0, 0); 
+    border-bottom: none; 
+  }
+  > span {
+    margin: 0 .8em;
+  }
+}
+
+.trends {
+    tr {
+        td {
+            vertical-align: middle;
+        }
+    }
+}
+
+.sample {
+  $sample-bg: #d4d4d4;
+  padding: 0.8em 1em;
+  background-color: $sample-bg;
+  border-radius: 4px;
+  border-top: solid 2px $sample-bg - #222;
+}
+
+.cat-toggle {
+  cursor: pointer;
+}

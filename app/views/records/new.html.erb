@@ -1,0 +1,8 @@
+<div class="margin-y clearfix">
+  <%= render 'form' %>
+</div>
+
+<div class="margin-y">
+  <h1>Last 7 days</h1>
+    <%= render :partial => "shared/records", :locals => {:records => @last_7_days} %>
+</div>

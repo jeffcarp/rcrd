@@ -1,0 +1,28 @@
+<header class="clearfix">
+  <h1>
+    <a href="http://rcrd.org">
+      <img src="<%= image_path('logo.png') %>" alt="rcrd" title="Click to go to the rcrd homepage" />
+    </a>
+  </h1>
+  <span id="beta">beta</span>
+  <div id="login_status">
+    <% if current_user %>
+      Logged in as <%= link_to current_user.email, edit_user_path(current_user) %>.
+      <%= link_to "Log out", logout_path %>
+    <% else %>
+      <%= link_to "Sign up", signup_path %> or
+      <%= link_to "log in", login_path %>.
+    <% end %>
+  </div>
+</header>
+
+<div id="main">
+  <h1>Stats.</h1>
+  
+  <%= render 'home/stats/jeff-in-n-out' %>
+  
+  <!--
+  <%= render 'home/stats/jeff-drinks' %>
+  -->
+  
+</div>

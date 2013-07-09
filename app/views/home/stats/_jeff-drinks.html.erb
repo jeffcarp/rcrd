@@ -1,0 +1,87 @@
+<section id="stats">
+  <div class="stat clearfix" id="drinks">
+    <div class="info">
+      <h2><strong>Jeff:</strong> Drinks in 2012</h2>
+      <h3>ridiculous</h3>
+    </div>
+    <div class="graph">
+    </div>
+  </div>
+</section>
+
+<script type="text/javascript">
+  
+  var dataset = Array();
+  <%
+  @jeff_drinks.each do |b|
+    %>
+    dataset.push(<%= "[#{b.join(',')}]" %>);
+    <%
+  end
+  %>
+  
+  // Layout
+  
+  var w = 650;
+  var h = 140;
+  var padding = 30;
+  
+  // Helpers
+  
+  var format = d3.time.format("%B");
+  var format2 = d3.time.format("%Y-%m-%d");
+  
+  // Scales
+  
+  var xScale = d3.time.scale()
+    .domain([
+      d3.min(dataset, 
+        function(d) { 
+          var minDate = new Date(2012, 0, 1);
+          return minDate.getTime();
+        }
+      ), 
+      d3.max(dataset, 
+        function(d) { 
+          var maxDate = new Date(d[0], d[1], d[2]);
+          return maxDate.getTime();
+        }
+      )])
+    .range([0 + padding, w - padding]);
+    
+  // Axes
+    
+  var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom")
+    .tickFormat(format);   
+  
+  // Begin construction
+  
+  var svg = d3.select("#drinks .graph")
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h);
+    
+  svg.selectAll("rect")
+    .data(dataset)
+    .enter()
+    .append("rect")
+    .attr("x", function(d) {
+      var xDate = new Date(d[0], d[1], d[2]);
+      return xScale(xDate);
+    })
+    .attr("y", 50)
+    .attr("height", 10)
+    .attr("width", 4  )
+    .style("fill", "green")
+/*     .style("stroke", "#222") */
+/*     .style("stroke-width", 1); */
+
+
+    svg.append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(0," + (h - padding) + ")")
+      .call(xAxis);
+  
+</script>

@@ -1,0 +1,50 @@
+
+<h2 class="margin-bottom-s">Log in</h2>
+
+<div class="margin-bottom-l">
+  <%= form_tag sessions_path do %>
+    <div class="input-wrap margin-bottom-s">
+      <%= label_tag :email %>
+      <%= text_field_tag :email, params[:email], {placeholder: "email"} %>
+    </div>
+    <div class="input-wrap margin-bottom-s">
+      <%= label_tag :password %>
+      <%= password_field_tag :password, params[:password], {placeholder: "password"} %>
+    </div>
+    <div class="actions">
+      <%= submit_tag "Log in" %>
+    </div>
+  <% end %>
+</div>
+
+<h2>Create Account</h2>
+
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div class="error_messages padding-all margin-bottom white" style="<%= bg_color_now %>">
+      <h3>Form is invalid</h3>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="input-wrap margin-bottom-small">
+    <%= f.label :email %>
+    <%= f.text_field :email, {placeholder: "email"} %>
+  </div>
+
+  <div class="input-wrap margin-bottom-small">
+    <%= f.label :password %>
+    <%= f.password_field :password, {placeholder: "password"} %>
+  </div>
+
+  <div class="input-wrap margin-bottom-small">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, {placeholder: "password confirmation"} %>
+  </div>
+
+  <p><%= f.submit %></p>
+<% end %>

@@ -1,0 +1,19 @@
+
+<% last_day = '0' %>
+<% records.each do |record| %>
+  <div class="day">
+
+    <% if last_day != record.local_target.strftime('%d') %>
+      <div class="span">
+        <h4><%= record.local_target.strftime '%A %b %d %Y' %> <span class="tiny normal"><%= record.time_zone %></span></h4>
+        
+      </div>
+    <% end %>
+    <% last_day = record.local_target.strftime '%d' %>
+
+    <div class="tiny margin-bottom-small"><%= link_to record.local_target.strftime('%l:%M%P'), record %></div>
+    <% record.cats_from_raw.each do |cat| %>
+      <%= render :partial => "shared/cat", :locals => {:cat => cat, :hue => record.hue} %>
+    <% end %>
+  </div>
+<% end %>

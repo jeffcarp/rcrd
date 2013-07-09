@@ -1,0 +1,29 @@
+
+@mixin space($type, $name, $size: 1em) {
+
+    $prefix: '';
+    @if $type == 'padding' { $prefix: 'p'; }
+    @if $type == 'margin'  { $prefix: 'm'; }
+
+    .#{$prefix}#{$name} { #{$type}: $size; }
+
+    .#{$prefix}#{$name}t { #{$type}-top:      $size; }
+    .#{$prefix}#{$name}l { #{$type}-left:     $size; }
+    .#{$prefix}#{$name}b { #{$type}-bottom:   $size; }
+    .#{$prefix}#{$name}r { #{$type}-right:    $size; }
+
+    .#{$prefix}#{$name}y { #{$type}-top: $size; #{$type}-bottom: $size; }
+    .#{$prefix}#{$name}x { #{$type}-left: $size; #{$type}-right: $size; }
+}
+
+@include space('padding', 't', 0.6em); // t Tiny 
+@include space('padding', 's', 0.8em); // s Small
+@include space('padding', 'm', 1.0em); // m Medium
+@include space('padding', 'l', 1.2em); // l Large 
+@include space('padding', 'h', 2.0em); // h Huge 
+
+@include space('margin', 't', 0.6em); // t Tiny 
+@include space('margin', 's', 0.8em); // s Small
+@include space('margin', 'm', 1.0em); // m Medium
+@include space('margin', 'l', 1.2em); // l Large 
+@include space('margin', 'h', 2.0em); // h Huge 

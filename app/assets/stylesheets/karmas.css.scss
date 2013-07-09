@@ -1,0 +1,22 @@
+.karma_list {
+  width: 100%;
+  th {
+    color: black;
+    font-weight: bold;
+    padding: 20px;
+  }
+  td {
+    margin: 3px;
+    padding: 10px;
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+  tr:nth-child(odd) {
+    background-color: #a7effd;
+  }
+  tr:nth-child(even) {
+    background-color: #86e8fc;
+  }
+}
