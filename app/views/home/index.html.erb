@@ -12,7 +12,7 @@
   <% @options.each do |cat| %>
     <tr class="trend" style="<%= 'border-left: solid 8px #'+cat[:color]+';' %>">
       <td class="padding-all">
-        <h2 class="left fixed-width-6"><%= link_to cat[:name], '/cats/'+cat[:name] %></h2>
+        <h2 class="left fixed-width-6 cat-link"><%= link_to cat[:name], '/cats/'+cat[:name] %></h2>
       </td>
       <% if cat[:day_avgs] %>
         <td class="padding-all">

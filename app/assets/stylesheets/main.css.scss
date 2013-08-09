@@ -218,3 +218,11 @@ div.boxes {
 .cat-toggle {
   cursor: pointer;
 }
+
+.cat-link a {
+  $color: black;
+  color: $color;
+  &:hover {
+    color: $color + #303030;
+  }
+}
