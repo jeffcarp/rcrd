@@ -38,8 +38,6 @@ time, mark, audio, video {
 article, aside, figure, footer, header, 
 hgroup, nav, section { display:block; }
 
-ul { list-style:none; }
-
 blockquote, q { quotes:none; }
 
 blockquote:before, blockquote:after,

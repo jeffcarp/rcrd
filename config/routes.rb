@@ -10,7 +10,7 @@ end
 
 Nassau::Application.routes.draw do
   
-  get 'guide' => 'home#guide', as: 'guide'
+  get 'guide' => 'home#guide', as: :guide
   get 'settings' => 'users#edit', as: 'settings'
   get 'logout' => 'sessions#destroy', as: 'logout'
 
