@@ -31,4 +31,8 @@ module ApplicationHelper
     str.gsub(/^\s*\d+\.*\d*\s*/, '').singularize
   end
 
+  def current(str)
+    params[:action] == str ? "current" : ""
+  end
+
 end

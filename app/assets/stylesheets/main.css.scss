@@ -125,6 +125,12 @@ header {
     li {
       display: inline-block;
       margin: 0 0 0 12px;
+      &.current {
+        a {
+          font-weight: bold;
+          color: #555;
+        }
+      }
       a {
         color: #777;
       }
