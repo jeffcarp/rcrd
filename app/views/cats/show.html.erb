@@ -25,4 +25,22 @@
 
 </div>
 
+    <%= form_for @cat do |f| %>
+      <% if @cat.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@cat.errors.count, "error") %> prohibited this record from being saved:</h2>
+          <ul>
+          <% @cat.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="input-wrap">
+        <%= f.text_field :color, {placeholder: "color (in hex) e.g. #3e2f1a"} %>
+      </div>
+      <%= f.submit %>
+    <% end %>
+
 <%= render partial: "shared/records", locals: {records: @records} %>
