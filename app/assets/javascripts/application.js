@@ -12,7 +12,10 @@
 var data = [ 
     { letter: "A", frequency: .08167 },
     { letter: "B", frequency: .01492 },
-    { letter: "C", frequency: .02780 }
+    { letter: "C", frequency: .02780 },
+    { letter: "D", frequency: .04253 },
+    { letter: "E", frequency: .12702 },
+    { letter: "F", frequency: .02288 }
 ];
 
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
