@@ -232,3 +232,15 @@ div.boxes {
     color: $color + #303030;
   }
 }
+
+ul.about {
+  list-style: none;
+  text-align: right;
+  li {
+    display: inline-block;
+    margin-left: 1em;
+    &.current {
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<h1>looking for: <%= @cat_name %></h1>
+
+<div><%= @records.count %> total records with <%= @cat_name %></div>
+
+<h2>Cohorts</h2>
+<ul>
+  <% @cohorts.each do |key, value| %>
+    <li><strong><a href="/records/find?cat=<%= key %>"><%= key %></a></strong> co-occurence rate: <%= ((value.to_f / @records.count.to_f) * 100).to_i %>%</li>
+  <% end %>
+</ul>
+
+
+<%= render :partial => "shared/records", :locals => {:records => @records} %>

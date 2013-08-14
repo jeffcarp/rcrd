@@ -9,13 +9,16 @@ class CatsController < ApplicationController
 
   def show
     @name = params[:id]
+    @cat = current_user.cats.find_or_create_by_name @name
     @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%') 
 
     @trending_cats = current_user.get_trending_cats[0..7]
     @trending_cats.delete @name
+  end
 
+  def edit 
+    @name = params[:id]
     @cat = current_user.cats.find_or_create_by_name @name
-
   end
 
   def update
@@ -25,14 +28,19 @@ class CatsController < ApplicationController
       @cat = current_user.cats.find_or_create_by_name params[:id]
     end
 
-    @option = params[:option]
-    #@cat[@option] = !@cat[@option]
+    #@option = params[:option]
 
     if @cat.equalize_then_save
-      render text: "success"
-    else
-      render text: "error"
+      redirect_to '/cats/'+@cat.name+'/edit'  
     end
+
+
+    #@cat[@option] = !@cat[@option]
+    #if @cat.equalize_then_save
+    #  render text: "success"
+    #else
+    #  render text: "error"
+    #end
   end
 
 end

@@ -62,8 +62,14 @@ class HomeController < ApplicationController
         # e.g. swim -> workout
         # not workout -> swim 
       # if source == target, return 
+  end
 
+  def about
+  end
 
+  def stats 
+    @stats = {}
+    @stats['24h'] = Record.where('target > ?', Time.now.utc - 1.day).count
   end
 
 end
