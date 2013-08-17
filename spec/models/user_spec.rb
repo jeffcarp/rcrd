@@ -2,6 +2,20 @@ require "spec_helper"
 
 describe User do
 
+  before(:each) do
+    @user = User.create!(email: "whatever@jeff.is", password: "test", password_confirmation: "test") 
+  end
+
+  describe "highest_use_cats" do
+    @user = User.create!(email: "whatever@jeff.is", password: "test", password_confirmation: "test") 
+    @user.records.create!(raw: "workout, swim, 3200 yards", target: Time.now)
+    @user.records.create!(raw: "workout, run, miles", target: Time.now)
+
+    workout = @user.cats.where('name = ?', 'workout')
+
+    expect(@user.highest_use_cats).to include(workout)
+  end
+
   describe "self.authenticate" do
     it "works when a user exists" do
       user = User.create!(email: "whatever@jeff.is", password: "test", password_confirmation: "test")

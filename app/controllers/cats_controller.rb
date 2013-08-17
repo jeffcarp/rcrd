@@ -5,6 +5,7 @@ class CatsController < ApplicationController
   def index
     # a more in-depth report of cat usage (frequency, cohorts)
     # a stream (the squiggly bulgy timeline one) graph of cats would be cool
+    @trending = current_user.get_trending_cats.slice 0, 100
   end
 
   def show

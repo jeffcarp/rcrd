@@ -5,7 +5,7 @@ class RecordsController < ApplicationController
   helper ApplicationHelper 
 
   def index
-    @records = current_user.records.where('target > ?', Date.today - 1.month).order('target DESC')
+    @records = current_user.records.order('target DESC').limit(40)
   end
 
   def find

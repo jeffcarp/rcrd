@@ -15,16 +15,20 @@
       </div>
     <% end %>
     <header class="clearfix">
+      <div class="clearfix">
+        <a href="/records/new" class="right">add record</a>
+      </div>
       <h1 class="logo"><a href="/">rcrd</a></h1>
       <ul>
         <% if current_user %>
           <li class="<%= current 'home', 'index' %><%= current 'home', 'welcome' %>"><a href="/">dashboard</a></li>
-          <li class="<%= current 'records', 'new' %>"><a href="/records/new">records</a></li>
+          <li class="<%= current 'records' %>"><a href="/records">records</a></li>
+          <li class="<%= current 'cats' %>"><a href="/cats">cats</a></li>
           <li class="<%= current 'users', 'edit' %>"><a href="/settings">settings</a></li>
         <% else %>
           <li class="<%= current 'sessions', 'new' %>"><a href="/sessions/new">dashboard</a></li>
         <% end %>
-        <li class="<%= current 'home', 'guide' %>"><a href="/guide">guide</a></li>
+        <li class="<%= current 'home', 'guide' %><%= current 'home', 'stats' %>"><a href="/guide">guide</a></li>
       </ul>
     </header>
     <%= yield %>
