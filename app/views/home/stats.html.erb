@@ -5,14 +5,26 @@
 <div class="grid">
   <div class="unit one-of-two">
     <div class="mzb pf ac" style="border: solid 1px #eee;">
-      <div class="mdb">Records in the last 24 hours</div>
-      <div class="th"><%= @stats['24h'] %></div>
+      <div class="mdb">Records in the last day</div>
+      <div class="th"><%= @stats['1d'] %></div>
     </div>
   </div>
   <div class="unit one-of-two">
     <div class="mzb pf ac" style="border: solid 1px #eee;">
-      <div class="mdb">Records in the last 7 days</div>
-      <div class="th"><%= @stats['7d'] %></div>
+      <div class="mdb">Records in the last week</div>
+      <div class="th"><%= @stats['1w'] %></div>
+    </div>
+  </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last month</div>
+      <div class="th"><%= @stats['1m'] %></div>
+    </div>
+  </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last year</div>
+      <div class="th"><%= @stats['1y'] %></div>
     </div>
   </div>
 </div>

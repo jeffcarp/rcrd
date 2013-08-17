@@ -84,8 +84,10 @@ class HomeController < ApplicationController
 
   def stats 
     @stats = {}
-    @stats['24h'] = Record.where('target > ?', Time.now.utc - 24.hours).count
-    @stats['7d'] = Record.where('target > ?', Time.now.utc - 7.days).count
+    @stats['1d'] = Record.where('target > ?', Time.now.utc - 1.day).count
+    @stats['1w'] = Record.where('target > ?', Time.now.utc - 1.week).count
+    @stats['1m'] = Record.where('target > ?', Time.now.utc - 1.month).count
+    @stats['1y'] = Record.where('target > ?', Time.now.utc - 1.year).count
   end
 
 end

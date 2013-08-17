@@ -8,21 +8,21 @@ var block_data = <%= raw @display_json %>;
 <table class="trends margin-y">
   <% @options.each do |cat| %>
     <tr class="trend" style="<%= 'border-left: solid 8px #'+cat[:color]+';' %>">
-      <td class="padding-all">
+      <td class="pf">
         <h2 class="left fixed-width-6 cat-link"><%= link_to cat[:name], '/cats/'+cat[:name] %></h2>
       </td>
       <% if cat[:day_avgs] %>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_16_weeks] %></div>
           <div class="tiny lighter">per week</div>
           <div class="small margin-top-small"><strong>Last 16 weeks</strong></div>
         </td>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_8_weeks] %></div>
           <div class="tiny lighter">per week</div>
           <div class="small margin-top-small"><strong>Last 8 weeks</strong></div>
         </td>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_4_weeks] %></div>
           <div class="tiny lighter">per week</div>
           <div class="small margin-top-small"><strong>Last 4 weeks</strong></div>
