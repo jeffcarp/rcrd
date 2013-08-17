@@ -24,6 +24,21 @@ class HomeController < ApplicationController
       c_i += 1
       if c_i >= colors.size then c_i = 0 end
     end
+
+    @display = []
+    row = 1 
+    @options.each do |cat|
+      column = 1
+      cat[:days].each do |key, value|
+        clr = '#eee'
+        clr = '#'+cat[:color] if value
+        @display << {'row' => row, 'col' => column, 'color' => clr}
+        column += 1
+      end
+      row += 1
+    end
+
+    @display_json = @display.to_json
   end
 
 

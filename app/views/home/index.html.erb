@@ -1,11 +1,8 @@
-<div class="boxes clearfix margin-bottom">
-  <% @options.each do |cat| %>
-    <div class="blocks clearfix">
-      <% cat[:days].each do |key, value| %>
-        <div class="day " style="<%= 'background-color: #'+cat[:color]+';' if value %>" data-date="<%= key %>"></div>
-      <% end %>
-    </div>
-  <% end %>
+<script>
+var block_data = <%= raw @display_json %>;
+</script>
+
+<div id="block-chart">
 </div>
 
 <table class="trends margin-y">

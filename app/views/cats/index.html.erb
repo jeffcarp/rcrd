@@ -1,10 +1,12 @@
-<h1>Cats</h1>
 
+<!--
+<h1>Cats</h1>
 <div class="input-wrap mft mkb">
   <input type="text" placeholder="search cats">
 </div>
+-->
 
-<h2>Most frequently used cats</h2>
+<h2 class="mfb">50 Most frequently used cats</h2>
 
 <% @trending.each do |cat| %>
   <%= render :partial => "shared/cat", :locals => {:cat => cat, :hue => hue_now} %>
