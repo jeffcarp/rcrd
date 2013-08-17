@@ -4,6 +4,7 @@
   <title>rcrd</title>
   <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'favicon.ico' %>
   <meta name="viewport" content="width=device-width, user-scalable=no" />
 </head>
 <body>
@@ -17,13 +18,15 @@
       <h1 class="logo"><a href="/">rcrd</a></h1>
       <ul>
         <% if current_user %>
-          <li class="<%= current 'index' %><%= current 'welcome' %>"><a href="/">dashboard</a></li>
-          <li class="<%= current 'new' %>"><a href="/records/new">records</a></li>
-          <li class="<%= current 'edit' %>"><a href="/settings">settings</a></li>
+          <li class="<%= current 'home', 'index' %><%= current 'home', 'welcome' %>"><a href="/">dashboard</a></li>
+          <li class="<%= current 'records', 'new' %>"><a href="/records/new">add</a></li>
+          <li class="<%= current 'records', 'index' %>"><a href="/records">records</a></li>
+          <li class="<%= current 'cats' %>"><a href="/cats">cats</a></li>
+          <li class="<%= current 'users', 'edit' %>"><a href="/settings">settings</a></li>
         <% else %>
-          <li class="<%= current 'new' %>"><a href="/sessions/new">dashboard</a></li>
+          <li class="<%= current 'sessions', 'new' %><%= current 'home', 'welcome' %>"><a href="/sessions/new">dashboard</a></li>
         <% end %>
-        <li class="<%= current 'guide' %>"><a href="/guide">guide</a></li>
+        <li class="<%= current 'home', 'guide' %><%= current 'home', 'stats' %>"><a href="/guide">guide</a></li>
       </ul>
     </header>
     <%= yield %>

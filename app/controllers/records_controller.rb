@@ -5,7 +5,29 @@ class RecordsController < ApplicationController
   helper ApplicationHelper 
 
   def index
-    @records = current_user.records.where('target > ?', Date.today - 1.month).order('target DESC')
+    @records = current_user.records.order('target DESC').limit(40)
+  end
+
+  def find
+    @cat_name = params[:cat]
+    # if this matches an existing cat, redirect there
+    # IDEA: compare two searches (esp. in graphs)
+    if @cat_name
+      @records = current_user.records.where("raw ILIKE ?", '%'+@cat_name+'%') 
+      @cohorts = {} # one level of cohort analysis for now
+      @records.each do |record|
+        record.cats_from_raw_without_mags.each do |cat|
+          next if cat == @cat_name
+          if !@cohorts[cat]
+            @cohorts[cat] = 0
+          end 
+          @cohorts[cat] += 1
+        end
+      end 
+      #@cohorts.values.sort
+    else
+      # error: param not found
+    end
   end
 
   def show 

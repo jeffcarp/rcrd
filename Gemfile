@@ -18,6 +18,7 @@ group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
+  gem 'd3-rails'
 end
 
 group :test do

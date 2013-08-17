@@ -24,6 +24,21 @@ class HomeController < ApplicationController
       c_i += 1
       if c_i >= colors.size then c_i = 0 end
     end
+
+    @display = []
+    row = 1 
+    @options.each do |cat|
+      column = 1
+      cat[:days].each do |key, value|
+        clr = '#eee'
+        clr = '#'+cat[:color] if value
+        @display << {'row' => row, 'col' => column, 'color' => clr}
+        column += 1
+      end
+      row += 1
+    end
+
+    @display_json = @display.to_json
   end
 
 
@@ -62,8 +77,17 @@ class HomeController < ApplicationController
         # e.g. swim -> workout
         # not workout -> swim 
       # if source == target, return 
+  end
 
+  def about
+  end
 
+  def stats 
+    @stats = {}
+    @stats['1d'] = Record.where('target > ?', Time.now.utc - 1.day).count
+    @stats['1w'] = Record.where('target > ?', Time.now.utc - 1.week).count
+    @stats['1m'] = Record.where('target > ?', Time.now.utc - 1.month).count
+    @stats['1y'] = Record.where('target > ?', Time.now.utc - 1.year).count
   end
 
 end

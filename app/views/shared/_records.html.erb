@@ -1,6 +1,6 @@
-
 <% last_day = '0' %>
 <% records.each do |record| %>
+    <% puts record.inspect %>
   <div class="day">
 
     <% if last_day != record.local_target.strftime('%d') %>
