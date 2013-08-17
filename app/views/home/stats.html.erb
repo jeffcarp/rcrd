@@ -2,9 +2,6 @@
 
 <h1 class="mkb">Stats</h1>
 
-<div id="chart">
-</div>
-
 <div class="grid">
   <div class="unit one-of-two">
     <div class="mzb pf ac" style="border: solid 1px #eee;">
@@ -12,25 +9,10 @@
       <div class="th"><%= @stats['24h'] %></div>
     </div>
   </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last 7 days</div>
+      <div class="th"><%= @stats['7d'] %></div>
+    </div>
+  </div>
 </div>
-
-
-<style>
-svg {
-    font: 10px;
-}
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.bar {
-  fill: steelblue;
-}
-
-.x.axis path {
-  display: none;
-}
-</style>
