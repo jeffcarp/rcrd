@@ -1,5 +1,5 @@
 class Cat < ActiveRecord::Base
-  attr_accessible :dashboard, :day_avgs, :name, :user_id
+  attr_accessible :dashboard, :day_avgs, :name, :user_id, :color
   belongs_to :user
   validates_presence_of :name
 

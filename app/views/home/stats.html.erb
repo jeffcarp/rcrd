@@ -1,28 +1,30 @@
-<header class="clearfix">
-  <h1>
-    <a href="http://rcrd.org">
-      <img src="<%= image_path('logo.png') %>" alt="rcrd" title="Click to go to the rcrd homepage" />
-    </a>
-  </h1>
-  <span id="beta">beta</span>
-  <div id="login_status">
-    <% if current_user %>
-      Logged in as <%= link_to current_user.email, edit_user_path(current_user) %>.
-      <%= link_to "Log out", logout_path %>
-    <% else %>
-      <%= link_to "Sign up", signup_path %> or
-      <%= link_to "log in", login_path %>.
-    <% end %>
-  </div>
-</header>
+<%= render 'shared/about' %>
 
-<div id="main">
-  <h1>Stats.</h1>
-  
-  <%= render 'home/stats/jeff-in-n-out' %>
-  
-  <!--
-  <%= render 'home/stats/jeff-drinks' %>
-  -->
-  
+<h1 class="mkb">Stats</h1>
+
+<div class="grid">
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last day</div>
+      <div class="th"><%= @stats['1d'] %></div>
+    </div>
+  </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last week</div>
+      <div class="th"><%= @stats['1w'] %></div>
+    </div>
+  </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last month</div>
+      <div class="th"><%= @stats['1m'] %></div>
+    </div>
+  </div>
+  <div class="unit one-of-two">
+    <div class="mzb pf ac" style="border: solid 1px #eee;">
+      <div class="mdb">Records in the last year</div>
+      <div class="th"><%= @stats['1y'] %></div>
+    </div>
+  </div>
 </div>

@@ -1,34 +1,31 @@
-<div class="boxes clearfix margin-bottom">
-  <% @options.each do |cat| %>
-    <div class="blocks clearfix">
-      <% cat[:days].each do |key, value| %>
-        <div class="day " style="<%= 'background-color: #'+cat[:color]+';' if value %>" data-date="<%= key %>"></div>
-      <% end %>
-    </div>
-  <% end %>
+<script>
+var block_data = <%= raw @display_json %>;
+</script>
+
+<div id="block-chart">
 </div>
 
-<table class="trends margin-y">
+<table class="trends mky">
   <% @options.each do |cat| %>
     <tr class="trend" style="<%= 'border-left: solid 8px #'+cat[:color]+';' %>">
-      <td class="padding-all">
+      <td class="pf">
         <h2 class="left fixed-width-6 cat-link"><%= link_to cat[:name], '/cats/'+cat[:name] %></h2>
       </td>
       <% if cat[:day_avgs] %>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_16_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 16 weeks</strong></div>
+          <div class="small mct"><strong>Last 16 weeks</strong></div>
         </td>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_8_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 8 weeks</strong></div>
+          <div class="small mct"><strong>Last 8 weeks</strong></div>
         </td>
-        <td class="padding-all">
+        <td class="pf">
           <div class="hefty"><%= cat[:last_4_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 4 weeks</strong></div>
+          <div class="small mct"><strong>Last 4 weeks</strong></div>
         </td>
       <% else %>
         <td></td>
