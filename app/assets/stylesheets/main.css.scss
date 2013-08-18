@@ -22,10 +22,24 @@ ul li {
 
 .fixed-width-6 { width: 6em; }
 
-.hefty { font-size: 24px; }
+.hefty { 
+  font-size: 24px; 
+  &.shrink {
+    @media only screen and (max-width: 600px){
+      font-size: 16px;
+    }
+  }
+}
 .large { font-size: 18px; }
 .medium { font-size: 16px; }
-.small { font-size: 12px; }
+.small { 
+  font-size: 12px; 
+  &.shrink {
+    @media only screen and (max-width: 600px){
+      font-size: 10px;
+    }
+  }
+}
 .tiny { font-size: 10px; }
 
 // Text
@@ -211,6 +225,9 @@ div.boxes {
   color: $color;
   &:hover {
     color: $color + #303030;
+  }
+  @media only screen and (max-width: 600px){
+    font-size: 12px;
   }
 }
 
