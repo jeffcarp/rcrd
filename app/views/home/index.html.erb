@@ -5,7 +5,7 @@ var block_data = <%= raw @display_json %>;
 <div id="block-chart">
 </div>
 
-<table class="trends margin-y">
+<table class="trends mky">
   <% @options.each do |cat| %>
     <tr class="trend" style="<%= 'border-left: solid 8px #'+cat[:color]+';' %>">
       <td class="pf">
@@ -15,17 +15,17 @@ var block_data = <%= raw @display_json %>;
         <td class="pf">
           <div class="hefty"><%= cat[:last_16_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 16 weeks</strong></div>
+          <div class="small mct"><strong>Last 16 weeks</strong></div>
         </td>
         <td class="pf">
           <div class="hefty"><%= cat[:last_8_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 8 weeks</strong></div>
+          <div class="small mct"><strong>Last 8 weeks</strong></div>
         </td>
         <td class="pf">
           <div class="hefty"><%= cat[:last_4_weeks] %></div>
           <div class="tiny lighter">per week</div>
-          <div class="small margin-top-small"><strong>Last 4 weeks</strong></div>
+          <div class="small mct"><strong>Last 4 weeks</strong></div>
         </td>
       <% else %>
         <td></td>
