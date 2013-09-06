@@ -35,7 +35,7 @@ class Record < ActiveRecord::Base
 
   # I believe this should be a method on User
   def self.get_weekly_frequency_since(date, cat)
-    records = Record.where("target > ? AND raw LIKE ?", date, '%'+cat+'%').count.to_f
+    records = Record.where("target > ? AND raw ILIKE ?", date, '%'+cat+'%').count.to_f
     (records / ((Date.today - date).to_f / 7.0)).round(2)
   end
 
