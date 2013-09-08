@@ -30,16 +30,14 @@ class CatsController < ApplicationController
     if params[:option]
       option = params[:option]
       @cat[option] = !@cat[option]
-      if @cat.equalize_then_save
+      if @cat.save
         render text: "success"
       else
         render text: "error"
       end
     else
-
       @cat.update_attributes(params[:cat])
       @cat.save
-      puts @cat.inspect
       render :edit 
     end
 
