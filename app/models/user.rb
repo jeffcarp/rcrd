@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
       days[day.strftime('%F')] = false 
     end
 
-    records = self.records.where('target > ? AND raw LIKE ?', Date.today - (num_days - 2).days, '%'+cat+'%')
+    records = self.records.where('target > ? AND raw ILIKE ?', Date.today - (num_days - 2).days, '%'+cat+'%')
 
     records.each do |records|
       this_key = records.local_target.strftime('%F')
