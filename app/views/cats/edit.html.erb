@@ -1,3 +1,27 @@
-<h1><%= @cat.name %></h1>
+<div class="mfb">
+  <%= render partial: "shared/cat", 
+             locals: {
+                cat: @cat.name, 
+                hue: hue_now, 
+                size: "hefty" } %>
+</div>
+
+<div class="mkb bg-grey small options">
+
+  <p class="pf clearfix">
+    <span class="left">Dashboard</span>
+    <span class="right cat-toggle <%= @cat.dashboard ? "bold green" : "grey" %>" 
+          data-id="<%= @cat.id %>"          
+          data-option="dashboard"><%= @cat.dashboard ? "on" : "off" %></span>
+  </p>
+
+  <p class="pf clearfix">
+    <span class="left">Binary day averages</span>
+    <span class="right cat-toggle <%= @cat.day_avgs ? "bold green" : "grey" %>" 
+          data-id="<%= @cat.id %>"          
+          data-option="day_avgs"><%= @cat.day_avgs ? "on" : "off" %></span>
+  </p>
+
+</div>
 
 <%= render "form" %>

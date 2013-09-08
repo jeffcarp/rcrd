@@ -11,37 +11,38 @@ class CatsController < ApplicationController
   def show
     @name = params[:id]
     @cat = current_user.cats.find_or_create_by_name @name
-    @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%') 
+    if params[:all]
+      @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%')
+    else
+      @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%').limit(50)
+    end
 
     @trending_cats = current_user.get_trending_cats[0..7]
     @trending_cats.delete @name
   end
 
   def edit 
-    @name = params[:id]
-    @cat = current_user.cats.find_or_create_by_name @name
+    @cat = current_user.cats.find params[:id]
   end
 
   def update
-    if params[:id].match /[0-9]+/
-      @cat = current_user.cats.find_by_id params[:id]
+    @cat = current_user.cats.find params[:id]
+    if params[:option]
+      option = params[:option]
+      @cat[option] = !@cat[option]
+      if @cat.equalize_then_save
+        render text: "success"
+      else
+        render text: "error"
+      end
     else
-      @cat = current_user.cats.find_or_create_by_name params[:id]
+
+      @cat.update_attributes(params[:cat])
+      @cat.save
+      puts @cat.inspect
+      render :edit 
     end
 
-    #@option = params[:option]
-
-    if @cat.equalize_then_save
-      redirect_to '/cats/'+@cat.name+'/edit'  
-    end
-
-
-    #@cat[@option] = !@cat[@option]
-    #if @cat.equalize_then_save
-    #  render text: "success"
-    #else
-    #  render text: "error"
-    #end
   end
 
 end

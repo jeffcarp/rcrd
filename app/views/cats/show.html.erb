@@ -1,28 +1,24 @@
 
-<div class="margin-bottom">
+<div class="mfb">
   <% @trending_cats.each do |cat| %>
     <%= render partial: "shared/cat", locals: {cat: cat, hue: hue_now, size: "small"} %>
   <% end %>
 </div>
 
-<div class="margin-bottom">
+<div class="mfb">
   <div>
     <%= render partial: "shared/cat", locals: {cat: @name, hue: hue_now, size: "hefty"} %>
   </div>
 </div>
 
-<div class="margin-bottom bg-grey small options" data-name="<%= @name %>">
-
-  <p class="padding-all clearfix">
-    <span class="left">Dashboard</span>
-    <span class="right margin-left cat-toggle <%= @cat.dashboard ? "bold green" : "grey" %>" data-option="dashboard"><%= @cat.dashboard ? "on" : "off" %></span>
-  </p>
-
-  <p class="padding-all clearfix">
-    <span class="left">Binary day averages</span>
-    <span class="right margin-left cat-toggle <%= @cat.day_avgs ? "bold green" : "grey" %>" data-option="day_avgs"><%= @cat.day_avgs ? "on" : "off" %></span>
-  </p>
-
+<div class="mfb pf bg-grey">
+  <%= link_to 'Edit Cat Settings', edit_cat_path(@cat) %>
 </div>
 
 <%= render partial: "shared/records", locals: {records: @records} %>
+
+<% if !params[:all] %>
+  <div class="mkt">
+    <a href="?all=true">View all records</a>
+  </div>
+<% end %>

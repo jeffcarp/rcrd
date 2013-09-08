@@ -8,6 +8,27 @@
 //= require jquery_ujs
 //= require d3 
 
+$(document).ready(function(){
+  $('.cat-toggle').click(function(e){
+
+    var $self = $(this);
+    var params = {
+      id: $self.data('id'),
+      option: $self.data('option')
+    };
+    if (params.id.length == 0 || params.option.length == 0) return;
+
+    $.ajax({
+        url: '/cats/'+params.id,
+        type: 'PUT',
+        data: params,
+        success: function(result) {
+          window.location = '';
+        }
+    });
+  });
+});
+
 if (typeof block_data != 'undefined') {
 
     var data = [
