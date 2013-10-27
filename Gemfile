@@ -24,3 +24,8 @@ end
 group :test do
   gem 'rake'
 end
+
+group :production do
+  gem 'therubyracer'
+  gem 'execjs'
+end
