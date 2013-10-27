@@ -1,7 +1,9 @@
+<h2 class="mfb">Create Account</h2>
+
 <%= form_for @user do |f| %>
   <% if @user.errors.any? %>
-    <div class="error_messages">
-      <h2>Form is invalid</h2>
+    <div class="error_messages padding-all margin-bottom white" style="<%= bg_color_now %>">
+      <h3>Form is invalid</h3>
       <ul>
         <% for message in @user.errors.full_messages %>
           <li><%= message %></li>
@@ -9,17 +11,21 @@
       </ul>
     </div>
   <% end %>
-  <div class="field">
+
+  <div class="input-wrap mfb">
     <%= f.label :email %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, {placeholder: "email"} %>
   </div>
-  <div class="field">
+
+  <div class="input-wrap mfb">
     <%= f.label :password %>
-    <%= f.password_field :password %>
+    <%= f.password_field :password, {placeholder: "password"} %>
   </div>
-  <div class="field">
+
+  <div class="input-wrap mfb">
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.password_field :password_confirmation, {placeholder: "password confirmation"} %>
   </div>
-  <div class="actions"><%= f.submit %></div>
+
+  <p><%= f.submit %></p>
 <% end %>

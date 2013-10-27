@@ -14,6 +14,8 @@ Nassau::Application.routes.draw do
   get 'settings' => 'users#edit', as: 'settings'
   get 'about' => 'home#about', as: 'about'
   get 'stats' => 'home#stats', as: 'stats'
+  get 'login' => 'sessions#new', as: 'login'
+  get 'signup' => 'users#new', as: 'signup'
   get 'logout' => 'sessions#destroy', as: 'logout'
   get 'records/find' => 'records#find', as: 'find'
 

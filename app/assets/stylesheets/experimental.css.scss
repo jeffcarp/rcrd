@@ -1,25 +1,3 @@
-@each $type in 'padding', 'margin' {
-    $size: 0em;
-    @each $name in a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,y,z {
-
-        $prefix: ''; // For scope
-        @if $type == 'padding' { $prefix: 'p'; }
-        @if $type == 'margin'  { $prefix: 'm'; }
-
-        .#{$prefix}#{$name} { #{$type}: $size; }
-
-        .#{$prefix}#{$name}t { #{$type}-top:      $size; }
-        .#{$prefix}#{$name}l { #{$type}-left:     $size; }
-        .#{$prefix}#{$name}b { #{$type}-bottom:   $size; }
-        .#{$prefix}#{$name}r { #{$type}-right:    $size; }
-
-        .#{$prefix}#{$name}y { #{$type}-top: $size; #{$type}-bottom: $size; }
-        .#{$prefix}#{$name}x { #{$type}-left: $size; #{$type}-right: $size; }
-
-        $size: $size + 0.2em;
-    }
-}
-
 .grid {
     margin-left: -3%;
     max-width: 105%;

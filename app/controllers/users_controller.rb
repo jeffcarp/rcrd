@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  def new
+    @user = User.new
+  end
+
   def edit
     @user = current_user
     @cats = current_user.cats.order('name ASC')

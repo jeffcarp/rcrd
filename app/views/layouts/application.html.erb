@@ -17,14 +17,15 @@
     <header class="clearfix">
       <h1 class="logo"><a href="/">rcrd</a></h1>
       <ul>
+        <li class="<%= current 'home', 'index' %><%= current 'home', 'welcome' %>"><a href="/">home</a></li>
         <% if current_user %>
-          <li class="<%= current 'home', 'index' %><%= current 'home', 'welcome' %>"><a href="/">dashboard</a></li>
           <li class="<%= current 'records', 'new' %>"><a href="/records/new">add</a></li>
           <li class="<%= current 'records', 'index' %>"><a href="/records">records</a></li>
           <li class="<%= current 'cats' %>"><a href="/cats">cats</a></li>
           <li class="<%= current 'users', 'edit' %>"><a href="/settings">settings</a></li>
         <% else %>
-          <li class="<%= current 'sessions', 'new' %><%= current 'home', 'welcome' %>"><a href="/sessions/new">dashboard</a></li>
+          <li class="<%= current 'sessions', 'new' %>"><a href="/login">log in</a></li>
+          <li class="<%= current 'users', 'new' %>"><a href="/signup">sign up</a></li>
         <% end %>
         <li class="<%= current 'home', 'guide' %><%= current 'home', 'stats' %>"><a href="/guide">guide</a></li>
       </ul>
