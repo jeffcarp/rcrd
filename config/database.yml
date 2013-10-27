@@ -7,3 +7,10 @@ test:
   adapter: postgresql
   database: rcrd_test 
   host: localhost
+
+production:
+  adapter: postgresql
+  database: rcrd 
+  host: localhost
+  user: jeff
+  password: timanous
