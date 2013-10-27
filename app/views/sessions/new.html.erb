@@ -1,13 +1,12 @@
+<h2 class="mfb">Log in</h2>
 
-<h2 class="margin-bottom-s">Log in</h2>
-
-<div class="margin-bottom-l">
+<div>
   <%= form_tag sessions_path do %>
-    <div class="input-wrap margin-bottom-s">
+    <div class="input-wrap mfb">
       <%= label_tag :email %>
       <%= text_field_tag :email, params[:email], {placeholder: "email"} %>
     </div>
-    <div class="input-wrap margin-bottom-s">
+    <div class="input-wrap mfb">
       <%= label_tag :password %>
       <%= password_field_tag :password, params[:password], {placeholder: "password"} %>
     </div>

@@ -19,8 +19,7 @@
       <ul>
         <li class="<%= current 'home', 'index' %><%= current 'home', 'welcome' %>"><a href="/">home</a></li>
         <% if current_user %>
-          <li class="<%= current 'records', 'new' %>"><a href="/records/new">add</a></li>
-          <li class="<%= current 'records', 'index' %>"><a href="/records">records</a></li>
+          <li class="<%= current 'records', 'new' %>"><a href="/records/new">records</a></li>
           <li class="<%= current 'cats' %>"><a href="/cats">cats</a></li>
           <li class="<%= current 'users', 'edit' %>"><a href="/settings">settings</a></li>
         <% else %>
