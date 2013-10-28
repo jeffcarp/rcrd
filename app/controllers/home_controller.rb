@@ -11,6 +11,8 @@ class HomeController < ApplicationController
     @cats.each do |cat|
       option = {}
       option[:name] = cat.name
+      cat.color ||= 200
+      cat.color = cat.color.to_s
       if cat.color[0] == '#'
         option[:color] = '#'+cat.color
       else
