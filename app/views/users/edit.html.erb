@@ -27,22 +27,3 @@
 
   <div class="actions"><%= f.submit %></div>
 <% end %>
-
-<h2 class="mmy">Cat Settings</h2>
-
-<% @cats.each do |cat| %>
-  <h3 class="mmy"><%= cat.name %></h3>
-  <div class="mfb bg-grey small options" data-name="<%= cat.name %>">
-
-    <p class="pf clearfix">
-      <span class="left">Dashboard</span>
-      <span class="right mfl cat-toggle <%= cat.dashboard ? "bold green" : "grey" %>" data-option="dashboard"><%= cat.dashboard ? "on" : "off" %></span>
-    </p>
-
-    <p class="pf clearfix">
-      <span class="left">Binary day averages</span>
-      <span class="right mfl cat-toggle <%= cat.day_avgs ? "bold green" : "grey" %>" data-option="day_avgs"><%= cat.day_avgs ? "on" : "off" %></span>
-    </p>
-
-  </div>
-<% end %>

@@ -17,6 +17,11 @@ describe "Cats" do
       :password => @user.password})
   end
 
+  it "GET /cats" do
+    get "/cats"
+    expect(response.status).to eq(200)
+  end
+
   it "GET /cats/:name" do
     get "/cats/swim"
     expect(response.status).to eq(200)
