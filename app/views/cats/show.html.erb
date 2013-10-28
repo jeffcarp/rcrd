@@ -1,10 +1,3 @@
-
-<div class="mfb">
-  <% @trending_cats.each do |cat| %>
-    <%= render partial: "shared/cat", locals: {cat: cat, hue: hue_now, size: "small"} %>
-  <% end %>
-</div>
-
 <div class="mfb">
   <div>
     <%= render partial: "shared/cat", locals: {cat: @name, hue: hue_now, size: "hefty"} %>
@@ -12,12 +5,16 @@
 </div>
 
 <div class="mfb pf bg-grey">
-  <%= link_to 'Edit Cat Settings', edit_cat_path(@cat) %>
+  <% if @cat.id %>
+    <%= link_to 'Edit Cat Settings', "/cats/"+@cat.name+"/edit" %>
+  <% else %>
+    <%= link_to 'Start Tracking this Cat', new_cat_path(@cat, {name: @name}) %>
+  <% end %>
 </div>
 
 <%= render partial: "shared/records", locals: {records: @records} %>
 
-<% if !params[:all] %>
+<% if !params[:all] && @records.count != @all_count %>
   <div class="mkt">
     <a href="?all=true">View all records</a>
   </div>

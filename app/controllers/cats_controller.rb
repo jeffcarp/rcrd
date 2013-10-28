@@ -11,18 +11,26 @@ class CatsController < ApplicationController
   def show
     @name = params[:id]
     @cat = current_user.cats.find_or_create_by_name @name
+    @all = current_user.records.where("raw ILIKE ?", '%'+@name+'%')
+    @all_count = @all.count
     if params[:all]
-      @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%')
+      @records = @all
     else
-      @records = current_user.records.where("raw ILIKE ?", '%'+@name+'%').limit(50)
+      @records = @all.slice(0, 50)
     end
+  end
 
-    @trending_cats = current_user.get_trending_cats[0..7]
-    @trending_cats.delete @name
+  def new
+    @cat = current_user.cats.create(:name => params[:name], :color => 200)
+    if @cat.save
+      redirect_to "/cats/"+params[:name]+"/edit", notice: "Cat created!"
+    else
+      redirect_to "/cats/"+params[:name], notice: "Sorry, there was an issue creating your cat." 
+    end
   end
 
   def edit 
-    @cat = current_user.cats.find params[:id]
+    @cat = current_user.cats.find_by_name params[:id]
   end
 
   def update
