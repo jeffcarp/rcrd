@@ -12,7 +12,7 @@ class CatsController < ApplicationController
     @name = params[:id]
     @cat = current_user.cats.find_by_name @name
     if !@cat
-      @cat = current_user.cats.create(:name => @name, :color => 200)
+      @cat = current_user.cats.create!(:name => @name, :color => 200)
     end
     @all = current_user.records.where("raw ILIKE ?", '%'+@name+'%')
     @all_count = @all.count
