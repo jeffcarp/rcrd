@@ -85,13 +85,19 @@ ul li {
 /* one-off styles */
 
 h1.logo {
-  font-family: "Myriad Pro", sans-serif;
-  font-weight: 600;
-  font-size: 48px;
-  letter-spacing: -2px;
   margin: 0;
+  width: 81px;
+  height: 42px;
   a {
+    text-indent: 1000px;
     color: #444;
+    display: block;
+    width: 81px;
+    height: 42px;
+    background: url('/assets/rcrd-logo.png') center center no-repeat;
+    @media screen and (min-device-pixel-ratio: 2) {
+      background-image: url('/assets/rcrd-logo@2x.png');
+    }
   }
 }
 
