@@ -14,7 +14,7 @@ class HomeController < ApplicationController
       cat.color ||= 200
       cat.color = cat.color.to_s
       if cat.color[0] == '#'
-        option[:color] = '#'+cat.color
+        option[:color] = cat.color
       else
         option[:color] = "hsl(#{cat.color}, 65%, 48%)" 
       end
