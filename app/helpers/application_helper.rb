@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def new_style_info(color)
-    color ||= hue_now
+    color ||= hue_now.to_s
     if color[0] == '#'
       str = "background-color: #{color};"
       str += "border-bottom: solid 1px rgba(1, 1, 1, 0.4);"
