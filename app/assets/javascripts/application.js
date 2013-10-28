@@ -63,10 +63,9 @@ console.log(data);
           .attr("class", "col")
           .attr("width", gridSize - 2)
           .attr("height", gridSize - 2)
-          .style("fill", "white");
-
-      heatMap.transition().duration(1000)
+          .style("fill", "white")
+        .transition().duration(1000)
           //.style("fill", function(d) { return colorScale(d.value); });
-          .style("fill", function(d) { return d.color; });
+          .style("fill", function(d) { console.log('d.color', d.color); return d.color; });
 
 }

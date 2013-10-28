@@ -37,7 +37,7 @@ class CatsController < ApplicationController
   end
 
   def update
-    @cat = current_user.cats.find params[:id]
+    @cat = current_user.cats.find_by_name params[:id]
     if params[:option]
       option = params[:option]
       @cat[option] = !@cat[option]

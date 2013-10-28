@@ -1,4 +1,4 @@
-<%= form_for @cat do |f| %>
+<%= form_for @cat, url: "/cats/#{@cat.name}" do |f| %>
 
   <% if @cat.errors.any? %>
     <div id="error_explanation">
@@ -13,7 +13,7 @@
 
   <div class="input-wrap mkb">
     <%= f.label :color %>
-    <%= f.text_field :color, {placeholder: "color (in hex) e.g. #3e2f1a"} %>
+    <%= f.text_field :color, {placeholder: "color in hex (#3e2f1a) or as a hue (0-255)"} %>
   </div>
   <%= f.submit %>
 

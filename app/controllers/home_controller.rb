@@ -37,7 +37,7 @@ class HomeController < ApplicationController
       column = 1
       cat[:days].each do |key, value|
         clr = '#eee'
-        clr = '#'+cat[:color] if value
+        clr = cat[:color] if value
         @display << {'row' => row, 'col' => column, 'color' => clr}
         column += 1
       end
