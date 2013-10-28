@@ -11,7 +11,11 @@ class HomeController < ApplicationController
     @cats.each do |cat|
       option = {}
       option[:name] = cat.name
-      option[:color] = colors[c_i]
+      if cat.color[0] == '#'
+        option[:color] = '#'+cat.color
+      else
+        option[:color] = "hsl(#{cat.color}, 65%, 48%)" 
+      end
       option[:days] = current_user.binary_cat_existence(@num_days, cat[:name])
       option[:day_avgs] = cat.day_avgs 
       if option[:day_avgs]
