@@ -94,6 +94,7 @@ h1.logo {
     width: 81px;
     height: 42px;
     background: url('/assets/rcrd-logo.png') center center no-repeat;
+    background-size: 81px 42px;
     @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
       background-image: url('/assets/rcrd-logo@2x.png');
     }
