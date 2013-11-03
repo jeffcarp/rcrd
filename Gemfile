@@ -9,6 +9,7 @@ end
 
 gem 'json'
 gem 'jquery-rails'
+gem 'aws-s3'
 
 gem 'bcrypt-ruby', require: 'bcrypt'
 
