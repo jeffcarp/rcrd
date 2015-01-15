@@ -11,8 +11,6 @@ module ApplicationHelper
 
   def style_info(hue)
     str = "background-color: hsl(#{hue}, 65%, 48%);"
-    str += "border-bottom: solid 2px hsl(#{hue}, 80%, 20%);"
-    str += "text-shadow: 0 -1px 1px hsl(#{hue}, 30%, 0%);"
   end
 
   def new_style_info(color)
@@ -32,12 +30,12 @@ module ApplicationHelper
     end
   end
 
-  def bg_color_now 
+  def bg_color_now
     "background-color: hsl(#{hue_now}, 65%, 48%);"
   end
 
   def mag(str)
-    str[/^\s*\d+\.*\d*/]  
+    str[/^\s*\d+\.*\d*/]
   end
 
   def no_mag(str)
