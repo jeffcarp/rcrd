@@ -28,11 +28,11 @@ class CatsController < ApplicationController
     if @cat.save
       redirect_to "/cats/"+params[:name]+"/edit", notice: "Cat created!"
     else
-      redirect_to "/cats/"+params[:name], notice: "Sorry, there was an issue creating your cat." 
+      redirect_to "/cats/"+params[:name], notice: "Sorry, there was an issue creating your cat."
     end
   end
 
-  def edit 
+  def edit
     @cat = current_user.cats.find_by_name params[:id]
   end
 
@@ -49,7 +49,7 @@ class CatsController < ApplicationController
     else
       @cat.update_attributes(params[:cat])
       @cat.save
-      render :edit 
+      render :edit
     end
 
   end

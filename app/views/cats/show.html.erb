@@ -12,10 +12,66 @@
   <% end %>
 </div>
 
-<%= render partial: "shared/records", locals: {records: @records} %>
+<svg
+  class="cat-histogram"
+  id="cat-histogram"
+  width="600"
+  height="120"
+  xmlns="http://www.w3.org/2000/svg">
+</svg>
+
+<script>
+var records = <%= raw @records.to_json %>;
+var catHistogram = document.getElementById('cat-histogram');
+var xmlns = "http://www.w3.org/2000/svg";
+var currentYear = (new Date()).getFullYear();
+var earliestYearSeen = currentYear;
+var outerBorder = 15;
+
+records.forEach(function (record) {
+  var d = new Date(record.target);
+  if (d.getFullYear() < currentYear) {
+    earliestYearSeen = d.getFullYear();
+  }
+});
+
+var yearSpan = currentYear - earliestYearSeen;
+catHistogram.setAttribute('height', ((yearSpan + 1) * 30) + ((outerBorder * 2) - 2));
+
+records.forEach(function (record) {
+  var rect = document.createElementNS(xmlns, 'rect');
+  var d = new Date(record.target);
+
+  var now = d;
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+
+  rect.setAttribute('x', day + 50);
+  rect.setAttribute('y', (currentYear - d.getFullYear()) * 30 + outerBorder);
+  rect.setAttribute('width', 1);
+  rect.setAttribute('height', 28);
+  catHistogram.appendChild(rect);
+});
+
+for (var year = currentYear; year >= earliestYearSeen; year -= 1) {
+  var text = document.createElementNS(xmlns, 'text');
+
+  text.setAttribute('x', outerBorder);
+  text.setAttribute('y', ((currentYear - year) * 30) + 17 + outerBorder);
+  text.setAttribute('class', 'year-label');
+  text.textContent = String(year);
+
+  catHistogram.appendChild(text);
+}
+
+</script>
 
 <% if !params[:all] && @records.count != @all_count %>
   <div class="mkt">
     <a href="?all=true">View all records</a>
   </div>
 <% end %>
+
+<%= render partial: "shared/records", locals: {records: @records} %>
