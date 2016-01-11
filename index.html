@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>rcrd</title>
+
+    <style>
+body {
+  font-size: 16px;
+  font-family: Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1.logo {
+  font-weight: normal;
+}
+div#container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+input[name="raw"] {
+  font-size: 1.4em;
+  display: block;
+  width: 100%;
+  padding: 0.2em 0;
+}
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="logo">rcrd</h1>
+      <input 
+        type="text" 
+        name="raw"
+        placeholder="record, comma, separated" 
+        /> 
+      <input
+        type="submit"
+        value="Create record"
+        />
+    </div>
+    <script>
+var apiURL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
+
+window.onload = function () {
+  var submit = document.querySelector('input[type=submit]');
+  var rawInput = document.querySelector('input[name="raw"]');
+
+  submit.addEventListener('click', function () {
+    var rawValue = rawInput.value;
+    console.log(rawValue);
+
+    fetch(apiURL + 'records', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: (new Date).getTime(),
+        raw: rawValue
+      })
+    }).then(function (response) {
+      console.log(response);
+    });
+
+  });
+};
+    </script>
+  </body>
+</html>
