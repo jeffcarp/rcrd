@@ -1,5 +1,6 @@
 var React = require('react');
 var request = require('browser-request');
+var bus = require('./bus')();
 
 var apiURL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
 
@@ -27,13 +28,17 @@ var Adder = React.createClass({
       }
       console.log(response);
       self.refs.raw.value = '';
+
+      bus.emit('refresh-records');
     });
 
   },
 
   render: function() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form 
+        onSubmit={this.onSubmit}
+        className='adder'>
         <input 
           type="text" 
           name="raw"

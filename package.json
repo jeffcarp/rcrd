@@ -20,6 +20,7 @@
   "devDependencies": {
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
+    "event-emitter": "^0.3.4",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "reactify": "^1.1.1"

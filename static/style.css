@@ -47,7 +47,7 @@ input#add-record {
   display: block;
 }
 
-.adder {
+form.adder {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: solid 1px #ddd;
