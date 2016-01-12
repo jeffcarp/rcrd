@@ -1,4 +1,5 @@
 var React = require('react');
+var request = require('browser-request');
 
 var apiURL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
 
@@ -10,14 +11,20 @@ var Adder = React.createClass({
     var rawValue = this.refs.raw.value;
     var self = this;
     console.log(rawValue);
+    // TODO: disable input
 
-    fetch(apiURL + 'records', {
-      method: 'POST',
+    request({
+      method:'POST', 
+      url: apiURL + 'records', 
       body: JSON.stringify({
         id: (new Date).getTime(),
         raw: rawValue
-      })
-    }).then(function (response) {
+      }),
+      json:true
+    }, function (err, response) {
+      if (err) {
+        return;
+      }
       console.log(response);
       self.refs.raw.value = '';
     });

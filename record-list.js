@@ -1,6 +1,7 @@
 // RecordList
 var React = require('react');
 var Record = require('./record');
+var request = require('browser-request');
 var apiURL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
 
 var RecordList = React.createClass({
@@ -13,18 +14,24 @@ var RecordList = React.createClass({
 
   componentWillMount: function() {
     var self = this;
-    fetch(apiURL + 'records', {
-      method: 'POST',
+
+    request({
+      method: 'POST', 
+      url: apiURL + 'records', 
       body: JSON.stringify({
         operation: 'list' 
-      })
-    }).then(function (response) {
-      response.json().then(function (data) {
-        console.log(data.Items);
-        var records = data.Items;
-        records.reverse();
-        self.setState({ records: records });
+      }),
+      json: true
+    }, function (err, response) {
+      if (err) {
+        return;
+      }
+      console.log(response);
+      var records = response.body.Items;
+      records.sort(function (a, b) {
+        return Number(b) - Number(a);
       });
+      self.setState({ records: records });
     });
   },
 

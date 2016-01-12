@@ -116,7 +116,7 @@ header {
   height: 42px;
   display: block;
   text-indent: -9999;
-  background: url('/images/rcrd-logo@2x.png') center center no-repeat;
+  /* background: url('/images/rcrd-logo@2x.png') center center no-repeat; */
   background-size: 81px 42px;
 }
 
