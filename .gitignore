@@ -1,9 +1,2 @@
-.bundle
-db/*.sqlite3
-log/*.log
-tmp/
-.sass-cache/
-*.DS_Store
-*.dat
-*.swp
-coverage/*
+node_modules
+npm-debug.log

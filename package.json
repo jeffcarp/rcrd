@@ -1,0 +1,26 @@
+{
+  "name": "rcrd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t reactify main.js > static/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffcarp/rcrd-dynamo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffcarp/rcrd-dynamo/issues"
+  },
+  "homepage": "https://github.com/jeffcarp/rcrd-dynamo#readme",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "reactify": "^1.1.1"
+  }
+}

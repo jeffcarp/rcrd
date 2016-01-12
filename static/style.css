@@ -1,0 +1,169 @@
+/* Prelude
+===================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+body {
+  font-family: "Lucida Grande", sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+h1.logo {
+  font-weight: normal;
+}
+div#container {
+  max-width: 600px;
+  margin: 1em auto;
+}
+input[name="raw"] {
+  font-size: 1.4em;
+  display: block;
+  width: 100%;
+  padding: 0.2em 0;
+}
+
+a {
+  text-decoration: none;
+  color: #525ee2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table td {
+  vertical-align: top;
+}
+input#add-record {
+  font-size: 16px;
+  padding: 0.4em;
+  width: 100%;
+  border: solid 2px #ddd;
+  display: block;
+}
+
+.adder {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: solid 1px #ddd;
+}
+
+/* Records and Cats 
+===================================== */
+.record {
+  margin-bottom: 1em;
+}
+.record .time {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 0.4em;
+}
+.cat {
+  display: inline-block;
+  border-radius: 3px;
+  color: white;
+  background-color: hsl(150, 50%, 60%);
+  padding: 8px 10px;
+  margin: 0 0.4em 0 0;
+}
+.cat:hover {
+  cursor: pointer;
+  background-color: hsl(150, 50%, 65%);
+}
+.split-cat {
+  margin: 0 0.4em 0 0;
+}
+.split-cat .magnitude {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  padding: 8px 10px;
+  background-color: hsl(150, 50%, 40%);
+}
+.split-cat .name {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding: 8px 10px;
+  background-color: hsl(150, 50%, 60%);
+}
+
+header {
+}
+
+.blocks {
+  -moz-animation: fadein 1s;
+  -webkit-animation: fadein 1s;
+  animation: fadein 1s;
+  margin-bottom: 1em;
+}
+
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.logo {
+  width: 81px;
+  height: 42px;
+  display: block;
+  text-indent: -9999;
+  background: url('/images/rcrd-logo@2x.png') center center no-repeat;
+  background-size: 81px 42px;
+}
+
+.mf {
+  margin: 1em;
+}
+
+table.timePicker {
+  border-left: solid 1px #fefefe;
+  border-bottom: solid 1px #fefefe;
+}
+table.timePicker td {
+  width: 33.33%;
+  border-right: solid 1px #fefefe;
+  text-align: center;
+  background-color: #fafafa;
+#  padding: 0.6em 0;
+}
+
+section {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: solid 1px #ddd;
+}
+
+nav {
+  margin-bottom: 1em;
+}
+nav h2 {
+  font-size: 16px;
+  margin-bottom: 0.6em;
+}
+nav table tr td > div {
+  line-height: 1.6em;
+  font-size: 0.9em; 
+}
+
+.page h1 {
+  border-bottom: solid 1px #ddd;
+  padding-bottom: 0.4em;
+  margin-bottom: 0.4em;
+}
+.page h1 em {
+  font-style: normal;
+  color: #777;
+  font-weight: normal;
+}
+.page p {
+  margin-bottom: 1em;
+}
