@@ -1,13 +1,25 @@
 var React = require('react');
 
+function hasMagnitude(str) {
+  return !isNaN(str[0]);
+}
+
 var Cat = React.createClass({
 
   render: function() {
-    return (
-      <span
-        className='cat'
-        >{this.props.name}</span>
-    );
+    var name = this.props.name.trim();
+
+    if (hasMagnitude(name)) {
+      return (
+        <span className='split-cat'>
+          <span className='magnitude'>{name}</span>
+          <span className='name'>{name}</span>
+        </span>
+      );
+    } else {
+      return <span className='cat'>{name}</span>;
+    }
+
   }
 
 });

@@ -9,7 +9,11 @@ var Adder = React.createClass({
   onSubmit: function (e) {
     e.preventDefault();
 
-    var rawValue = this.refs.raw.value;
+    var rawInput = this.refs.raw;
+    var rawValue = rawInput.value;
+
+    rawInput.setAttribute('disabled', 'disabled');
+
     var self = this;
     console.log(rawValue);
     // TODO: disable input
@@ -26,8 +30,8 @@ var Adder = React.createClass({
       if (err) {
         return;
       }
-      console.log(response);
       self.refs.raw.value = '';
+      rawInput.removeAttribute('disabled');
 
       bus.emit('refresh-records');
     });
@@ -43,6 +47,8 @@ var Adder = React.createClass({
           type="text" 
           name="raw"
           ref="raw"
+          autoCorrect="off"
+          autoCapitalize="none"
           placeholder="record, comma, separated" 
           /> 
         <input

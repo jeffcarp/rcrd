@@ -10,7 +10,11 @@ var Adder = React.createClass({displayName: "Adder",
   onSubmit: function (e) {
     e.preventDefault();
 
-    var rawValue = this.refs.raw.value;
+    var rawInput = this.refs.raw;
+    var rawValue = rawInput.value;
+
+    rawInput.setAttribute('disabled', 'disabled');
+
     var self = this;
     console.log(rawValue);
     // TODO: disable input
@@ -29,6 +33,7 @@ var Adder = React.createClass({displayName: "Adder",
       }
       console.log(response);
       self.refs.raw.value = '';
+      rawInput.removeAttribute('disabled');
 
       bus.emit('refresh-records');
     });
@@ -44,6 +49,8 @@ var Adder = React.createClass({displayName: "Adder",
           type: "text", 
           name: "raw", 
           ref: "raw", 
+          autoCorrect: "off", 
+          autoCapitalize: "none", 
           placeholder: "record, comma, separated"}
           ), 
         React.createElement("input", {
@@ -77,14 +84,26 @@ module.exports = bus;
 },{"event-emitter":7}],3:[function(require,module,exports){
 var React = require('react');
 
+function hasMagnitude(str) {
+  return !isNaN(str[0]);
+}
+
 var Cat = React.createClass({displayName: "Cat",
 
   render: function() {
-    return (
-      React.createElement("span", {
-        className: "cat"
-        }, this.props.name)
-    );
+    var name = this.props.name.trim();
+
+    if (hasMagnitude(name)) {
+      return (
+        React.createElement("span", {className: "split-cat"}, 
+          React.createElement("span", {className: "magnitude"}, name), 
+          React.createElement("span", {className: "name"}, name)
+        )
+      );
+    } else {
+      return React.createElement("span", {className: "cat"}, name);
+    }
+
   }
 
 });
