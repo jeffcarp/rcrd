@@ -21,9 +21,9 @@ var RecordList = React.createClass({
     }).then(function (response) {
       response.json().then(function (data) {
         console.log(data.Items);
-        self.setState({
-          records: data.Items
-        });
+        var records = data.Items;
+        records.reverse();
+        self.setState({ records: records });
       });
     });
   },
