@@ -9,7 +9,7 @@ var RecordList = React.createClass({
 
   getInitialState: function() {
     return {
-      records: [{raw: 'yo yo ma', id: '234'}]
+      records: []
     };
   },
 
@@ -46,11 +46,16 @@ var RecordList = React.createClass({
   },
 
   render: function() {
-    var recordDivs = this.state.records.map(function(record) {
-      return <Record record={record} key={record.id} />;
-    });
+    var records = this.state.records;
+    if (records.length > 0) {
+      var recordDivs = this.state.records.map(function(record) {
+        return <Record record={record} key={record.id} />;
+      });
 
-    return React.DOM.div(null, recordDivs);
+      return <div>{recordDivs}</div>;
+    } else {
+      return <div className="faded">Loading records...</div>;
+    }
   }
 });
 

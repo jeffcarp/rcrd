@@ -9,38 +9,14 @@ var Record = React.createClass({
       return <Cat name={name} key={name} />
     });
 
+    var timeStamp = (new Date(Number(record.id))).toString();
+
     return (
-      <div 
-        className="record"
-        >{cats}</div>
+      <div className="record">
+        <div className="time">{timeStamp}</div>
+        <div>{cats}</div>
+      </div>
     );
-/*
-    if (raw) {
-      var rawCats = raw.split(',').map(aux.trim);
-    }
-    else if (rec && rec.raw) {
-      var rawCats = rec.raw.split(',').map(aux.trim);
-    }
-    else {
-      var rawCats = [];
-    }
-
-    var catSpans = rawCats.map(function(cat) {
-      // This logic should take place inside Cat
-      // TODO: Merge Cat and SplitCat
-      if (aux.hasMag(cat)) {
-        return SplitCat({catName: cat});
-      }
-      else {
-        return Cat({catName: cat});
-      }
-    });
-
-    return React.DOM.div({className: 'record'}, [
-      React.DOM.div({className: 'time'}, React.DOM.span(null, 'Saturday May 17, 2014 2:34 AM')),
-      React.DOM.div(null, catSpans)
-    ]);
-*/
   }
 });
 

@@ -31,7 +31,6 @@ var Adder = React.createClass({displayName: "Adder",
       if (err) {
         return;
       }
-      console.log(response);
       self.refs.raw.value = '';
       rawInput.removeAttribute('disabled');
 
@@ -88,6 +87,19 @@ function hasMagnitude(str) {
   return !isNaN(str[0]);
 }
 
+function magnitudePortion(str) {
+  var matches = str.match(/^[\d\.]+/i);
+  if (matches) {
+    return matches.shift();
+  } else {
+    return '';
+  }
+}
+
+function sansMagnitude(str) {
+  return str.replace(/^\s*\d+\.*\d*\s*/, '');
+}
+
 var Cat = React.createClass({displayName: "Cat",
 
   render: function() {
@@ -96,8 +108,8 @@ var Cat = React.createClass({displayName: "Cat",
     if (hasMagnitude(name)) {
       return (
         React.createElement("span", {className: "split-cat"}, 
-          React.createElement("span", {className: "magnitude"}, name), 
-          React.createElement("span", {className: "name"}, name)
+          React.createElement("span", {className: "magnitude"}, magnitudePortion(name)), 
+          React.createElement("span", {className: "name"}, sansMagnitude(name))
         )
       );
     } else {
@@ -19998,7 +20010,7 @@ var RecordList = React.createClass({displayName: "RecordList",
 
   getInitialState: function() {
     return {
-      records: [{raw: 'yo yo ma', id: '234'}]
+      records: []
     };
   },
 
@@ -20035,11 +20047,16 @@ var RecordList = React.createClass({displayName: "RecordList",
   },
 
   render: function() {
-    var recordDivs = this.state.records.map(function(record) {
-      return React.createElement(Record, {record: record, key: record.id});
-    });
+    var records = this.state.records;
+    if (records.length > 0) {
+      var recordDivs = this.state.records.map(function(record) {
+        return React.createElement(Record, {record: record, key: record.id});
+      });
 
-    return React.DOM.div(null, recordDivs);
+      return React.createElement("div", null, recordDivs);
+    } else {
+      return React.createElement("div", {className: "faded"}, "Loading records...");
+    }
   }
 });
 
@@ -20057,38 +20074,16 @@ var Record = React.createClass({displayName: "Record",
       return React.createElement(Cat, {name: name, key: name})
     });
 
+    console.log(record.id);
+
+    var timeStamp = (new Date(Number(record.id))).toString();
+
     return (
-      React.createElement("div", {
-        className: "record"
-        }, cats)
+      React.createElement("div", {className: "record"}, 
+        React.createElement("div", {className: "time"}, timeStamp), 
+        React.createElement("div", null, cats)
+      )
     );
-/*
-    if (raw) {
-      var rawCats = raw.split(',').map(aux.trim);
-    }
-    else if (rec && rec.raw) {
-      var rawCats = rec.raw.split(',').map(aux.trim);
-    }
-    else {
-      var rawCats = [];
-    }
-
-    var catSpans = rawCats.map(function(cat) {
-      // This logic should take place inside Cat
-      // TODO: Merge Cat and SplitCat
-      if (aux.hasMag(cat)) {
-        return SplitCat({catName: cat});
-      }
-      else {
-        return Cat({catName: cat});
-      }
-    });
-
-    return React.DOM.div({className: 'record'}, [
-      React.DOM.div({className: 'time'}, React.DOM.span(null, 'Saturday May 17, 2014 2:34 AM')),
-      React.DOM.div(null, catSpans)
-    ]);
-*/
   }
 });
 

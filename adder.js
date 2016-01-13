@@ -49,7 +49,7 @@ var Adder = React.createClass({
           ref="raw"
           autoCorrect="off"
           autoCapitalize="none"
-          placeholder="record, comma, separated" 
+          placeholder="rcrd, comma, separated" 
           /> 
         <input
           type="submit"
