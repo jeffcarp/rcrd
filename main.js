@@ -1,5 +1,3 @@
-console.log('ok');
-
 var React = require('react');
 var ReactDOM = require('react-dom');
 
