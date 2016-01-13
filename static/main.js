@@ -23704,26 +23704,78 @@ module.exports = RecordList;
 },{"./bus":2,"./record":181,"browser-request":5,"react":179}],181:[function(require,module,exports){
 var React = require('react');
 var Cat = require('./cat');
+var moment = require('moment');
 
 var Record = React.createClass({displayName: "Record",
-  render: function() {
-    var record = this.props.record;
-    var rawCats = record.raw.split(',');
-    var cats = rawCats.map(function (name) {
-      return React.createElement(Cat, {name: name, key: name})
+
+  getInitialState: function () {
+    return {
+      editing: false,
+      rawEdit: ''
+    };
+  },
+
+  componentWillMount: function () {
+    this.setState({
+      rawEdit: this.props.record.raw
     });
+  },
 
-    var timeStamp = (new Date(Number(record.id))).toString();
+  render: function () {
+    var record = this.props.record;
 
-    return (
-      React.createElement("div", {className: "record"}, 
-        React.createElement("div", {className: "time"}, timeStamp), 
-        React.createElement("div", null, cats)
-      )
-    );
+    var timestamp = moment(Number(record.id)).format('MMMM Do YYYY, h:mm:ss a')
+
+    if (this.state.editing) {
+      var rawCats = this.state.rawEdit.split(',');
+      var cats = rawCats.map(function (name) {
+        return React.createElement(Cat, {name: name, key: name})
+      });
+
+      return (
+        React.createElement("div", {className: "record"}, 
+          React.createElement("div", {className: "time"}, timestamp), 
+          React.createElement("div", null, cats), 
+          React.createElement("form", null, 
+            React.createElement("input", {
+              type: "text", 
+              placeholder: "comma, separated", 
+              name: "raw", 
+              value: this.state.rawEdit, 
+              onChange: this.onChange}
+              )
+          )
+        )
+      );
+    } else {
+      var rawCats = record.raw.split(',');
+      var cats = rawCats.map(function (name) {
+        return React.createElement(Cat, {name: name, key: name})
+      });
+
+      return (
+        React.createElement("div", {className: "record"}, 
+          React.createElement("div", {className: "time"}, timestamp), 
+          React.createElement("div", {className: "cat-list"}, cats), 
+          React.createElement("div", {className: "time"}, React.createElement("span", {onClick: this.onClick}, "edit"))
+        )
+      );
+    }
+  },
+
+  onChange: function (e) {
+    this.setState({
+      rawEdit: e.target.value
+    });
+  },
+
+  onClick: function () {
+    this.setState({
+      editing: !this.state.editing
+    });
   }
 });
 
 module.exports = Record;
 
-},{"./cat":3,"react":179}]},{},[4]);
+},{"./cat":3,"moment":22,"react":179}]},{},[4]);
