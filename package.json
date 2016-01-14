@@ -2,10 +2,10 @@
   "name": "rcrd",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t reactify lib/main.js > static/main.js"
+    "build": "browserify -t reactify lib/index.js > static/index.js"
   },
   "repository": {
     "type": "git",
