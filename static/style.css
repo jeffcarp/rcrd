@@ -32,7 +32,7 @@ a {
   color: #525ee2;
 }
 
-form.adder {
+.adder {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: solid 1px #ddd;
@@ -62,6 +62,7 @@ form.adder {
   background-color: hsl(150, 50%, 60%);
   padding: 8px 10px;
   margin: 0 0.4em 0 0;
+  font-weight: normal;
 }
 .cat:hover {
   cursor: pointer;

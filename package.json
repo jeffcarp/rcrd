@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t reactify main.js > static/main.js"
+    "build": "browserify -t reactify lib/main.js > static/main.js"
   },
   "repository": {
     "type": "git",
