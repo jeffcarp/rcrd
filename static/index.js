@@ -5,37 +5,14 @@ var bus = require('./bus')();
 var moment = require('moment');
 var Editor = require('./editor');
 
-var apiURL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
-
 var Adder = React.createClass({displayName: "Adder",
 
-  getInitialState: function() {
-    return {
-      adding: false
-    };  
-  },
-
   render: function() {
-    if (this.state.adding) {
-      return (
-        React.createElement("div", {className: "adder"}, 
-          React.createElement(Editor, null), 
-          React.createElement("div", {onClick: this.toggleAdding}, "cancel")
-        )
-      );
-    } else {
-      return (
-        React.createElement("div", {className: "adder", onClick: this.toggleAdding}, 
-          "add new rcrd"
-        )
-      );
-    }
-  },
-
-  toggleAdding: function() {
-    this.setState({
-      adding: !this.state.adding
-    });
+    return (
+      React.createElement("div", {className: "adder"}, 
+        React.createElement(Editor, null)
+      )
+    );
   }
 
 });
@@ -145,7 +122,8 @@ var CatPage = React.createClass({displayName: "CatPage",
       url: apiURL + 'records', 
       body: JSON.stringify({
         operation: 'list-records-with-cat',
-        catName: this.props.name
+        catName: this.props.name,
+        access_token: 'some_bs_access_token'
       }),
       json: true
     }, function (err, response) {
@@ -326,7 +304,7 @@ var Root = (
   React.createElement("div", null, 
     React.createElement(Adder, null), 
     React.createElement(Blocks, null), 
-    React.createElement(CatPage, {name: "test"})
+    React.createElement(RecordList, null)
   )
 );
 
@@ -366,7 +344,8 @@ var RecordList = React.createClass({displayName: "RecordList",
       method: 'POST', 
       url: apiURL + 'records', 
       body: JSON.stringify({
-        operation: 'list' 
+        operation: 'list',
+        access_token: 'some_bs_access_token'
       }),
       json: true
     }, function (err, response) {
