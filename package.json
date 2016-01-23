@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "node lambda/test.js | tap-spec",
     "build": "browserify -t reactify lib/index.js > static/index.js"
   },
@@ -21,6 +22,7 @@
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
     "event-emitter": "^0.3.4",
+    "express": "^4.13.4",
     "moment": "^2.11.1",
     "proxyquire": "^1.7.3",
     "react": "^0.14.6",

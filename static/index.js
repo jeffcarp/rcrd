@@ -568,7 +568,6 @@ module.exports = Editor;
 },{"./API":1,"./bus":6,"browser-request":17,"moment":35,"react":192}],10:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-//var canvasRetinafy = require('../canvasRetinafy');
 var canvasDpiScaler = require('canvas-dpi-scaler');
 var moment = require('moment');
 
@@ -590,9 +589,7 @@ var Blocks = React.createClass({displayName: "Blocks",
 
   componentDidMount: function() {
     var canvas = ReactDOM.findDOMNode(this);
-    //canvasRetinafy(canvas);
     var context = canvas.getContext('2d');
-
     canvasDpiScaler(canvas, context);
 
     this.paint(context);
@@ -601,23 +598,15 @@ var Blocks = React.createClass({displayName: "Blocks",
   componentDidUpdate: function() {
     var context = ReactDOM.findDOMNode(this).getContext('2d');
     context.clearRect(0, 0, this.height, this.width);
+
     this.paint(context);
   },
 
   paint: function(context) {
-    //context.save();
     for (var y=0; y<100; y++) {
       for (var x=0; x<366; x++) {
-/*
-        var hue = rand(256);
-        if (rand(5) == 0) {
-          context.fillStyle = "hsl("+hue+", 50%, 50%)";
-          context.fillRect(x*2, y*2, 2, 2);
-        } else {
-*/
-          context.fillStyle = "#f4f4f4";
-          context.fillRect(x*2, y*2, 2, 2);
- //       }
+        context.fillStyle = "#f4f4f4";
+        context.fillRect(x*2, y*2, 2, 2);
       }
     }
 
