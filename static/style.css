@@ -25,9 +25,8 @@ h1.logo {
   font-weight: normal;
 }
 div#container {
-  max-width: 600px;
+  max-width: 732px;
   margin: 0 auto;
-  padding: 1em;
 }
 input {
   font-size: 1.4em;
