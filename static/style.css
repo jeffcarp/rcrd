@@ -10,6 +10,17 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
 }
+
+nav {
+  margin: 0 0 0.4em;
+  padding: 0 0 0.4em;
+  border-bottom: solid 1px #eee;
+}
+nav span {
+  display: inline-block;
+  padding-right: 1em;
+}
+
 h1.logo {
   font-weight: normal;
 }
