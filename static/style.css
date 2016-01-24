@@ -11,15 +11,22 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* General */
+.right { float: right; }
+
+/* ------------------------------ */
+
 nav {
-  margin: 0 0 0.4em;
-  padding: 0 0 0.4em;
+  margin: 0.4em 0;
+  padding: 0.4em 0;
   border-bottom: solid 1px #eee;
 }
-nav span {
+nav a {
   display: inline-block;
   padding-right: 1em;
 }
+
+/* ------------------------------ */
 
 h1.logo {
   font-weight: normal;
@@ -144,18 +151,6 @@ section {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: solid 1px #ddd;
-}
-
-nav {
-  margin-bottom: 1em;
-}
-nav h2 {
-  font-size: 16px;
-  margin-bottom: 0.6em;
-}
-nav table tr td > div {
-  line-height: 1.6em;
-  font-size: 0.9em; 
 }
 
 .page h1 {
