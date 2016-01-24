@@ -150,9 +150,12 @@ table.timePicker td {
 section {
   margin-bottom: 1em;
   padding-bottom: 1em;
-  border-bottom: solid 1px #ddd;
+  border-bottom: solid 1px #eee;
 }
 
+.page {
+  padding-top: 0.6em;
+}
 .page h1 {
   border-bottom: solid 1px #ddd;
   padding-bottom: 0.4em;
@@ -162,6 +165,10 @@ section {
   font-style: normal;
   color: #777;
   font-weight: normal;
+}
+.page h2 {
+  padding-bottom: 0.4em;
+  margin-bottom: 0.4em;
 }
 .page p {
   margin-bottom: 1em;
