@@ -868,9 +868,11 @@ var Blocks = React.createClass({displayName: "Blocks",
   componentDidMount: function() {
     var self = this;
 
-    var canvas = ReactDOM.findDOMNode(this);
-    var context = canvas.getContext('2d');
-    canvasDpiScaler(canvas, context);
+    var canvasElem = this.refs.viz;
+    var context = canvasElem.getContext('2d');
+    canvasDpiScaler(canvasElem, context);
+
+    this.paint(context);
 
     API.fetchRecords(function (err, records) {
       if (err) {
@@ -881,7 +883,7 @@ var Blocks = React.createClass({displayName: "Blocks",
   },
 
   componentDidUpdate: function() {
-    var context = ReactDOM.findDOMNode(this).getContext('2d');
+    var context = this.refs.viz.getContext('2d');
     context.clearRect(0, 0, this.height, this.width);
 
     this.paint(context);
@@ -890,48 +892,39 @@ var Blocks = React.createClass({displayName: "Blocks",
   paint: function(context) {
     var records = this.state.records;
 
-    for (var y=0; y<100; y++) {
-      for (var x=0; x<366; x++) {
-        context.fillStyle = "#f4f4f4";
-        context.fillRect(x*2, y*2, 2, 2);
+    for (var x=0; x<366; x++) {
+      var dayOfWeek = moment().startOf('year').add(x, 'days').format('dddd');
+      if (dayOfWeek === 'Saturday' || dayOfWeek === 'Sunday') {
+        context.fillStyle = "#dcdcdc";
+      } else {
+        context.fillStyle = "#fdfdfd";
       }
+
+      context.fillRect(x*2, 0, 2, 20);
     }
 
-    var allCats = {}; 
-    var catCount = 0;
+    var hue = rand(256);
 
     records.forEach(function (record) {
-      var cats = util.catsFromRaw(record.raw);
       var x = Number(moment.unix(Number(record.id) / 1000).format('DDD'));
 
-      cats.forEach(function (cat) {
-        var hue = rand(256);
-
-        if (cat in allCats) {
-          var y = allCats[cat];
-        } else {
-          var y = allCats[cat] = catCount;
-          catCount += 1;
-        } 
-
-        context.fillStyle = "hsl("+hue+", 50%, 50%)";
-        context.fillRect(x*2, y*2, 2, 2);
-
-      });
-
+      context.fillStyle = "hsl("+hue+", 50%, 50%)";
+      context.fillRect(x*2, 5, 2, 10);
     });
-
-    console.log(catCount);
-
-    //context.restore();
   },
 
   render: function () {
-    return React.DOM.canvas({
-      height: this.height,
-      width: this.width,
-      className: 'blocks'
-    });
+    return (
+      React.createElement("div", null, 
+        React.createElement("div", {style: { fontSize: '0.8em'}}, "2016"), 
+        React.createElement("canvas", {
+          height: this.height, 
+          width: this.width, 
+          className: "blocks", 
+          ref: "viz"
+          })
+      )
+    );
   }
 });
 
