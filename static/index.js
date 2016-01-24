@@ -657,16 +657,17 @@ var RecordList = React.createClass({displayName: "RecordList",
   },
 
   componentWillMount: function() {
-    var self = this;
-
     this.refreshRecords();
 
-    bus.on('record-added', function () {
-      self.refreshRecords();
-    });
+    bus.on('record-added', this.refreshRecords);
+  },
+
+  componentWillUnmount: function () {
+    bus.off('record-added', this.refreshRecords);
   },
 
   refreshRecords: function () {
+    console.log('WHAT');
     var self = this;
 
     API.fetchRecords(function (err, records) {
