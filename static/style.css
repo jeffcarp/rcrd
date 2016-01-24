@@ -72,22 +72,26 @@ a {
   color: #888;
   margin-bottom: 0.4em;
 }
-.cat {
-  display: inline-block;
-  border-radius: 3px;
+
+/* ------------------------------ */
+
+.cat, .split-cat {
   color: white;
-  background-color: hsl(150, 50%, 60%);
-  padding: 8px 10px;
+  display: inline-block;
   margin: 0 0.4em 0 0;
   font-weight: normal;
+  line-height: 2.5em;
 }
-.cat:hover {
+.cat span{
+  border-radius: 3px;
+  background-color: hsl(150, 50%, 60%);
+  padding: 8px 10px;
+}
+.cat span:hover {
   cursor: pointer;
   background-color: hsl(150, 50%, 65%);
 }
 .split-cat {
-  color: white;
-  margin: 0 0.4em 0 0;
 }
 .split-cat .magnitude {
   border-top-left-radius: 3px;
@@ -101,6 +105,8 @@ a {
   padding: 8px 10px;
   background-color: hsl(150, 50%, 60%);
 }
+
+/* ------------------------------ */
 
 header {
 }
