@@ -530,7 +530,7 @@ var Editor = React.createClass({displayName: "Editor",
         }
 
         console.log(data);
-        bus.emit('refresh-records');
+        bus.emit('record-added');
 
         self.setState({
           raw: '',
@@ -661,9 +661,8 @@ var RecordList = React.createClass({displayName: "RecordList",
 
     this.refreshRecords();
 
-    bus.on('refresh-records', function () {
-      console.log('refresh-records');
-      //self.refreshRecords();
+    bus.on('record-added', function () {
+      self.refreshRecords();
     });
   },
 
@@ -869,13 +868,14 @@ var CatPage = React.createClass({displayName: "CatPage",
       var catNumbers = {};
 
       util.allCats(records).forEach(function (name) {
-        if (catNumbers[name]) {
+        if (name === self.props.name) {
+          return;
+        } else if (catNumbers[name]) {
           catNumbers[name] += 1;
         } else {
           catNumbers[name] = 1;
         }
       });
-      console.log(catNumbers);
 
       var catNumberArray = [];
       for (var name in catNumbers) {
@@ -1106,10 +1106,6 @@ var moment = require('moment');
 
 var util = require('./util');
 
-var rand = function(num) {
-  return Math.floor(Math.random()*num);
-};
-
 var YearBlocks = React.createClass({displayName: "YearBlocks",
 
   height: 20,
@@ -1137,6 +1133,7 @@ var YearBlocks = React.createClass({displayName: "YearBlocks",
   paint: function(context) {
     var records = this.props.records;
 
+    // Paint weekends
     for (var x=0; x<366; x++) {
       var dayOfWeek = moment().startOf('year').add(x, 'days').format('dddd');
       if (dayOfWeek === 'Saturday' || dayOfWeek === 'Sunday') {
@@ -1148,12 +1145,17 @@ var YearBlocks = React.createClass({displayName: "YearBlocks",
       context.fillRect(x*2, 0, 2, 20);
     }
 
-    var hue = rand(256);
+    // Paint today
+    var todayX = Number(moment().format('DDD'));
+    context.fillStyle = "hsl(1, 75%, 50%)";
+    context.fillRect(todayX*2, 0, 2, 2);
+    context.fillRect(todayX*2, 18, 2, 2);
 
+    // Paint records
     records.forEach(function (record) {
       var x = Number(moment.unix(Number(record.id) / 1000).format('DDD'));
 
-      context.fillStyle = "hsl("+hue+", 50%, 50%)";
+      context.fillStyle = "hsl(150, 50%, 50%)";
       context.fillRect(x*2, 5, 2, 10);
     });
   },
