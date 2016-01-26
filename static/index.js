@@ -408,23 +408,44 @@ var React = require('react');
 
 var bus = require('./bus')();
 var Link = require('react-router-component').Link;
-var u = require('./util');
+var util = require('./util');
 
 var Cat = React.createClass({displayName: "Cat",
 
   render: function() {
     var name = this.props.name.trim();
-    var url = '/cats/' + u.sansMagnitude(this.props.name).trim();
+    var url = '/cats/' + util.sansMagnitude(this.props.name).trim();
+    var hue = util.rand(256);
 
-    if (u.hasMagnitude(name)) {
+    if (util.hasMagnitude(name)) {
       return (
-        React.createElement(Link, {className: "split-cat", href: url}, 
-          React.createElement("span", {className: "magnitude"}, u.magnitudePortion(name)), 
-          React.createElement("span", {className: "name"}, u.sansMagnitude(name))
+        React.createElement(Link, {
+          className: "split-cat", 
+          href: url}, 
+          React.createElement("span", {
+            style: {
+              backgroundColor: 'hsl('+hue+', 50%, 40%)'
+            }, 
+            className: "magnitude"
+            }, util.magnitudePortion(name)), 
+          React.createElement("span", {
+            style: {
+              backgroundColor: 'hsl('+hue+', 50%, 60%)'
+            }, 
+            className: "name"
+            }, util.sansMagnitude(name))
         )
       );
     } else {
-      return React.createElement(Link, {className: "cat", href: url}, React.createElement("span", null, name));
+      return (
+        React.createElement(Link, {
+          className: "cat", 
+          href: url
+          }, React.createElement("span", {
+            style: {
+              backgroundColor: 'hsl('+hue+', 50%, 60%)'
+            }}, name))
+      );
     }
 
   }
@@ -830,10 +851,10 @@ var Record = React.createClass({displayName: "Record",
       return (
         React.createElement("div", {className: "record"}, 
           React.createElement("div", {className: "time"}, timestamp), 
-          React.createElement("div", {className: "cat-list"}, cats), 
-          React.createElement("div", {className: "time"}, React.createElement("span", {onClick: this.toggleEdit}, "edit"))
+          React.createElement("div", {className: "cat-list"}, cats)
         )
       );
+      //<div className="time"><span onClick={this.toggleEdit}>edit</span></div>
     }
   },
 
@@ -1139,6 +1160,10 @@ util.allCats = function (records) {
     return acc.concat(util.catsFromRaw(record.raw));
   }, []);
 }
+
+util.rand = function(num) {
+  return Math.floor(Math.random()*num);
+};
 
 module.exports = util;
 
