@@ -22,6 +22,7 @@
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
     "canvas-dpi-scaler": "0.0.3",
+    "debounce": "^1.0.0",
     "event-emitter": "^0.3.4",
     "express": "^4.13.4",
     "history": "^1.17.0",
