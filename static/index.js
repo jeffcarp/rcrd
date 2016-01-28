@@ -410,12 +410,22 @@ var bus = require('./bus')();
 var Link = require('react-router-component').Link;
 var util = require('./util');
 
+function strTo256(str) {
+  var num = 0;
+  for (var i in str) {
+    num += str.charCodeAt(i);
+  }
+
+  return num % 256;
+}
+
 var Cat = React.createClass({displayName: "Cat",
 
   render: function() {
     var name = this.props.name.trim();
-    var url = '/cats/' + util.sansMagnitude(this.props.name).trim();
-    var hue = util.rand(256);
+    var bareName = util.sansMagnitude(this.props.name).trim();
+    var url = '/cats/' + bareName;
+    var hue = strTo256(bareName);
 
     if (util.hasMagnitude(name)) {
       return (
