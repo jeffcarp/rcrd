@@ -410,14 +410,6 @@ var bus = require('./bus')();
 var Link = require('react-router-component').Link;
 var util = require('./util');
 
-function strTo256(str) {
-  var num = 0;
-  for (var i in str) {
-    num += str.charCodeAt(i);
-  }
-
-  return num % 256;
-}
 
 var Cat = React.createClass({displayName: "Cat",
 
@@ -425,7 +417,7 @@ var Cat = React.createClass({displayName: "Cat",
     var name = this.props.name.trim();
     var bareName = util.sansMagnitude(this.props.name).trim();
     var url = '/cats/' + bareName;
-    var hue = strTo256(bareName);
+    var hue = util.strTo256(bareName);
 
     if (util.hasMagnitude(name)) {
       return (
@@ -690,6 +682,7 @@ var MonthBlocks = React.createClass({displayName: "MonthBlocks",
 
   propTypes: {
     numDays: React.PropTypes.number.isRequired,
+    hue: React.PropTypes.number.isRequired,
   },
 
   getInitialState: function () {
@@ -775,7 +768,7 @@ var MonthBlocks = React.createClass({displayName: "MonthBlocks",
       var x = (this.props.numDays - daysFromToday) * blockWidth;
       assert(!isNaN(x));
 
-      context.fillStyle = "hsl(150, 50%, 50%)";
+      context.fillStyle = 'hsl('+this.props.hue+', 50%, 60%)';
       context.fillRect(x, 5, blockWidth, 10);
     }.bind(this));
   },
@@ -1051,6 +1044,7 @@ var CatPage = React.createClass({displayName: "CatPage",
     var records = this.state.records;
     var cats = this.state.contemporaneousCatNames;
     var name = this.props.name;
+    var hue = util.catNameToHue(name);
     var recordDivs = [];
     var catElems = [];
     var oneYear;
@@ -1071,9 +1065,10 @@ var CatPage = React.createClass({displayName: "CatPage",
       catElems = React.createElement("div", {className: "faded"}, "'Loading cats..'");
     }
 
+
     return (
       React.createElement("div", null, 
-        React.createElement(MonthBlocks, {records: records, numDays: 90}), 
+        React.createElement(MonthBlocks, {records: records, numDays: 90, hue: hue}), 
         React.createElement("section", null, 
           React.createElement("h2", null, "Last 10 records with ", React.createElement(Cat, {name: name})), 
           recordDivs
@@ -1125,8 +1120,10 @@ var Everything = React.createClass({displayName: "Everything",
     return (
       React.createElement("div", null, 
         React.createElement(YearBlocks, {records: this.state.records}), 
-        React.createElement(MonthBlocks, {records: this.state.records, numDays: 90}), 
-        React.createElement(RecordList, null)
+        React.createElement(MonthBlocks, {records: this.state.records, numDays: 90, hue: 150}), 
+        React.createElement("div", {className: "small-section"}, 
+          React.createElement(RecordList, null)
+        )
       )
     );
   }
@@ -1205,6 +1202,20 @@ util.allCats = function (records) {
 
 util.rand = function(num) {
   return Math.floor(Math.random()*num);
+};
+
+util.strTo256 = function (str) {
+  var num = 0;
+  for (var i in str) {
+    num += str.charCodeAt(i);
+  }
+
+  return num % 256;
+};
+
+util.catNameToHue = function (name) {
+  var bareName = util.sansMagnitude(name.trim()).trim();
+  return util.strTo256(bareName);
 };
 
 module.exports = util;
