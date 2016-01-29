@@ -183,3 +183,16 @@ section {
 .faded {
   color: #aaa;
 }
+
+.button {
+  padding: 0.6em; 
+  margin: 0 0.6em 0.6em 0; 
+  display: inline-block;
+  font-size: 0.8em;
+  border: solid 1px #222;
+  color: #222;
+}
+
+.small-section {
+  padding: 0.4em;
+}
