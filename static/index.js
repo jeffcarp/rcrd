@@ -7050,6 +7050,8 @@ var CaptureClicks = React.createClass({
       return;
     }
 
+    // Prevent :focus from sticking; preventDefault() stops blur in some browsers
+    el.blur();
     e.preventDefault();
 
     // flag if we already found a "not found" case and bailed
