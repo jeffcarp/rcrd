@@ -498,6 +498,7 @@ var Editor = React.createClass({displayName: "Editor",
     var timestamp = this.state.timestamp.format('MMMM Do YYYY, h:mm:ss a');
     return (
       React.createElement("form", {
+        className: "small-section", 
         onSubmit: this.onSubmit}, 
         React.createElement("input", {
           type: "text", 
@@ -511,22 +512,21 @@ var Editor = React.createClass({displayName: "Editor",
           disabled: this.state.loading}
           ), 
         React.createElement("div", {className: "time"}, timestamp), 
-        React.createElement("div", {className: "time"}, 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": -1, "data-unit": 'day'}, "-1 day"), 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": 1, "data-unit": 'day'}, "+1 day"), 
+        React.createElement("div", null, 
+          React.createElement("a", {onClick: this.augmentTime, "data-num": -1, "data-unit": 'day', className: "button"}, "-1 day"), 
+          React.createElement("a", {onClick: this.augmentTime, "data-num": 1, "data-unit": 'day', className: "button"}, "+1 day"), 
           ' ', 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": -1, "data-unit": 'hours'}, "-1 hours"), 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": 1, "data-unit": 'hours'}, "+1 hour"), 
+          React.createElement("a", {onClick: this.augmentTime, "data-num": -1, "data-unit": 'hours', className: "button"}, "-1 hours"), 
+          React.createElement("a", {onClick: this.augmentTime, "data-num": 1, "data-unit": 'hours', className: "button"}, "+1 hour"), 
           ' ', 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": -10, "data-unit": 'minutes'}, "-10 min"), 
-          React.createElement("a", {onClick: this.augmentTime, "data-num": 10, "data-unit": 'minutes'}, "+10 min")
+          React.createElement("a", {onClick: this.augmentTime, "data-num": -10, "data-unit": 'minutes', className: "button"}, "-10 min"), 
+          React.createElement("a", {onClick: this.augmentTime, "data-num": 10, "data-unit": 'minutes', className: "button"}, "+10 min")
         ), 
         React.createElement("input", {
           type: "submit", 
           value: "Create record", 
           disabled: this.state.loading}
-          ), 
-        React.createElement("div", null, this.state.savedState)
+          )
       )
     );
   },
@@ -598,7 +598,7 @@ var Header = React.createClass({displayName: "Header",
   render: function() {
     if (AccountService.isLoggedIn()) {
       return (
-        React.createElement("nav", null, 
+        React.createElement("nav", {className: "small-section"}, 
           React.createElement("span", {className: "right"}, 
             React.createElement(Link, {href: "/account"}, localStorage.email)
           ), 
@@ -608,7 +608,7 @@ var Header = React.createClass({displayName: "Header",
       );
     } else {
       return (
-        React.createElement("nav", null, 
+        React.createElement("nav", {className: "small-section"}, 
           React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
           React.createElement("span", {className: "right"}, 
             React.createElement(Link, {href: "/login"}, "login")
@@ -714,6 +714,7 @@ var MonthBlocks = React.createClass({displayName: "MonthBlocks",
 
   componentWillMount: function() {
     window.addEventListener('resize', this.onResize);
+    window.addEventListener('orientationchange', this.onResize);
   },
 
   componentDidMount: function() {
@@ -736,6 +737,7 @@ var MonthBlocks = React.createClass({displayName: "MonthBlocks",
 
   componentWillUnmount: function() {
     window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('orientationchange', this.onResize);
   },
 
   paint: function(context) {
@@ -1096,6 +1098,7 @@ var ReactDOM = require('react-dom');
 var API = require('../api');
 var YearBlocks = require('../year-blocks');
 var MonthBlocks = require('../month-blocks');
+var RecordList = require('../record-list');
 
 var Everything = React.createClass({displayName: "Everything",
 
@@ -1122,7 +1125,8 @@ var Everything = React.createClass({displayName: "Everything",
     return (
       React.createElement("div", null, 
         React.createElement(YearBlocks, {records: this.state.records}), 
-        React.createElement(MonthBlocks, {records: this.state.records, numDays: 90})
+        React.createElement(MonthBlocks, {records: this.state.records, numDays: 90}), 
+        React.createElement(RecordList, null)
       )
     );
   }
@@ -1130,20 +1134,18 @@ var Everything = React.createClass({displayName: "Everything",
 
 module.exports = Everything;
 
-},{"../api":4,"../month-blocks":12,"../year-blocks":21,"react":226,"react-dom":47}],18:[function(require,module,exports){
+},{"../api":4,"../month-blocks":12,"../record-list":13,"../year-blocks":21,"react":226,"react-dom":47}],18:[function(require,module,exports){
 var React = require('react');
 
 var Adder = require('../adder');
 var Blocks = require('../blocks');
-var RecordList = require('../record-list');
 
 var Index = React.createClass({displayName: "Index",
 
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement(Adder, null), 
-        React.createElement(RecordList, null)
+        React.createElement(Adder, null)
       )
     );
   }
@@ -1152,7 +1154,7 @@ var Index = React.createClass({displayName: "Index",
 
 module.exports = Index;
 
-},{"../adder":3,"../blocks":6,"../record-list":13,"react":226}],19:[function(require,module,exports){
+},{"../adder":3,"../blocks":6,"react":226}],19:[function(require,module,exports){
 var React = require('react');
 
 var NotFoundPage = React.createClass({displayName: "NotFoundPage",
