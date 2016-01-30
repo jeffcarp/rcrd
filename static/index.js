@@ -463,6 +463,7 @@ var request = require('browser-request');
 
 var API = require('./API');
 var bus = require('./bus')();
+var util = require('./util');
 
 var Editor = React.createClass({displayName: "Editor",
 
@@ -534,6 +535,13 @@ var Editor = React.createClass({displayName: "Editor",
     e.preventDefault();
     var self = this;
 
+    var cats = util.catsFromRaw(this.state.raw); 
+    console.log(cats);
+    if (util.hasDupes(cats)) {
+      bus.emit('notification', 'Cannot create record with duplicate cats.');
+      return;
+    }
+
     this.setState({
       loading: true
     });
@@ -579,7 +587,7 @@ var Editor = React.createClass({displayName: "Editor",
 
 module.exports = Editor;
 
-},{"./API":1,"./bus":7,"browser-request":22,"moment":46,"react":226}],10:[function(require,module,exports){
+},{"./API":1,"./bus":7,"./util":20,"browser-request":22,"moment":46,"react":226}],10:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router-component').Link;
 
@@ -587,27 +595,59 @@ var AccountService = require('./account-service');
 var bus = require('./bus')();
 
 var Header = React.createClass({displayName: "Header",
-  render: function() {
-    if (AccountService.isLoggedIn()) {
-      return (
-        React.createElement("nav", {className: "small-section"}, 
-          React.createElement("span", {className: "right"}, 
-            React.createElement(Link, {href: "/account"}, localStorage.email)
-          ), 
-          React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
-          React.createElement(Link, {href: "/everything"}, "everything")
-        )
-      );
-    } else {
-      return (
-        React.createElement("nav", {className: "small-section"}, 
-          React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
-          React.createElement("span", {className: "right"}, 
-            React.createElement(Link, {href: "/login"}, "login")
+
+  getInitialState: function () {
+    return {
+      notification: null
+    };
+  },
+
+  componentWillMount: function () {
+    bus.on('notification', function (message) {
+      this.setState({ notification: message });
+     
+      setTimeout(function () {
+        this.setState({ notification: null });
+      }.bind(this), 4e3);
+    }.bind(this));
+  },
+
+  render: function () {
+    var message = this.state.notification;
+    var inner;
+
+    if (message) {
+
+        return (
+          React.createElement("nav", {className: "small-section notification"}, 
+            React.createElement("span", null, message)
           )
-        )
-      );
+        );
+
+    } else {
+
+      if (AccountService.isLoggedIn()) {
+        return (
+          React.createElement("nav", {className: "small-section"}, 
+            React.createElement("span", {className: "right"}, 
+              React.createElement(Link, {href: "/account"}, localStorage.email)
+            ), 
+            React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
+            React.createElement(Link, {href: "/everything"}, "everything")
+          )
+        );
+      } else {
+        return (
+          React.createElement("nav", {className: "small-section"}, 
+            React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
+            React.createElement("span", {className: "right"}, 
+              React.createElement(Link, {href: "/login"}, "login")
+            )
+          )
+        );
+      }
     }
+
   }
 });
 
@@ -1216,6 +1256,17 @@ util.strTo256 = function (str) {
 util.catNameToHue = function (name) {
   var bareName = util.sansMagnitude(name.trim()).trim();
   return util.strTo256(bareName);
+};
+
+util.hasDupes = function (arr) {
+  var foundDupe = false;
+  arr.forEach(function (x, i) {
+    arr.forEach(function (y, j) {
+      if (i !== j && x === y) foundDupe = true; 
+    });
+  });
+
+  return foundDupe;
 };
 
 module.exports = util;
