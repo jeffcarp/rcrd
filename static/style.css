@@ -20,6 +20,11 @@ nav {
   margin: 0.4em 0;
   padding: 0.4em 0;
   border-bottom: solid 1px #eee;
+  transition: background-color 0.5s ease-in-out;
+}
+nav.notification {
+  background-color: hsl(150, 50%, 50%);
+  color: white;
 }
 nav a {
   display: inline-block;
