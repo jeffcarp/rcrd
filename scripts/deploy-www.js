@@ -1,7 +1,7 @@
 var AWS = require('aws-sdk');
 var fs = require('fs');
 
-confirmCorrectDirectory();
+require('./confirm-correct-directory')();
 
 AWS.config.region = 'us-east-1';
 const BUCKET_NAME = 'www.rcrd.org';
