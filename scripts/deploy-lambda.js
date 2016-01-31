@@ -1,3 +1,4 @@
+var AdmZip = require('adm-zip');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 
@@ -9,14 +10,20 @@ var lambda = new AWS.Lambda({
   apiVersion: '2015-03-31'
 });
 
-// TODO: Create zipped base64 buffer
+// Idea: run unit tests before deploying?
 
-var params = {
-  FunctionName: 'hello-world',
-  Publish: true,
-  ZipFile: 'console.log("hey")'
-};
-lambda.updateFunctionCode(params, function(err, data) {
-  if (err) console.log(err, err.stack); // an error occurred
-  else     console.log(data);           // successful response
+var zip = new AdmZip();
+zip.addLocalFile('./lambda/index.js');
+var zipBuffer = zip.toBuffer();
+
+lambda.updateFunctionCode({
+  FunctionName: 'test-write-to-dynamo',
+  ZipFile: zipBuffer,
+  Publish: true
+}, function(err, data) {
+  if (err) {
+    console.error(err, err.stack);
+  } else {
+    console.log(data);
+  }
 });
