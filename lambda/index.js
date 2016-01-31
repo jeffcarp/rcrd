@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var doc = require('dynamodb-doc');
 
 var listRecords = require('./list-records');
+var listRecordsWithCat = require('./list-records-with-cat');
 
 var dynamo = new doc.DynamoDB();
 
@@ -16,7 +17,7 @@ exports.handler = function(params, context) {
             } else if (params.operation === 'create') {
                 createRecord(params, context);
             } else if (params.operation === 'list-records-with-cat') {
-                listRecordsWithCat(params, context);
+                listRecordsWithCat(dynamo, params, context);
             } else {
                 context.fail('operation not found');
             }
@@ -38,17 +39,6 @@ function validateAccessToken(access_token, context, callback) {
         
         callback();
     });
-}
-
-function listRecordsWithCat(params, context) {
-    if (!params.catName) {
-        context.fail('Missing param');
-    }
-    
-    var opts = {};
-    opts.TableName = "test-for-rcrd";
-    opts.ScanFilter = dynamo.Condition("raw", "CONTAINS", params.catName);
-    dynamo.scan(opts, context.done);
 }
 
 function createRecord(params, context) {
