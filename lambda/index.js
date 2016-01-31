@@ -1,6 +1,8 @@
 var crypto = require('crypto');
 var doc = require('dynamodb-doc');
 
+var listRecords = require('./list-records');
+
 var dynamo = new doc.DynamoDB();
 
 exports.handler = function(params, context) {
@@ -10,7 +12,7 @@ exports.handler = function(params, context) {
         validateAccessToken(params.access_token, context, function () {
             // Protected routes 
             if (params.operation === 'list') {
-                listRecords(params, context);
+                listRecords(dynamo, params, context);
             } else if (params.operation === 'create') {
                 createRecord(params, context);
             } else if (params.operation === 'list-records-with-cat') {
@@ -36,12 +38,6 @@ function validateAccessToken(access_token, context, callback) {
         
         callback();
     });
-}
-
-function listRecords(params, context) {
-    dynamo.scan({
-        "TableName": "test-for-rcrd"
-    }, context.done);
 }
 
 function listRecordsWithCat(params, context) {
