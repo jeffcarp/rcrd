@@ -1,6 +1,5 @@
 var crypto = require('crypto');
 var doc = require('dynamodb-doc');
-
 var dynamo = new doc.DynamoDB();
 
 exports.handler = function(params, context) {
