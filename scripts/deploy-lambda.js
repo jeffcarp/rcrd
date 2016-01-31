@@ -15,6 +15,7 @@ var lambda = new AWS.Lambda({
 var zip = new AdmZip();
 zip.addLocalFile('./lambda/index.js');
 zip.addLocalFile('./lambda/list-records.js');
+zip.addLocalFile('./lambda/list-records-with-cat.js');
 var zipBuffer = zip.toBuffer();
 
 lambda.updateFunctionCode({
