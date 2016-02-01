@@ -1,5 +1,5 @@
 // NOT DONE
-
+/*
 var sinon = require('sinon');
 var test = require('tape');
 
@@ -28,3 +28,4 @@ test('denies access to any operaion other than get-access-token', function (t) {
 
   t.end();
 });
+*/
