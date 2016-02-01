@@ -21,6 +21,7 @@
   "homepage": "https://github.com/jeffcarp/rcrd-dynamo#readme",
   "devDependencies": {
     "adm-zip": "^0.4.7",
+    "aws-sdk": "^2.2.33",
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
     "canvas-dpi-scaler": "0.0.3",
