@@ -1,8 +1,6 @@
 'use strict';
 
-var sinon = require('sinon');
 var test = require('tape');
-
 var util = require('../lib/util');
 
 test('util.hasMagnitude', function (t) {
