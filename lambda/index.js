@@ -1,6 +1,6 @@
 var crypto = require('crypto');
 var doc = require('dynamodb-doc');
-
+var deleteRecord = require('./delete-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
 
@@ -18,6 +18,8 @@ exports.handler = function(params, context) {
                 createRecord(params, context);
             } else if (params.operation === 'list-records-with-cat') {
                 listRecordsWithCat(dynamo, params, context);
+            } else if (params.operation === 'record.delete') {
+                deleteRecord(dynamo, params, context);
             } else {
                 context.fail('operation not found');
             }
@@ -42,8 +44,6 @@ function validateAccessToken(access_token, context, callback) {
 }
 
 function createRecord(params, context) {
-    console.log('params', params);
-    
     if (!params.id || !params.raw) {
         context.fail('Missing param');
     }
@@ -79,10 +79,8 @@ function getAccessToken(params, context) {
             return;
         }
         var user = data.Item;
-        console.log(user);
        
         var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64');
-        console.log(suppliedPassHash);
         if (suppliedPassHash === user.hash) {
             
             // TODO: generate and store an access token
