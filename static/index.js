@@ -1408,7 +1408,7 @@ var API = require('../api');
 var Record = require('../record');
 var util = require('../util');
 
-var CatPage = React.createClass({displayName: "CatPage",
+var RecordPage = React.createClass({displayName: "RecordPage",
 
   getInitialState: function() {
     return {
@@ -1428,23 +1428,27 @@ var CatPage = React.createClass({displayName: "CatPage",
       }
 
       this.setState({ record: record }); 
-    });
+    }.bind(this));
   },
 
   render: function() {
-    var record = this.state.record || {id: 'asdf', raw: 'test, yeah'};
+    var record = this.state.record;
+
+    if (record) {
+      var topSection = React.createElement(Record, {record: record});
+    } else {
+      var topSection = React.createElement("div", {className: "faded"}, "Loading record...");
+    }
 
     return (
       React.createElement("div", null, 
-        React.createElement("section", null, 
-          React.createElement(Record, {record: record})
-        )
+        React.createElement("section", null, topSection)
       )
     );
   }
 });
 
-module.exports = CatPage;
+module.exports = RecordPage;
 
 },{"../api":4,"../record":15,"../util":22,"browser-request":24,"react":229}],22:[function(require,module,exports){
 var util = {};
