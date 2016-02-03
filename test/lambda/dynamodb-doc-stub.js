@@ -13,8 +13,8 @@ dynamoDoc.prototype.getItem = function (params, callback) {
       callback('denied'); 
     }
   } else {
-    if (records[params.id]) {
-      callback(null, records[params.id]);
+    if (params.Key && params.Key.id && records[params.Key.id]) {
+      callback(null, records[params.Key.id]);
     } else {
       callback('Record not found');
     }
