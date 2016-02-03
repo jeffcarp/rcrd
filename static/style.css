@@ -62,11 +62,6 @@ a {
 
 .record {
   padding: 0.2em 0;
-  border-bottom: solid 1px #eee;
-}
-.record:hover {
-  background-color: #f9f9f9;
-  cursor: pointer;
 }
 .record .cat-list {
   margin-bottom: 0.4em;

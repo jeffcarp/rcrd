@@ -13,8 +13,8 @@ dynamoDoc.prototype.getItem = function (params, callback) {
       callback('denied'); 
     }
   } else {
-    if (records[params.Key]) {
-      callback(null, records[params.Key]);
+    if (records[params.id]) {
+      callback(null, records[params.id]);
     } else {
       callback('Record not found');
     }
@@ -35,25 +35,10 @@ dynamoDoc.prototype.putItem = function (params, callback) {
   }
 };
 
-dynamoDoc.prototype.updateItem = function (params, callback) {
-  if (records[params.Key]) {
-    var updateObj = params.AttributeUpdates.Value;
-    var updateKey = Object.keys(params.AttributeUpdates.Value)[0];
-    var updateValue = updateObj[updateKey];
+function _setRecord(record) {
+  if (!record || !record.id) return;
 
-    var record = records[params.Key];
-    record[updateKey] = updateValue;
-    
-    callback(null, record);
-  } else {
-    callback('Record not found');
-  }
-};
-
-function _addRecord(record) {
-  if (!record || !record.Key) return;
-
-  records[record.Key] = record;
+  records[record.id] = record;
 };
 
 function _getRecord(id) {
@@ -62,6 +47,6 @@ function _getRecord(id) {
 
 module.exports = {
   DynamoDB: dynamoDoc,
-  _addRecord: _addRecord,
+  _setRecord: _setRecord,
   _getRecord: _getRecord,
 };
