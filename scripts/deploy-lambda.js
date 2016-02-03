@@ -16,6 +16,7 @@ var zip = new AdmZip();
 zip.addLocalFile('./lambda/index.js');
 zip.addLocalFile('./lambda/create-record.js');
 zip.addLocalFile('./lambda/delete-record.js');
+zip.addLocalFile('./lambda/get-record.js');
 zip.addLocalFile('./lambda/list-records.js');
 zip.addLocalFile('./lambda/list-records-with-cat.js');
 var zipBuffer = zip.toBuffer();

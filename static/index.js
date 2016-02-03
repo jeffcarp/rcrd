@@ -48,6 +48,29 @@ API.createRecord = function (params, callback) {
   });
 };
 
+API.fetchRecord = function (id, callback) {
+  request({
+    method: 'POST', 
+    url: API_URL + 'records', 
+    body: JSON.stringify({
+      operation: 'record.get',
+      id: id,
+      access_token: 'some_bs_access_token'
+    }),
+    json: true
+  }, function (err, response) {
+    if (err) {
+      callback(err);
+    } else if (response.body.errorMessage) {
+      callback(response.body.errorMessage);
+    } else {
+      var record = response.body.Item;
+
+      callback(null, record);
+    }
+  });
+};
+
 API.fetchRecords = function (callback) {
   request({
     method: 'POST', 
@@ -249,6 +272,29 @@ API.createRecord = function (params, callback) {
       callback(response.body.errorMessage);
     } else {
       callback(null, response.body);
+    }
+  });
+};
+
+API.fetchRecord = function (id, callback) {
+  request({
+    method: 'POST', 
+    url: API_URL + 'records', 
+    body: JSON.stringify({
+      operation: 'record.get',
+      id: id,
+      access_token: 'some_bs_access_token'
+    }),
+    json: true
+  }, function (err, response) {
+    if (err) {
+      callback(err);
+    } else if (response.body.errorMessage) {
+      callback(response.body.errorMessage);
+    } else {
+      var record = response.body.Item;
+
+      callback(null, record);
     }
   });
 };
@@ -839,7 +885,7 @@ var Root = React.createClass({displayName: "Root",
           React.createElement(Location, {path: "/login", handler: Authentication}), 
           React.createElement(Location, {path: "/account", handler: Account}), 
           React.createElement(Location, {path: "/cats/:name", handler: CatPage}), 
-          React.createElement(Location, {path: "/records/:name", handler: RecordPage}), 
+          React.createElement(Location, {path: "/records/:id", handler: RecordPage}), 
           React.createElement(NotFound, {handler: NotFoundPage})
         )
       )
@@ -1370,12 +1416,23 @@ var CatPage = React.createClass({displayName: "CatPage",
     };
   },
 
-  componentWillMount: function() {
+  componentWillMount: function () {
+    this.fetchRecord();
   },
 
+  fetchRecord: function () {
+    API.fetchRecord(this.props.id, function (err, record) {
+      console.log(err, record);
+      if (err) {
+        return console.error(err);
+      }
+
+      this.setState({ record: record }); 
+    });
+  },
 
   render: function() {
-    var record = {id: 'asdf', raw: 'test, yeah'};
+    var record = this.state.record || {id: 'asdf', raw: 'test, yeah'};
 
     return (
       React.createElement("div", null, 
