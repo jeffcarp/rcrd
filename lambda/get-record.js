@@ -5,7 +5,7 @@ function getRecord(dynamo, params, context) {
 
   dynamo.getItem({
     'TableName': 'test-for-rcrd',
-    'Key': params.id
+    'Key': {id: params.id}
   }, function (err, record) {
     if (err) {
       context.fail(err);
