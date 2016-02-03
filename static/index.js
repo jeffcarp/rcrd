@@ -226,7 +226,7 @@ var Adder = React.createClass({displayName: "Adder",
 
 module.exports = Adder;
 
-},{"./api":4,"./bus":7,"./cat-list":8,"./editor":10,"./util":22,"browser-request":24,"moment":48,"react":229}],4:[function(require,module,exports){
+},{"./api":4,"./bus":6,"./cat-list":7,"./editor":9,"./util":22,"browser-request":24,"moment":48,"react":229}],4:[function(require,module,exports){
 var request = require('browser-request');
 
 var API_URL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/';
@@ -360,91 +360,6 @@ module.exports = API;
 },{"browser-request":24}],5:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-
-var API = require('./api');
-var bus = require('./bus')();
-
-var Authentication = React.createClass({displayName: "Authentication",
-
-  getInitialState: function () {
-    return {
-      loading: false
-    };
-  },
-
-  render: function() {
-    return (
-      React.createElement("div", {
-        style: {
-          margin: '0 0 1em',
-          padding: '0 0 1em',
-          borderBottom: 'solid 1px #ccc'
-        }}, 
-        React.createElement("h3", null, "Login"), 
-        React.createElement("form", {onSubmit: this.onSubmit}, 
-          React.createElement("input", {
-            type: "text", 
-            name: "email", 
-            ref: "email", 
-            placeholder: "email@email.com", 
-            disabled: this.state.loading, 
-            required: true}
-            ), 
-          React.createElement("input", {
-            type: "password", 
-            name: "password", 
-            placeholder: "password", 
-            ref: "password", 
-            disabled: this.state.loading, 
-            required: true}
-            ), 
-          React.createElement("div", null, 
-            React.createElement("input", {
-              type: "submit", 
-              value: "Authenticate", 
-              disabled: this.state.loading}
-              )
-          )
-        )
-      )
-    );
-  },
-
-  onSubmit: function (e) {
-    e.preventDefault();
-    var self = this;
-    var email = this.refs.email.value;
-    var password = this.refs.password.value;
-
-    this.setState({
-      loading: true
-    });
-
-    API.login(email, password, function (err, response) {
-
-      self.setState({
-        loading: false
-      });
-
-      if (err) {
-        console.log('there was a problem', err);
-      } else {
-        console.log(response);
-        localStorage.email = response.email;
-        localStorage.access_token = response.access_token;
-        
-        window.location = '/';
-      }
-    });
-  }
-
-});
-
-module.exports = Authentication;
-
-},{"./api":4,"./bus":7,"react":229,"react-dom":50}],6:[function(require,module,exports){
-var React = require('react');
-var ReactDOM = require('react-dom');
 //var canvasRetinafy = require('../canvasRetinafy');
 
 var rand = function(num) {
@@ -497,7 +412,7 @@ var Blocks = React.createClass({displayName: "Blocks",
 
 module.exports = Blocks;
 
-},{"react":229,"react-dom":50}],7:[function(require,module,exports){
+},{"react":229,"react-dom":50}],6:[function(require,module,exports){
 'use strict';
 
 var EventEmitter = require('event-emitter');
@@ -513,7 +428,7 @@ function bus() {
 
 module.exports = bus;
 
-},{"event-emitter":33}],8:[function(require,module,exports){
+},{"event-emitter":33}],7:[function(require,module,exports){
 var React = require('react');
 var Cat = require('./cat');
 
@@ -554,7 +469,7 @@ var CatList = React.createClass({displayName: "CatList",
 
 module.exports = CatList;
 
-},{"./cat":9,"react":229}],9:[function(require,module,exports){
+},{"./cat":8,"react":229}],8:[function(require,module,exports){
 var React = require('react');
 var pluralize = require('pluralize');
 
@@ -616,7 +531,7 @@ var Cat = React.createClass({displayName: "Cat",
 
 module.exports = Cat;
 
-},{"./bus":7,"./util":22,"pluralize":49,"react":229,"react-router-component":51}],10:[function(require,module,exports){
+},{"./bus":6,"./util":22,"pluralize":49,"react":229,"react-router-component":51}],9:[function(require,module,exports){
 var moment = require('moment');
 var React = require('react');
 var request = require('browser-request');
@@ -785,7 +700,7 @@ var Editor = React.createClass({displayName: "Editor",
 
 module.exports = Editor;
 
-},{"./API":1,"./bus":7,"./util":22,"browser-request":24,"moment":48,"react":229}],11:[function(require,module,exports){
+},{"./API":1,"./bus":6,"./util":22,"browser-request":24,"moment":48,"react":229}],10:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router-component').Link;
 
@@ -837,7 +752,7 @@ var Header = React.createClass({displayName: "Header",
       } else {
         return (
           React.createElement("nav", {className: "small-section"}, 
-            React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
+            React.createElement("b", null, "rcrd"), 
             React.createElement("span", {className: "right"}, 
               React.createElement(Link, {href: "/login"}, "login")
             )
@@ -851,7 +766,7 @@ var Header = React.createClass({displayName: "Header",
 
 module.exports = Header;
 
-},{"./account-service":2,"./bus":7,"react":229,"react-router-component":51}],12:[function(require,module,exports){
+},{"./account-service":2,"./bus":6,"react":229,"react-router-component":51}],11:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var request = require('browser-request');
@@ -862,7 +777,7 @@ var bus = require('./bus')();
 var Header = require('./header');
 
 var Account = require('./routes/account');
-var Authentication = require('./authentication');
+var Authentication = require('./routes/authentication');
 var CatPage = require('./routes/cat');
 var Everything = require('./routes/everything');
 var Index = require('./routes/index');
@@ -899,7 +814,7 @@ if (!AccountService.isLoggedIn() && window.location.pathname !== '/login') {
   ReactDOM.render(React.createElement(Root, null), document.getElementById('records'));
 }
 
-},{"./account-service":2,"./authentication":5,"./bus":7,"./header":11,"./routes/account":16,"./routes/cat":17,"./routes/everything":18,"./routes/index":19,"./routes/not-found-page":20,"./routes/record":21,"browser-request":24,"react":229,"react-dom":50,"react-router-component":51}],13:[function(require,module,exports){
+},{"./account-service":2,"./bus":6,"./header":10,"./routes/account":15,"./routes/authentication":16,"./routes/cat":17,"./routes/everything":18,"./routes/index":19,"./routes/not-found-page":20,"./routes/record":21,"browser-request":24,"react":229,"react-dom":50,"react-router-component":51}],12:[function(require,module,exports){
 var debounce = require('debounce');
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -1026,7 +941,7 @@ var MonthBlocks = React.createClass({displayName: "MonthBlocks",
 
 module.exports = MonthBlocks;
 
-},{"./util":22,"assert":25,"canvas-dpi-scaler":30,"debounce":31,"moment":48,"react":229,"react-dom":50}],14:[function(require,module,exports){
+},{"./util":22,"assert":25,"canvas-dpi-scaler":30,"debounce":31,"moment":48,"react":229,"react-dom":50}],13:[function(require,module,exports){
 var React = require('react');
 var request = require('browser-request');
 
@@ -1080,7 +995,7 @@ var RecordList = React.createClass({displayName: "RecordList",
 
 module.exports = RecordList;
 
-},{"./API":1,"./bus":7,"./record":15,"browser-request":24,"react":229}],15:[function(require,module,exports){
+},{"./API":1,"./bus":6,"./record":14,"browser-request":24,"react":229}],14:[function(require,module,exports){
 var CatList = require('./cat-list');
 var Editor = require('./editor');
 var Link = require('react-router-component').Link;
@@ -1140,7 +1055,7 @@ var Record = React.createClass({displayName: "Record",
 
 module.exports = Record;
 
-},{"./cat-list":8,"./editor":10,"moment":48,"react":229,"react-router-component":51}],16:[function(require,module,exports){
+},{"./cat-list":7,"./editor":9,"moment":48,"react":229,"react-router-component":51}],15:[function(require,module,exports){
 var React = require('react');
 
 var Account = React.createClass({displayName: "Account",
@@ -1180,7 +1095,83 @@ var Account = React.createClass({displayName: "Account",
 
 module.exports = Account;
 
-},{"react":229}],17:[function(require,module,exports){
+},{"react":229}],16:[function(require,module,exports){
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+var API = require('../api');
+var bus = require('../bus')();
+
+var Authentication = React.createClass({displayName: "Authentication",
+
+  getInitialState: function () {
+    return {
+      loading: false
+    };
+  },
+
+  render: function() {
+    return (
+      React.createElement("section", null, 
+        React.createElement("h1", null, "Login"), 
+        React.createElement("form", {onSubmit: this.onSubmit}, 
+          React.createElement("input", {
+            type: "text", 
+            name: "email", 
+            ref: "email", 
+            placeholder: "email@email.com", 
+            disabled: this.state.loading, 
+            autoCapitalize: "off", 
+            autoCorrect: "off", 
+            required: true}
+            ), 
+          React.createElement("input", {
+            type: "password", 
+            name: "password", 
+            placeholder: "password", 
+            ref: "password", 
+            disabled: this.state.loading, 
+            required: true}
+            ), 
+          React.createElement("div", null, 
+            React.createElement("input", {
+              type: "submit", 
+              value: "Authenticate", 
+              disabled: this.state.loading}
+              )
+          )
+        )
+      )
+    );
+  },
+
+  onSubmit: function (e) {
+    e.preventDefault();
+    var email = this.refs.email.value;
+    var password = this.refs.password.value;
+
+    this.setState({ loading: true });
+
+    API.login(email, password, function (err, response) {
+
+      this.setState({ loading: false });
+
+      if (err) {
+        bus.emit('notification', 'There was a problem logging you in.');
+      } else {
+        localStorage.email = response.email;
+        localStorage.access_token = response.access_token;
+        
+        window.location = '/';
+      }
+    }.bind(this));
+  }
+
+});
+
+module.exports = Authentication;
+
+},{"../api":4,"../bus":6,"react":229,"react-dom":50}],17:[function(require,module,exports){
 var React = require('react');
 var request = require('browser-request');
 
@@ -1318,7 +1309,7 @@ var CatPage = React.createClass({displayName: "CatPage",
 
 module.exports = CatPage;
 
-},{"../api":4,"../bus":7,"../cat":9,"../month-blocks":13,"../record":15,"../util":22,"browser-request":24,"react":229}],18:[function(require,module,exports){
+},{"../api":4,"../bus":6,"../cat":8,"../month-blocks":12,"../record":14,"../util":22,"browser-request":24,"react":229}],18:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -1363,7 +1354,7 @@ var Everything = React.createClass({displayName: "Everything",
 
 module.exports = Everything;
 
-},{"../api":4,"../month-blocks":13,"../record-list":14,"../year-blocks":23,"react":229,"react-dom":50}],19:[function(require,module,exports){
+},{"../api":4,"../month-blocks":12,"../record-list":13,"../year-blocks":23,"react":229,"react-dom":50}],19:[function(require,module,exports){
 var React = require('react');
 
 var Adder = require('../adder');
@@ -1383,7 +1374,7 @@ var Index = React.createClass({displayName: "Index",
 
 module.exports = Index;
 
-},{"../adder":3,"../blocks":6,"react":229}],20:[function(require,module,exports){
+},{"../adder":3,"../blocks":5,"react":229}],20:[function(require,module,exports){
 var React = require('react');
 
 var NotFoundPage = React.createClass({displayName: "NotFoundPage",
@@ -1450,7 +1441,7 @@ var RecordPage = React.createClass({displayName: "RecordPage",
 
 module.exports = RecordPage;
 
-},{"../api":4,"../record":15,"../util":22,"browser-request":24,"react":229}],22:[function(require,module,exports){
+},{"../api":4,"../record":14,"../util":22,"browser-request":24,"react":229}],22:[function(require,module,exports){
 var util = {};
 
 util.hasMagnitude = function (str) {
@@ -28921,4 +28912,4 @@ module.exports = warning;
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":97}]},{},[12]);
+},{"./lib/React":97}]},{},[11]);

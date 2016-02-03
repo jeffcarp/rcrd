@@ -6,6 +6,7 @@
   box-sizing: border-box;
 }
 body {
+  color: #333;
   font-family: "Lucida Grande", sans-serif;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -17,10 +18,10 @@ body {
 /* ------------------------------ */
 
 nav {
-  margin: 0.4em 0;
+  margin: 0 0 0.4em;
   padding: 0.4em 0;
   border-bottom: solid 1px #eee;
-  transition: background-color 0.5s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
 }
 nav.notification {
   background-color: hsl(150, 50%, 50%);
@@ -40,13 +41,18 @@ div#container {
   max-width: 732px;
   margin: 0 auto;
 }
-input {
+input[type="text"],
+input[type="password"] {
   font-size: 1.4em;
   display: block;
   width: 100%;
-  padding: 0.2em 0;
+  padding: 0.2em;
   margin-bottom: 0.4em;
   border: solid 1px #ddd;
+}
+
+input[type="submit"] {
+  font-size: 1em;
 }
 
 a {
@@ -154,9 +160,17 @@ table.timePicker td {
 }
 
 section {
-  margin-bottom: 1em;
-  padding-bottom: 1em;
+  padding: 0.4em 0.4em 1em;
   border-bottom: solid 1px #eee;
+}
+section h1 {
+  padding-bottom: 0.4em;
+}
+section h2 {
+  padding-bottom: 0.4em;
+}
+section h3 {
+  padding-bottom: 0.4em;
 }
 
 .page {
