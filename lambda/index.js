@@ -2,6 +2,7 @@ var crypto = require('crypto');
 var doc = require('dynamodb-doc');
 var createRecord = require('./create-record');
 var deleteRecord = require('./delete-record');
+var getRecord = require('./get-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
 
@@ -21,6 +22,8 @@ exports.handler = function(params, context) {
                 listRecordsWithCat(dynamo, params, context);
             } else if (params.operation === 'record.delete') {
                 deleteRecord(dynamo, params, context);
+            } else if (params.operation === 'record.get') {
+                getRecord(dynamo, params, context);
             } else {
                 context.fail('operation not found');
             }

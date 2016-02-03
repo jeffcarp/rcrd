@@ -10,13 +10,13 @@ var lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 });
 
-/*
-test('deleteRecord fails with no access token', function (t) {
+test('getRecord fails with no access token', function (t) {
   t.plan(2);
 
   var params = {
-    operation: 'record.delete',
-    id: 'a-record-id'
+    operation: 'record.get',
+    id: 'a-record-id',
+    raw: 'test, raw'
   };
 
   context.callback = function (status, arg) {
@@ -27,25 +27,24 @@ test('deleteRecord fails with no access token', function (t) {
   lambda.handler(params, context);
 });
 
-test('deleteRecord marks a record as deleted', function (t) {
-  t.plan(2);
+test('getRecord gets a record', function (t) {
+  t.plan(4);
+
+  var expectedRecord = {id: 'a-record-id', raw: 'test, raw'};
+  dynamoDocStub._setRecord(expectedRecord);
 
   var params = {
-    operation: 'record.delete',
+    operation: 'record.get',
     id: 'a-record-id',
-    access_token: 'yeah'
+    access_token: 'yeah',
   };
 
-  // put a record in the db with that id
-  dynamoDocStub._addRecord({id: 'a-record-id'});
-
-  context.callback = function (status, arg) {
+  context.callback = function (status, record) {
     t.equal(status, 'succeed');
-
-    let record = dynamoDocStub._getRecord('a-record-id');
-    t.true(record.deleted, 'record was marked as deleted');
+    t.ok(record);
+    t.equal(record.id, expectedRecord.id);
+    t.equal(record.raw, expectedRecord.raw);
   };
 
   lambda.handler(params, context);
 });
-*/
