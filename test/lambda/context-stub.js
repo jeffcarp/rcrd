@@ -10,8 +10,8 @@ context.done = function (arg) {
   context.callback('done', arg);
 };
 
-context.success = function (arg) {
-  context.callback('success', arg);
+context.succeed = function (arg) {
+  context.callback('succeed', arg);
 };
 
 context.fail = function (arg) {
