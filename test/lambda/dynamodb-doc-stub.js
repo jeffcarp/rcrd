@@ -21,6 +21,20 @@ dynamoDoc.prototype.getItem = function (params, callback) {
   }
 };
 
+dynamoDoc.prototype.putItem = function (params, callback) {
+  if (params.Item) {
+    var record = params.Item;
+    if (record.id) {
+      records[record.id] = record;
+      callback(null, record);
+    } else {
+      callback('putItem Item needs id');
+    }
+  } else {
+      callback('putItem not passed Item');
+  }
+};
+
 dynamoDoc.prototype.updateItem = function (params, callback) {
   if (records[params.Key]) {
     var updateObj = params.AttributeUpdates.Value;
@@ -42,7 +56,7 @@ function _addRecord(record) {
   records[record.Key] = record;
 };
 
-function _getRecord(id, record) {
+function _getRecord(id) {
   return records[id];
 };
 

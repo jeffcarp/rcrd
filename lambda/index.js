@@ -1,5 +1,6 @@
 var crypto = require('crypto');
 var doc = require('dynamodb-doc');
+var createRecord = require('./create-record');
 var deleteRecord = require('./delete-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
@@ -15,7 +16,7 @@ exports.handler = function(params, context) {
             if (params.operation === 'list') {
                 listRecords(dynamo, params, context);
             } else if (params.operation === 'create') {
-                createRecord(params, context);
+                createRecord(dynamo, params, context);
             } else if (params.operation === 'list-records-with-cat') {
                 listRecordsWithCat(dynamo, params, context);
             } else if (params.operation === 'record.delete') {
@@ -40,24 +41,6 @@ function validateAccessToken(access_token, context, callback) {
         // TODO: This also needs to return a user context to support access control
         
         callback();
-    });
-}
-
-function createRecord(params, context) {
-    if (!params.id || !params.raw) {
-        context.fail('Missing param');
-    }
-    
-    var newRecord = {
-        "id": String(params.id),
-        "raw": params.raw
-    };
-
-    dynamo.putItem({
-        "TableName": "test-for-rcrd",
-        "Item": newRecord
-    }, function () {
-        context.succeed(newRecord);
     });
 }
 

@@ -13,7 +13,7 @@ function deleteRecord(dynamo, params, context) {
 
   dynamo.updateItem(params, function(err, data) {
     if (err) { return console.log(err); }
-    context.success(data);
+    context.succeed(data);
   });
 }
 
