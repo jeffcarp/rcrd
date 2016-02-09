@@ -477,7 +477,6 @@ var bus = require('./bus')();
 var Link = require('react-router-component').Link;
 var util = require('./util');
 
-
 var Cat = React.createClass({displayName: "Cat",
 
   propTypes: {
@@ -490,7 +489,7 @@ var Cat = React.createClass({displayName: "Cat",
     var bareNameSingular = pluralize(bareName, 1);
     var bareNameEscaped = encodeURIComponent(bareNameSingular);
     var url = '/cats/' + bareNameEscaped;
-    var hue = util.strTo256(bareName);
+    var hue = util.catNameToHue(name);
 
     if (util.hasMagnitude(name)) {
       return (
@@ -1442,6 +1441,8 @@ var RecordPage = React.createClass({displayName: "RecordPage",
 module.exports = RecordPage;
 
 },{"../api":4,"../record":14,"../util":22,"browser-request":24,"react":229}],22:[function(require,module,exports){
+var pluralize = require('pluralize');
+
 var util = {};
 
 util.hasMagnitude = function (str) {
@@ -1488,7 +1489,8 @@ util.strTo256 = function (str) {
 
 util.catNameToHue = function (name) {
   var bareName = util.sansMagnitude(name.trim()).trim();
-  return util.strTo256(bareName);
+  var bareNameSingular = pluralize(bareName, 1);
+  return util.strTo256(bareNameSingular);
 };
 
 util.hasDupes = function (arr) {
@@ -1504,7 +1506,7 @@ util.hasDupes = function (arr) {
 
 module.exports = util;
 
-},{}],23:[function(require,module,exports){
+},{"pluralize":49}],23:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var canvasDpiScaler = require('canvas-dpi-scaler');
@@ -7769,6 +7771,8 @@ var CaptureClicks = React.createClass({
       return;
     }
 
+    // Prevent :focus from sticking; preventDefault() stops blur in some browsers
+    el.blur();
     e.preventDefault();
 
     // flag if we already found a "not found" case and bailed
