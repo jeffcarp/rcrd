@@ -210,3 +210,7 @@ section h3 {
 .small-section {
   padding: 0.4em;
 }
+
+svg, g {
+  transition: opacity 1s ease-in-out;
+}
