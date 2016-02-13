@@ -1,8 +1,16 @@
 'use strict';
 
+var util = require('./util');
+
 function createRecord(dynamo, params, context) {
     if (!params.id || !params.raw) {
         context.fail('Missing param');
+    }
+
+    var cats = util.catsFromRaw(params.raw); 
+    if (util.hasDupes(cats.map(util.sansMagnitude))) {
+      context.fail('Records cannot have duplicate cats.');
+      return;
     }
     
     var newRecord = {
