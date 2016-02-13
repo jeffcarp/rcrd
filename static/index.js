@@ -84,8 +84,6 @@ API.deleteRecord = function (id, callback) {
   }, function (err, response) {
     if (err) {
       callback(err);
-    } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
     } else {
       callback(null, null);
     }
