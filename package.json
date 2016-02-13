@@ -7,7 +7,7 @@
     "start": "node server.js",
     "test": "tape test/*-test.js test/**/*-test.js | tap-spec",
     "build": "browserify -t reactify lib/index.js > static/index.js",
-    "deploy": "node scripts/deploy-lambda.js"
+    "deploy": "npm t && node scripts/deploy-lambda.js && npm run build && node scripts/deploy-www.js"
   },
   "repository": {
     "type": "git",
