@@ -77,3 +77,47 @@ test('can create a record with UTF-8 characters', function (t) {
 
   lambda.handler(params, context);
 });
+
+test('cannot create a record with duplicate plain cats', function (t) {
+  dynamoDocStub._clear();
+  t.plan(3);
+
+  var params = {
+    operation: 'create',
+    id: 'a-record-id',
+    raw: 'test, raw, test',
+    access_token: 'yeah',
+  };
+
+  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+
+  context.callback = function (status, arg) {
+    t.equal(status, 'fail');
+
+    t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record was not created');
+  };
+
+  lambda.handler(params, context);
+});
+
+test('cannot create a record with duplicate cats with mags', function (t) {
+  dynamoDocStub._clear();
+  t.plan(3);
+
+  var params = {
+    operation: 'create',
+    id: 'a-record-id',
+    raw: 'run, great, 13 miles, phew, 3 miles',
+    access_token: 'yeah',
+  };
+
+  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+
+  context.callback = function (status, arg) {
+    t.equal(status, 'fail');
+
+    t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record was not created');
+  };
+
+  lambda.handler(params, context);
+});
