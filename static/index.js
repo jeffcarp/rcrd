@@ -71,6 +71,27 @@ API.fetchRecord = function (id, callback) {
   });
 };
 
+API.deleteRecord = function (id, callback) {
+  request({
+    method: 'POST', 
+    url: API_URL + 'records', 
+    body: JSON.stringify({
+      operation: 'record.delete',
+      id: id,
+      access_token: 'some_bs_access_token'
+    }),
+    json: true
+  }, function (err, response) {
+    if (err) {
+      callback(err);
+    } else if (response.body.errorMessage) {
+      callback(response.body.errorMessage);
+    } else {
+      callback(null, null);
+    }
+  });
+};
+
 API.fetchRecords = function (callback) {
   request({
     method: 'POST', 
@@ -121,9 +142,6 @@ API.fetchRecordsWithCat = function (name, callback) {
 
       callback(null, records);
     }
-
-
-
   });
 };
 
@@ -404,6 +422,25 @@ API.fetchRecord = function (id, callback) {
   });
 };
 
+API.deleteRecord = function (id, callback) {
+  request({
+    method: 'POST', 
+    url: API_URL + 'records', 
+    body: JSON.stringify({
+      operation: 'record.delete',
+      id: id,
+      access_token: 'some_bs_access_token'
+    }),
+    json: true
+  }, function (err, response) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, null);
+    }
+  });
+};
+
 API.fetchRecords = function (callback) {
   request({
     method: 'POST', 
@@ -633,13 +670,21 @@ var Cat = React.createClass({displayName: "Cat",
 module.exports = Cat;
 
 },{"./bus":7,"./util":26,"pluralize":49,"react":229,"react-router-component":51}],10:[function(require,module,exports){
+var API = require('./api');
+var bus = require('./bus')();
 var React = require('react');
 var util = require('./util');
 
 var DeleteRecord = React.createClass({displayName: "DeleteRecord",
 
   propTypes: {
-    id: React.PropTypes.string.isRequired
+    id: React.PropTypes.string.isRequired,
+  },
+
+  getInitialState: function () {
+    return {
+      loading: false
+    };
   },
 
   render: function() {
@@ -647,20 +692,35 @@ var DeleteRecord = React.createClass({displayName: "DeleteRecord",
 
     return (
       React.createElement("button", {
-        className: "button", 
+        className: 'button' + (this.state.loading ? ' loading' : ''), 
         onClick: this.onClick
         }, "Delete")
     );
   },
 
   onClick: function () {
-    console.log('yas')
+    if (this.state.loading) return;
+
+    if (!this.props.id) {
+      bus.emit('notification', "Error, didn't find an id to delete.");
+      return;
+    }
+
+    if (!confirm('Currently records are permanently deleted. You cannot undo this.')) return;
+
+    this.setState({ loading: true });
+
+    API.deleteRecord(this.props.id, function (err) {
+      this.setState({ loading: false });
+      if (err) return console.error(err);
+      bus.emit('notification', 'Successfully deleted.');
+    }.bind(this));
   }
 });
 
 module.exports = DeleteRecord;
 
-},{"./util":26,"react":229}],11:[function(require,module,exports){
+},{"./api":5,"./bus":7,"./util":26,"react":229}],11:[function(require,module,exports){
 var moment = require('moment');
 var React = require('react');
 var request = require('browser-request');

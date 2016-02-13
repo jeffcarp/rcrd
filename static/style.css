@@ -206,6 +206,9 @@ section h3 {
   border: solid 1px #222;
   color: #222;
 }
+.button.loading {
+  opacity: 0.5;
+}
 
 .small-section {
   padding: 0.4em;
