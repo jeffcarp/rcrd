@@ -45,8 +45,13 @@ function _getRecord(id) {
   return records[id];
 };
 
+function _clear() {
+  records = {};
+}
+
 module.exports = {
   DynamoDB: dynamoDoc,
   _setRecord: _setRecord,
   _getRecord: _getRecord,
+  _clear: _clear,
 };

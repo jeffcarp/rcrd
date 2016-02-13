@@ -11,6 +11,7 @@ var lambda = proxyquire('../../lambda/index', {
 });
 
 test('createRecord fails with no access token', function (t) {
+  dynamoDocStub._clear();
   t.plan(2);
 
   var params = {
@@ -28,12 +29,38 @@ test('createRecord fails with no access token', function (t) {
 });
 
 test('createRecord adds a record', function (t) {
+  dynamoDocStub._clear();
   t.plan(5);
 
   var params = {
     operation: 'create',
     id: 'a-record-id',
     raw: 'test, raw',
+    access_token: 'yeah',
+  };
+
+  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+
+  context.callback = function (status, arg) {
+    t.equal(status, 'succeed');
+
+    let record = dynamoDocStub._getRecord('a-record-id');
+    t.ok(record, 'a record now exists');
+    t.equal(record.id, params.id);
+    t.equal(record.raw, params.raw);
+  };
+
+  lambda.handler(params, context);
+});
+
+test('can create a record with UTF-8 characters', function (t) {
+  dynamoDocStub._clear();
+  t.plan(5);
+
+  var params = {
+    operation: 'create',
+    id: 'a-record-id',
+    raw: 'test, テスト, 你别放屁',
     access_token: 'yeah',
   };
 
