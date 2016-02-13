@@ -1,20 +1,22 @@
 'use strict';
 
-function deleteRecord(dynamo, params, context) {
-  var params = {
-    Key: params.id,
-    AttributeUpdates: {
-      Action: 'PUT',
-      Value: {deleted: true}
-    },
-    TableName: 'test-for-rcrd',
-    ReturnValues: 'ALL_NEW'
+function standardHandler(context) {
+  return function (err) {
+    if (err) {
+      context.fail(err);
+    } else {
+      context.succeed();
+    }
   };
+}
 
-  dynamo.updateItem(params, function(err, data) {
-    if (err) { return console.log(err); }
-    context.succeed(data);
-  });
+function deleteRecord(dynamo, params, context) {
+  if (!params.id) return context.fail('Missing param.id');
+
+  dynamo.deleteItem({
+    'TableName': 'test-for-rcrd',
+    'Key': {id: params.id}
+  }, standardHandler(context));
 }
 
 module.exports = deleteRecord;

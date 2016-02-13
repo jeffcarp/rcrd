@@ -21,6 +21,15 @@ dynamoDoc.prototype.getItem = function (params, callback) {
   }
 };
 
+dynamoDoc.prototype.deleteItem = function (params, callback) {
+  if (params.Key && params.Key.id) {
+    delete records[params.Key.id];
+    callback(null, null);
+  } else {
+    callback('Record not found');
+  }
+};
+
 dynamoDoc.prototype.putItem = function (params, callback) {
   if (params.Item) {
     var record = params.Item;
