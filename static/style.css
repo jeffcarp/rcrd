@@ -146,6 +146,9 @@ header {
 .mf {
   margin: 1em;
 }
+.m7b {
+  margin-bottom: 0.5em;
+}
 
 table.timePicker {
   border-left: solid 1px #fefefe;
@@ -216,4 +219,15 @@ section h3 {
 
 svg, g {
   transition: opacity 1s ease-in-out;
+}
+
+ul {
+  list-style: none;
+  padding: 1em 0 0;
+}
+ul li {
+  padding: 0 0 0.5em;
+  margin: 0 0 0.5em;
+  font-size: 0.8em;
+  border-bottom: solid 1px #eee;
 }
