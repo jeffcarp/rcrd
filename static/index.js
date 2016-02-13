@@ -1381,31 +1381,19 @@ var CatPage = React.createClass({displayName: "CatPage",
   },
 
   componentWillMount: function() {
-    this.refreshRecords();
-    this.getContemporaneousCats();
-
     this.setState({ 
-      name: this.props.name 
+      name: decodeURIComponent(this.props.name)
     });
-  },
-
-  componentDidUpdate: function() {
-    // This occurs when you click on a cat on this page
-    if (this.props.name !== this.state.name) {
-      this.setState({ 
-        name: this.props.name,
-        records: []
-      });
-
+    setTimeout(function () {
       this.refreshRecords();
       this.getContemporaneousCats();
-    }
+    }.bind(this), 1);
   },
 
   refreshRecords: function() {
     var self = this;
 
-    API.fetchRecordsWithCat(this.props.name, function (err, records) {
+    API.fetchRecordsWithCat(this.state.name, function (err, records) {
       if (err) {
         return console.error(err);
       }
@@ -1423,13 +1411,13 @@ var CatPage = React.createClass({displayName: "CatPage",
       }
 
       records = records.filter(function (record) {
-        return util.catsFromRaw(record.raw).indexOf(self.props.name) !== -1;
+        return util.catsFromRaw(record.raw).indexOf(self.state.name) !== -1;
       });
 
       var catNumbers = {};
 
       util.allCats(records).forEach(function (name) {
-        if (name === self.props.name) {
+        if (name === self.state.name) {
           return;
         } else if (catNumbers[name]) {
           catNumbers[name] += 1;
@@ -1454,7 +1442,7 @@ var CatPage = React.createClass({displayName: "CatPage",
   render: function() {
     var records = this.state.records;
     var cats = this.state.contemporaneousCatNames;
-    var name = this.props.name;
+    var name = this.state.name;
     var hue = util.catNameToHue(name);
     var recordDivs = [];
     var catElems = [];
