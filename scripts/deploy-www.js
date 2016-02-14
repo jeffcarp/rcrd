@@ -4,7 +4,7 @@ var fs = require('fs');
 require('./confirm-correct-directory')();
 
 AWS.config.region = 'us-east-1';
-const BUCKET_NAME = 'www.rcrd.org';
+const BUCKET_NAME = 'app.rcrd.org';
 var s3bucket = new AWS.S3({params: {Bucket: BUCKET_NAME}});
 
 const files = [
