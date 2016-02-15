@@ -1113,11 +1113,12 @@ var Record = require('./record');
 var RecordList = React.createClass({displayName: "RecordList",
 
   render: function() {
-    if (this.props.records.length > 0) {
+    var records = this.props.records || [];
+    if (records.length > 0) {
       return (
         React.createElement("div", null, 
           
-            this.props.records.map(function (record) {
+            records.map(function (record) {
               return React.createElement(Record, {record: record, key: record.id})
             })
           
@@ -1565,14 +1566,8 @@ var Everything = React.createClass({displayName: "Everything",
 
   componentDidMount: function () {
     API.fetchRecords(function (err, records) {
-      if (err) {
-        return console.error(err);
-      }
-
-      this.setState({ 
-        records: records 
-      });
-
+      if (err) return console.error(err);
+      this.setState({ records: records });
     }.bind(this));
   },
 
@@ -1581,7 +1576,7 @@ var Everything = React.createClass({displayName: "Everything",
       React.createElement("div", null, 
         React.createElement(MonthBlocks, {records: this.state.records, numDays: 90}), 
         React.createElement("div", {className: "small-section"}, 
-          React.createElement(RecordList, null)
+          React.createElement(RecordList, {records: this.state.records})
         )
       )
     );
