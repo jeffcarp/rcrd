@@ -172,25 +172,9 @@ section h3 {
   padding-bottom: 0.4em;
 }
 
-.page {
-  padding-top: 0.6em;
-}
-.page h1 {
-  border-bottom: solid 1px #ddd;
-  padding-bottom: 0.4em;
-  margin-bottom: 0.4em;
-}
-.page h1 em {
-  font-style: normal;
-  color: #777;
-  font-weight: normal;
-}
-.page h2 {
-  padding-bottom: 0.4em;
-  margin-bottom: 0.4em;
-}
-.page p {
-  margin-bottom: 1em;
+h4 {
+  font-size: 0.7em;
+  padding-bottom: 0.2em;
 }
 
 .faded {
