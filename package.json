@@ -26,6 +26,7 @@
     "browser-request": "^0.3.3",
     "browserify": "^13.0.0",
     "canvas-dpi-scaler": "0.0.3",
+    "dynamodb-doc": "^1.0.0",
     "envify": "^3.4.0",
     "event-emitter": "^0.3.4",
     "express": "^4.13.4",
