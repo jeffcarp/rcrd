@@ -23,10 +23,6 @@ nav {
   border-bottom: solid 1px #eee;
   transition: background-color 0.2s ease-in-out;
 }
-nav.notification {
-  background-color: hsl(150, 50%, 50%);
-  color: white;
-}
 nav a {
   display: inline-block;
   padding-right: 1em;
