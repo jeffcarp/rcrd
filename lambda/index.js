@@ -38,6 +38,7 @@ function validateAccessToken(access_token, context, callback) {
     
     dynamo.getItem(dbParams, function (err, data) {
         if (err) {
+            console.log(err);
             return context.fail('access_token denied');
         }
         

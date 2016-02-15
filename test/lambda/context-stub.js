@@ -1,7 +1,5 @@
 'use strict';
 
-var sinon = require('sinon');
-
 var context = {};
 
 context.callback = null;
