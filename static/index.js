@@ -791,7 +791,6 @@ var Header = React.createClass({displayName: "Header",
               React.createElement(Link, {href: "/account"}, localStorage.email)
             ), 
             React.createElement(Link, {href: "/"}, React.createElement("b", null, "rcrd")), 
-            React.createElement(Link, {href: "/watching"}, "watching"), 
             React.createElement(Link, {href: "/everything"}, "everything")
           )
         );
@@ -1414,17 +1413,17 @@ var CatRecordsPage = React.createClass({displayName: "CatRecordsPage",
 module.exports = CatRecordsPage;
 
 },{"../api":4,"../cat":8,"../record-list-pure":16,"react":232}],22:[function(require,module,exports){
-var React = require('react');
-var request = require('browser-request');
-
+var AllBlocksEver = require('../all-blocks-ever');
 var API = require('../api');
 var bus = require('../bus')();
 var Cat = require('../cat');
-var Record = require('../record');
-var util = require('../util');
 var ManyMonths = require('../many-months');
 var MagGraph = require('../mag-graph');
+var React = require('react');
+var Record = require('../record');
+var request = require('browser-request');
 var TogetherCats = require('../together-cats');
+var util = require('../util');
 
 var CatPage = React.createClass({displayName: "CatPage",
 
@@ -1546,6 +1545,7 @@ var CatPage = React.createClass({displayName: "CatPage",
           React.createElement("h2", null, React.createElement(Cat, {name: name}), also)
         ), 
         monthBlocks, 
+        React.createElement(AllBlocksEver, {records: records, cat: this.state.name}), 
         React.createElement("section", null, 
           React.createElement("h2", null, "Last 3 records"), 
           recordDivs, 
@@ -1564,7 +1564,7 @@ var CatPage = React.createClass({displayName: "CatPage",
 
 module.exports = CatPage;
 
-},{"../api":4,"../bus":6,"../cat":8,"../mag-graph":13,"../many-months":14,"../record":18,"../together-cats":28,"../util":29,"browser-request":30,"react":232}],23:[function(require,module,exports){
+},{"../all-blocks-ever":3,"../api":4,"../bus":6,"../cat":8,"../mag-graph":13,"../many-months":14,"../record":18,"../together-cats":28,"../util":29,"browser-request":30,"react":232}],23:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 
