@@ -36,7 +36,7 @@ test('getRecord gets a record', function (t) {
   var params = {
     operation: 'record.get',
     id: 'a-record-id',
-    access_token: 'yeah',
+    access_token: 'some_bs_access_token',
   };
 
   context.callback = function (status, record) {

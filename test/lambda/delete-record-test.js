@@ -35,7 +35,7 @@ test('deleteRecord actually deletes a record', function (t) {
   var params = {
     operation: 'record.delete',
     id: 'a-record-id',
-    access_token: 'yeah'
+    access_token: 'some_bs_access_token'
   };
 
   t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
