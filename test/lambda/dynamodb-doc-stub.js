@@ -3,11 +3,23 @@
 var dynamoDoc = function () {};
 var records = {};
 
-dynamoDoc.scan = function () {};
+function allRecords() {
+  return Object.keys(records).map(key => {
+    return records[key]  
+  })
+}
+
+dynamoDoc.prototype.scan = function (params, callback) {
+  callback(null, {
+    Items: allRecords()
+  })
+};
 
 dynamoDoc.prototype.getItem = function (params, callback) {
   if (params.TableName === 'rcrd-access-tokens') {
-    if (params.Key && params.Key.access_token) {
+    if (params.Key 
+        && params.Key.access_token 
+        && params.Key.access_token === 'some_bs_access_token') {
       callback(); 
     } else {
       callback('denied'); 

@@ -1,22 +1,82 @@
-var sinon = require('sinon');
+var proxyquire = require('proxyquire').noCallThru();
 var test = require('tape');
+
+var dynamoDocStub = require('./dynamodb-doc-stub');
+var context = require('./context-stub');
+
+var lambda = proxyquire('../../lambda/index', {
+  'dynamodb-doc': dynamoDocStub
+});
 
 var listRecords = require('../../lambda/list-records');
 
-test('listRecords', function (t) {
+function testLambda (params, handler, callback) {
+  context.callback = callback;
+  handler(params, context);
+}
 
-  var dynamo = {
-    scan: sinon.spy(function (opts, cb) {
-      cb(['a record']);
-    })
-  };
-  var params = {};
-  var context = { done: sinon.spy() };
+test('listRecords fails with no access token', function (t) {
+  dynamoDocStub._clear();
 
-  listRecords(dynamo, params, context);
+  testLambda({
+    operation: 'list'
+  }, lambda.handler, function (status, arg) {
+    t.equal(status, 'fail', 'status is fail');
+    t.equal(arg, 'access_token denied', 'error is "access_token denied"');
+    t.end();
+  });
+});
 
-  t.true(dynamo.scan.called, 'dynamo.scan called');
-  t.true(context.done.called, 'context.done called');
+test('listRecords fails with incorrect access token', function (t) {
+  dynamoDocStub._clear();
 
-  t.end();
+  testLambda({
+    operation: 'list',
+    access_token: 'some_incorrect_access_token'
+  }, lambda.handler, function (status, arg) {
+    t.equal(status, 'fail', 'status is fail');
+    t.equal(arg, 'access_token denied', 'error is "access_token denied"');
+    t.end();
+  });
+});
+
+test('listRecords returns sorted records (id DESC)', function (t) {
+  dynamoDocStub._clear();
+
+  dynamoDocStub._setRecord({ id: 123 });
+  dynamoDocStub._setRecord({ id: 321 });
+  dynamoDocStub._setRecord({ id: 456 });
+
+  testLambda({
+    operation: 'list',
+    access_token: 'some_bs_access_token'
+  }, lambda.handler, function (status, data) {
+    t.equal(status, 'succeed', 'status is succeed')
+
+    t.equal(data.length, 3)
+    t.equal(data[0].id, 456)
+    t.equal(data[1].id, 321)
+    t.equal(data[2].id, 123)
+
+    t.end();
+  });
+});
+
+test('listRecords returns no more than 50 records', function (t) {
+  dynamoDocStub._clear();
+
+  for (var i = 0; i < 75; i++) {
+    dynamoDocStub._setRecord({ id: i });
+  }
+
+  testLambda({
+    operation: 'list',
+    access_token: 'some_bs_access_token'
+  }, lambda.handler, function (status, data) {
+    t.equal(status, 'succeed', 'status is succeed')
+
+    t.equal(data.length, 50)
+
+    t.end();
+  });
 });

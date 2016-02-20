@@ -36,7 +36,7 @@ test('createRecord adds a record', function (t) {
     operation: 'create',
     id: 'a-record-id',
     raw: 'test, raw',
-    access_token: 'yeah',
+    access_token: 'some_bs_access_token',
   };
 
   t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
@@ -61,7 +61,7 @@ test('can create a record with UTF-8 characters', function (t) {
     operation: 'create',
     id: 'a-record-id',
     raw: 'test, テスト, 你别放屁',
-    access_token: 'yeah',
+    access_token: 'some_bs_access_token',
   };
 
   t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
@@ -86,7 +86,7 @@ test('cannot create a record with duplicate plain cats', function (t) {
     operation: 'create',
     id: 'a-record-id',
     raw: 'test, raw, test',
-    access_token: 'yeah',
+    access_token: 'some_bs_access_token',
   };
 
   t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
@@ -108,7 +108,7 @@ test('cannot create a record with duplicate cats with mags', function (t) {
     operation: 'create',
     id: 'a-record-id',
     raw: 'run, great, 13 miles, phew, 3 miles',
-    access_token: 'yeah',
+    access_token: 'some_bs_access_token',
   };
 
   t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
