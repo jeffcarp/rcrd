@@ -414,7 +414,7 @@ var canvas = document.getElementById('bg');
 var context = canvas.getContext('2d');
 var scale = canvasDpiScaler(canvas, context, window.innerWidth, window.innerHeight);
 
-var blockSize = 50;
+var blockSize = 300;
 var blockPadding = 1;
 var blockDimension = blockSize + blockPadding;
 
@@ -444,7 +444,6 @@ function fillNoise(seed) {
       var value = noise.simplex2(x, y);
 
       var data = context.getImageData(x*blockDimension, y*blockDimension, blockSize, blockSize).data;
-      console.log(data);
 
       //var lum = ((value + 1) / 2 * 50) + 35; // map domain 0,2 onto 0,50
       var lum = Math.floor(value * 5);
