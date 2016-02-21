@@ -5,6 +5,7 @@ var deleteRecord = require('./delete-record');
 var getRecord = require('./get-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
+var updateRecord = require('./update-record');
 
 var dynamo = new doc.DynamoDB();
 
@@ -20,6 +21,8 @@ exports.handler = function(params, context) {
                 createRecord(dynamo, params, context);
             } else if (params.operation === 'list-records-with-cat') {
                 listRecordsWithCat(dynamo, params, context);
+            } else if (params.operation === 'record.update') {
+                updateRecord(dynamo, params, context);
             } else if (params.operation === 'record.delete') {
                 deleteRecord(dynamo, params, context);
             } else if (params.operation === 'record.get') {
