@@ -1,8 +1,8 @@
-var proxyquire = require('proxyquire').noCallThru();
-var test = require('tape');
+var proxyquire = require('proxyquire').noCallThru()
+var test = require('tape')
 
-var dynamoDocStub = require('./dynamodb-doc-stub');
-var context = require('./context-stub');
+var dynamoDocStub = require('./dynamodb-doc-stub')
+const testLambda = require('./test-lambda')
 
 var lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
@@ -10,14 +10,7 @@ var lambda = proxyquire('../../lambda/index', {
 
 var listRecords = require('../../lambda/list-records');
 
-function testLambda (params, handler, callback) {
-  context.callback = callback;
-  handler(params, context);
-}
-
 test('listRecords fails with no access token', function (t) {
-  dynamoDocStub._clear();
-
   testLambda({
     operation: 'list'
   }, lambda.handler, function (status, arg) {
@@ -28,8 +21,6 @@ test('listRecords fails with no access token', function (t) {
 });
 
 test('listRecords fails with incorrect access token', function (t) {
-  dynamoDocStub._clear();
-
   testLambda({
     operation: 'list',
     access_token: 'some_incorrect_access_token'
@@ -41,8 +32,6 @@ test('listRecords fails with incorrect access token', function (t) {
 });
 
 test('listRecords returns sorted records (id DESC)', function (t) {
-  dynamoDocStub._clear();
-
   dynamoDocStub._setRecord({ id: 123 });
   dynamoDocStub._setRecord({ id: 321 });
   dynamoDocStub._setRecord({ id: 456 });
@@ -63,8 +52,6 @@ test('listRecords returns sorted records (id DESC)', function (t) {
 });
 
 test('listRecords returns no more than 50 records', function (t) {
-  dynamoDocStub._clear();
-
   for (var i = 0; i < 75; i++) {
     dynamoDocStub._setRecord({ id: i });
   }
