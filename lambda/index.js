@@ -6,6 +6,7 @@ var getRecord = require('./get-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
 var updateRecord = require('./update-record');
+var viewData = require('./view-data');
 
 var dynamo = new doc.DynamoDB();
 
@@ -27,6 +28,8 @@ exports.handler = function(params, context) {
                 deleteRecord(dynamo, params, context);
             } else if (params.operation === 'record.get') {
                 getRecord(dynamo, params, context);
+            } else if (params.operation === 'view-data') {
+                viewData(dynamo, params, context);
             } else {
                 context.fail('operation not found');
             }

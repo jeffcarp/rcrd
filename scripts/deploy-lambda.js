@@ -19,6 +19,8 @@ zip.addLocalFile('./lambda/delete-record.js');
 zip.addLocalFile('./lambda/get-record.js');
 zip.addLocalFile('./lambda/list-records.js');
 zip.addLocalFile('./lambda/list-records-with-cat.js');
+zip.addLocalFile('./lambda/update-record.js');
+zip.addLocalFile('./lambda/view-data.js');
 zip.addLocalFile('./lambda/util.js');
 var zipBuffer = zip.toBuffer();
 
