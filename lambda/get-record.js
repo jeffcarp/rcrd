@@ -3,8 +3,10 @@
 function getRecord(dynamo, params, context) {
   if (!params.id) return context.fail('Missing param.id');
 
+  // Validate permissions
+
   dynamo.getItem({
-    'TableName': 'test-for-rcrd',
+    'TableName': 'rcrd-records',
     'Key': {id: params.id}
   }, function (err, record) {
     if (err) {
