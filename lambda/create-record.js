@@ -24,7 +24,7 @@ function createRecord(dynamo, params, context) {
 
     // Add user_id to this
     var hashThis = params.time + params.raw
-    var id = crypto.createHash('sha256').update(hashThis).digest('base64')
+    var id = crypto.createHash('sha256').update(hashThis).digest('hex')
 
     var newRecord = {
       id: id,
