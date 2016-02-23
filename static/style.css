@@ -142,6 +142,9 @@ header {
 .mf {
   margin: 1em;
 }
+.m1-0b {
+  margin-bottom: 1em;
+}
 .m7b {
   margin-bottom: 0.5em;
 }
@@ -189,7 +192,8 @@ h4 {
   border: solid 1px #222;
   color: #222;
 }
-.button.loading {
+
+.loading {
   opacity: 0.5;
 }
 
