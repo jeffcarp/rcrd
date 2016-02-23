@@ -15,14 +15,14 @@ test('util.splitRecordsByYears', (t) => {
   t.plan(3)
 
   const records = [
-    {id: '1454659200000'},
-    {id: '1462431600000'},
-    {id: '1273042800000'}
+    {id: 'user_id|2016-05-22T18:19:19+10:00'},
+    {id: 'user_id|2010-12-22T18:19:19-02:00'},
+    {id: 'user_id|2016-02-22T18:19:19+07:00'}
   ]
 
   const actual = util.splitRecordsByYears(records)
 
-  t.deepEqual(actual['2016'], [{id: '1454659200000'}, {id: '1462431600000'}])
+  t.deepEqual(actual['2016'], [records[0], records[2]])
   t.equal(actual['2015'], undefined)
-  t.deepEqual(actual['2010'], [{id: '1273042800000'}])
+  t.deepEqual(actual['2010'], [records[1]])
 })
