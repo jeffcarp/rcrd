@@ -185,12 +185,17 @@ h4 {
 }
 
 .button {
-  padding: 0.6em; 
-  margin: 0 0.6em 0.6em 0; 
+  padding: 0.5em; 
+  margin: 0 0.5em 0.5em 0; 
   display: inline-block;
   font-size: 0.8em;
   border: solid 1px #222;
   color: #222;
+  background-color: white;
+}
+.button:hover {
+  cursor: pointer;
+  background-color: #eee;
 }
 
 .loading {
