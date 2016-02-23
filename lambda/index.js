@@ -67,24 +67,25 @@ function getAccessToken(params, context) {
     dbParams.Key = {email : params.email};
     
     dynamo.getItem(dbParams, function (err, data) {
-        if (err) {
-            context.fail(err);
-            return;
-        }
-        var user = data.Item;
-       
-        var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64');
-        if (suppliedPassHash === user.hash) {
-            
-            // TODO: generate and store an access token
-            
-            context.succeed({
-                email: user.email,
-                access_token: 'some_bs_access_token'
-            });                
-        } else {
-            context.fail('authentication failed');                        
-        }
+      if (err) {
+          context.fail(err);
+          return;
+      }
+      var user = data.Item;
+     
+      var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64');
+      if (suppliedPassHash === user.hash) {
+          
+        // TODO: generate and store an access token
+        
+        context.succeed({
+          email: user.email,
+          access_token: 'some_bs_access_token',
+          time_zone: user.time_zone
+        });                
+      } else {
+          context.fail('authentication failed');                        
+      }
         
 
     });
