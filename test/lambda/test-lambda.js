@@ -25,6 +25,11 @@ function testLambda (params, handler, callback) {
   handler(params, context)
 
   dynamoDocStub._clear()
+
+  dynamoDocStub._set('rcrd-access-tokens', 'some_bs_access_token', {
+    access_token: 'some_bs_access_token',
+    owner: '102938' 
+  })
 }
 
 module.exports = testLambda;

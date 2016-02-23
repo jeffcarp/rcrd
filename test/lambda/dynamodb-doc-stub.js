@@ -28,7 +28,18 @@ dynamoDoc.prototype.scan = function (params, callback) {
   }
 
   callback(null, { Items: allOfEm })
-};
+}
+
+dynamoDoc.prototype.getItem = function (params, callback) {
+  if (!params.TableName) return callback('getItem not passed TableName')
+  if (!params.Key) return callback('getItem not passed Key')
+  if (!Object.keys(params.Key).length) return callback('getItem not passed a Key')
+  if (!store[params.TableName]) return callback('Table not found.')
+
+  const key = params.Key[Object.keys(params.Key)[0]]
+  const item = store[params.TableName][key]
+  callback(null, item)
+}
 
 dynamoDoc.prototype.getItem = function (params, callback) {
   if (!params.TableName) return callback('No TableName param')
@@ -41,47 +52,46 @@ dynamoDoc.prototype.getItem = function (params, callback) {
 }
 
 dynamoDoc.prototype.deleteItem = function (params, callback) {
-  if (!params.TableName) return callback('No TableName param')
-  if (!store[params.TableName]) return callback('Table not found')
-  if (!store[params.id]) return callback('Not passed id')
+  if (!params.TableName) return callback('deleteItem not passed TableName')
+  if (!params.Key) return callback('deleteItem not passed Key')
+  if (!params.Key.id) return callback('deleteItem not passed Key.id')
+  if (!store[params.TableName]) return callback('Table not found.')
 
-  delete store[params.TableName][params.id]
+  delete store[params.TableName][params.Key.id]
   callback(null, null);
-}
+};
 
 dynamoDoc.prototype.putItem = function (params, callback) {
-  if (!params.TableName) return callback('No TableName param')
-  if (!store[params.TableName]) return callback('Table not found')
-  if (!params.Item) return callback('Not passed Item')
-  if (!params.Item.id) return callback('Not passed Item.id')
+  if (!params.Item) return callback('putItem not passed Item')
+  if (!params.TableName) return callback('putItem not passed TableName')
+  if (!params.Item.id) return callback('putItem not passed Item.id')
 
-  store[params.TableName] = params.Item
+  _set(params.TableName, params.Item.id, params.Item)
   callback(null, params.Item)
 }
 
-function _set(tableName, item) {
-  store[tableName] = store[tableName] || []
-  store[tableName][item.id] = item
-}
+function _get(table, id) {
+  store[table] = store[table] || {}
+  return store[table][id];
+};
 
-function _get(tableName, id) {
-  return store[tableName] && store[tableName][item.id]
-}
-
-function _getAll(tableName) {
-  return Object.keys(store[tableName]).map(key => {
-    return store[tableName][key]  
+function _getAll(table) {
+  return Object.keys(store[table]).map(key => {
+    return store[table][key]  
   })
 }
 
-function _createTable(tableName) {
-  if (store[tableName]) throw new Error('Table already exists')
-
-  store[tableName] = []
+function _set(table, id, item) {
+  store[table] = store[table] || {}
+  store[table][id] = item
 }
 
 function _clear() {
   store = {}
+}
+
+function _store() {
+  return store
 }
 
 module.exports = {
@@ -89,6 +99,6 @@ module.exports = {
   _set: _set,
   _get: _get,
   _getAll: _getAll,
-  _createTable: _createTable,
   _clear: _clear,
+  _store: _store,
 };

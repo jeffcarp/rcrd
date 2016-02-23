@@ -7,6 +7,9 @@ const lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 });
 
+const id = 'a-record-id'
+const expectedID = '102938|'+id
+
 test('updateRecord fails with no access token', function (t) {
   testLambda({
     operation: 'record.update'
@@ -29,20 +32,20 @@ test('updateRecord fails with incorrect access token', function (t) {
 });
 
 test('updateRecord updates a record', function (t) {
-  dynamoDocStub._setRecord({ id: 'some-id', raw: 'yas' });
+  dynamoDocStub._set('rcrd-records', { id: id, raw: 'yas' })
 
   testLambda({
     operation: 'record.update',
     access_token: 'some_bs_access_token',
-    id: 'some-id',
+    id: id,
     raw: 'nas'
   }, lambda.handler, function (status, data) {
     t.equal(status, 'succeed', 'status is succeed')
 
-    const actual = dynamoDocStub._getRecord('some-id');
+    const actual = dynamoDocStub._get('rcrd-records', expectedID);
 
     t.ok(actual)
-    t.equal(actual.id, 'some-id')
+    t.equal(actual.id, expectedID)
     t.equal(actual.raw, 'nas')
 
     t.end()

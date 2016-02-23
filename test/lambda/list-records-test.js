@@ -32,9 +32,9 @@ test('listRecords fails with incorrect access token', function (t) {
 });
 
 test('listRecords returns sorted records (id DESC)', function (t) {
-  dynamoDocStub._setRecord({ id: 123 });
-  dynamoDocStub._setRecord({ id: 321 });
-  dynamoDocStub._setRecord({ id: 456 });
+  dynamoDocStub._set('rcrd-records', { id: 123 });
+  dynamoDocStub._set('rcrd-records', { id: 321 });
+  dynamoDocStub._set('rcrd-records', { id: 456 });
 
   testLambda({
     operation: 'list',
@@ -53,7 +53,7 @@ test('listRecords returns sorted records (id DESC)', function (t) {
 
 test('listRecords returns no more than 50 records', function (t) {
   for (var i = 0; i < 75; i++) {
-    dynamoDocStub._setRecord({ id: i });
+    dynamoDocStub._set('rcrd-records', { id: i });
   }
 
   testLambda({

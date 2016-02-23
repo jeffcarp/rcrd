@@ -1,52 +1,41 @@
 'use strict';
 
-var proxyquire = require('proxyquire').noCallThru();
-var test = require('tape');
 
-var dynamoDocStub = require('./dynamodb-doc-stub');
-var context = require('./context-stub');
+const context = require('./context-stub')
+const dynamoDocStub = require('./dynamodb-doc-stub')
+const proxyquire = require('proxyquire').noCallThru()
+const test = require('tape')
+const testLambda = require('./test-lambda')
 
-var lambda = proxyquire('../../lambda/index', {
+const lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 });
 
+const expectedID = '102938|a-record-id'
 
 test('deleteRecord fails with no access token', function (t) {
-  dynamoDocStub._clear();
-  t.plan(2);
-
-  var params = {
+  testLambda({
     operation: 'record.delete',
     id: 'a-record-id'
-  };
-
-  context.callback = function (status, arg) {
+  }, lambda.handler, (status, arg) => {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token denied', 'error is "access_token denied"');
-  };
-
-  lambda.handler(params, context);
+    t.end()
+  })
 });
 
 test('deleteRecord actually deletes a record', function (t) {
-  dynamoDocStub._clear();
-  t.plan(4);
+  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist')
+  dynamoDocStub._set('rcrd-records', {id: expectedID, raw: 'yas'})
+  t.ok(dynamoDocStub._get('rcrd-records', expectedID), 'a record now exists')
 
-  var params = {
+  testLambda({
     operation: 'record.delete',
     id: 'a-record-id',
     access_token: 'some_bs_access_token'
-  };
-
-  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
-  dynamoDocStub._setRecord({id: 'a-record-id'});
-  t.ok(dynamoDocStub._getRecord('a-record-id'), 'a record now exists');
-
-  context.callback = function (status, arg) {
-    t.equal(status, 'succeed');
-
-    t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record was deleted');
-  };
-
-  lambda.handler(params, context);
+  }, lambda.handler, (status, arg) => {
+    t.equal(status, 'succeed')
+    t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record was deleted')
+    t.end()
+  })
 });
