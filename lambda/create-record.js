@@ -3,7 +3,7 @@
 var util = require('./util');
 
 function createRecord(dynamo, params, context) {
-    if (!params.id || !params.raw) {
+    if (!params.id || !params.raw || !params.time_zone) {
         context.fail('Missing param');
     }
 
@@ -14,12 +14,13 @@ function createRecord(dynamo, params, context) {
     }
     
     var newRecord = {
-        "id": String(params.id),
-        "raw": params.raw
+        "id": 'user_id|'+String(params.id),
+        "raw": params.raw,
+        "time_zone": params.time_zone
     };
 
     dynamo.putItem({
-        "TableName": "test-for-rcrd",
+        "TableName": "rcrd-records",
         "Item": newRecord
     }, function () {
         context.succeed(newRecord);
