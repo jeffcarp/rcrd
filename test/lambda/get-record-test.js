@@ -1,50 +1,43 @@
 'use strict';
 
-var proxyquire = require('proxyquire').noCallThru();
-var test = require('tape');
+const context = require('./context-stub')
+const dynamoDocStub = require('./dynamodb-doc-stub')
+const proxyquire = require('proxyquire').noCallThru()
+const test = require('tape')
+const testLambda = require('./test-lambda')
 
-var dynamoDocStub = require('./dynamodb-doc-stub');
-var context = require('./context-stub');
-
-var lambda = proxyquire('../../lambda/index', {
+const lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 });
 
-test('getRecord fails with no access token', function (t) {
-  t.plan(2);
+const id = 'a-record-id'
+const expectedID = '102938|a-record-id'
 
-  var params = {
+test('getRecord fails with no access token', function (t) {
+  testLambda({
     operation: 'record.get',
     id: 'a-record-id',
     raw: 'test, raw'
-  };
-
-  context.callback = function (status, arg) {
+  }, lambda.handler, (status, arg) => {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token denied', 'error is "access_token denied"');
-  };
-
-  lambda.handler(params, context);
-});
+    t.end()
+  })
+})
 
 test('getRecord gets a record', function (t) {
-  t.plan(4);
+  const expectedRecord = {id: id, raw: 'test, raw'};
+  dynamoDocStub._set('rcrd-records', expectedRecord)
 
-  var expectedRecord = {id: 'a-record-id', raw: 'test, raw'};
-  dynamoDocStub._setRecord(expectedRecord);
-
-  var params = {
+  testLambda({
     operation: 'record.get',
     id: 'a-record-id',
     access_token: 'some_bs_access_token',
-  };
-
-  context.callback = function (status, record) {
+  }, lambda.handler, (status, record) => {
     t.equal(status, 'succeed');
     t.ok(record);
     t.equal(record.id, expectedRecord.id);
     t.equal(record.raw, expectedRecord.raw);
-  };
-
-  lambda.handler(params, context);
+    t.end()
+  })
 });

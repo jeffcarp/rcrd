@@ -3,6 +3,9 @@
 var util = require('./util');
 
 function updateRecord(dynamo, params, context) {
+  if (!params.id || !params.raw) {
+    return context.fail('Missing param')
+  }
 
   // Currently unused!
   // createRecord is doing double duty as create+update
