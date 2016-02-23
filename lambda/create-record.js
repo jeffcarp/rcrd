@@ -14,7 +14,7 @@ function createRecord(dynamo, params, context) {
     }
     
     var newRecord = {
-        "id": 'user_id|'+String(params.id),
+        "id": String(params.id),
         "raw": params.raw,
         "time_zone": params.time_zone
     };
