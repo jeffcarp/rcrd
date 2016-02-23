@@ -5,7 +5,7 @@ function listRecordsWithCat(dynamo, params, context) {
     }
     
     var opts = {};
-    opts.TableName = "test-for-rcrd";
+    opts.TableName = 'rcrd-records'
     opts.ScanFilter = dynamo.Condition("raw", "CONTAINS", params.catName);
     dynamo.scan(opts, context.done);
 }
