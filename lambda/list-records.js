@@ -2,7 +2,7 @@
 
 function listRecords(dynamo, params, context) {
   dynamo.scan({
-    'TableName': 'test-for-rcrd'
+    'TableName': 'rcrd-records'
   }, function (err, data) {
     if (err) {
       context.fail(err);
