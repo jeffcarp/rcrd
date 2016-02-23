@@ -9,6 +9,8 @@ function allRecords() {
   })
 }
 
+dynamoDoc.prototype.Condition = function () {}
+
 dynamoDoc.prototype.scan = function (params, callback) {
   callback(null, {
     Items: allRecords()
