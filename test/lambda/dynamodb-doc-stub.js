@@ -37,7 +37,7 @@ dynamoDoc.prototype.getItem = function (params, callback) {
 
   const item = store[params.TableName][params.Key.id]
   
-  callback(null, item)
+  callback(null, { Item: item })
 }
 
 dynamoDoc.prototype.deleteItem = function (params, callback) {
@@ -68,6 +68,12 @@ function _get(tableName, id) {
   return store[tableName] && store[tableName][item.id]
 }
 
+function _getAll(tableName) {
+  return Object.keys(store[tableName]).map(key => {
+    return store[tableName][key]  
+  })
+}
+
 function _createTable(tableName) {
   if (store[tableName]) throw new Error('Table already exists')
 
@@ -75,13 +81,14 @@ function _createTable(tableName) {
 }
 
 function _clear() {
-  store = {};
+  store = {}
 }
 
 module.exports = {
   DynamoDB: dynamoDoc,
   _set: _set,
   _get: _get,
+  _getAll: _getAll,
   _createTable: _createTable,
   _clear: _clear,
 };

@@ -10,12 +10,11 @@ var lambda = new AWS.Lambda({
   apiVersion: '2015-03-31'
 });
 
-// Idea: run unit tests before deploying?
-
 var zip = new AdmZip();
 zip.addLocalFile('./lambda/index.js');
 zip.addLocalFile('./lambda/create-record.js');
 zip.addLocalFile('./lambda/delete-record.js');
+zip.addLocalFile('./lambda/get-access-token.js');
 zip.addLocalFile('./lambda/get-record.js');
 zip.addLocalFile('./lambda/list-records.js');
 zip.addLocalFile('./lambda/list-records-with-cat.js');
@@ -28,11 +27,11 @@ var zipBuffer = zip.toBuffer();
 lambda.updateFunctionCode({
   FunctionName: 'test-write-to-dynamo',
   ZipFile: zipBuffer,
-  Publish: true
+  Publish: true,
 }, function(err, data) {
   if (err) {
     console.error(err, err.stack);
   } else {
     console.log(data);
   }
-});
+})
