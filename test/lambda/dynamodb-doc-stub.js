@@ -32,9 +32,10 @@ dynamoDoc.prototype.scan = function (params, callback) {
 
 dynamoDoc.prototype.getItem = function (params, callback) {
   if (!params.TableName) return callback('No TableName param')
+  if (!params.Key) return callback('No Key param')
   if (!store[params.TableName]) return callback('Table not found')
 
-  const item = store[params.TableName][params.id]
+  const item = store[params.TableName][params.Key.id]
   
   callback(null, item)
 }
@@ -59,6 +60,7 @@ dynamoDoc.prototype.putItem = function (params, callback) {
 }
 
 function _set(tableName, item) {
+  store[tableName] = store[tableName] || []
   store[tableName][item.id] = item
 }
 

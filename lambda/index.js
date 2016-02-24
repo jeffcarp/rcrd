@@ -6,6 +6,7 @@ var getRecord = require('./get-record');
 var listRecords = require('./list-records');
 var listRecordsWithCat = require('./list-records-with-cat');
 var updateRecord = require('./update-record');
+var validateAccessToken = require('./validate-access-token')
 var viewData = require('./view-data');
 
 var dynamo = new doc.DynamoDB();
@@ -14,7 +15,7 @@ exports.handler = function(params, context) {
     if (params.operation === 'get-access-token') {
         getAccessToken(params, context);
     } else {
-        validateAccessToken(params.access_token, context, function () {
+        validateAccessToken(params.access_token, dynamo, context, function () {
             // Protected routes 
             if (params.operation === 'list') {
                 listRecords(dynamo, params, context);
@@ -36,23 +37,6 @@ exports.handler = function(params, context) {
         });
     }
 };
-
-function validateAccessToken(access_token, context, callback) {
-    dbParams = {};
-    dbParams.TableName = "rcrd-access-tokens";
-    dbParams.Key = {access_token : access_token};
-    
-    dynamo.getItem(dbParams, function (err, data) {
-        if (err) {
-            console.log(err);
-            return context.fail('access_token denied');
-        }
-        
-        // TODO: This also needs to return a user context to support access control
-        
-        callback();
-    });
-}
 
 function getAccessToken(params, context) {
     if (!params.email) {
