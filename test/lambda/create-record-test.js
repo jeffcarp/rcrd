@@ -39,12 +39,12 @@ test('createRecord adds a record', function (t) {
     access_token: 'some_bs_access_token',
   };
 
-  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+  t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record does not exist');
 
   context.callback = function (status, arg) {
     t.equal(status, 'succeed');
 
-    let record = dynamoDocStub._getRecord('a-record-id');
+    let record = dynamoDocStub._get('rcrd-records', 'a-record-id');
     t.ok(record, 'a record now exists');
     t.equal(record.id, params.id);
     t.equal(record.raw, params.raw);
@@ -64,12 +64,12 @@ test('can create a record with UTF-8 characters', function (t) {
     access_token: 'some_bs_access_token',
   };
 
-  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+  t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record does not exist');
 
   context.callback = function (status, arg) {
     t.equal(status, 'succeed');
 
-    let record = dynamoDocStub._getRecord('a-record-id');
+    let record = dynamoDocStub._get('rcrd-records', 'a-record-id');
     t.ok(record, 'a record now exists');
     t.equal(record.id, params.id);
     t.equal(record.raw, params.raw);
@@ -89,12 +89,12 @@ test('cannot create a record with duplicate plain cats', function (t) {
     access_token: 'some_bs_access_token',
   };
 
-  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+  t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record does not exist');
 
   context.callback = function (status, arg) {
     t.equal(status, 'fail');
 
-    t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record was not created');
+    t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record was not created');
   };
 
   lambda.handler(params, context);
@@ -111,12 +111,12 @@ test('cannot create a record with duplicate cats with mags', function (t) {
     access_token: 'some_bs_access_token',
   };
 
-  t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record does not exist');
+  t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record does not exist');
 
   context.callback = function (status, arg) {
     t.equal(status, 'fail');
 
-    t.notOk(dynamoDocStub._getRecord('a-record-id'), 'a record was not created');
+    t.notOk(dynamoDocStub._get('rcrd-records', 'a-record-id'), 'a record was not created');
   };
 
   lambda.handler(params, context);
