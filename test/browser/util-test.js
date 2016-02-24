@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const util = require('../lib/util')
+const util = require('../../browser/util')
 
 test('util.hasMagnitude', function (t) {
   t.plan(2)

@@ -2,12 +2,12 @@
   "name": "rcrd",
   "version": "1.0.0",
   "description": "",
-  "main": "lib/index.js",
+  "main": "browser/index.js",
   "scripts": {
     "start": "node server.js",
     "test": "tape test/*-test.js test/**/*-test.js | tap-spec",
-    "build": "browserify -t reactify lib/index.js > static/index.js",
-    "watch": "watchify -t reactify lib/index.js -o static/index.js",
+    "build": "browserify -t reactify browser/index.js > static/index.js",
+    "watch": "watchify -t reactify browser/index.js -o static/index.js",
     "deploy": "npm t && node scripts/deploy-lambda.js && npm run build && node scripts/deploy-www.js"
   },
   "repository": {

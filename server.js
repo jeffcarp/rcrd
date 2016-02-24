@@ -9,7 +9,7 @@ const dynamoDocStub = require('./test/lambda/dynamodb-doc-stub')
 const fs = require('fs')
 const randomWords = require('random-words')
 const proxyquire = require('proxyquire').noCallThru()
-const util = require('./lib/util')
+const util = require('./browser/util')
 
 const app = express()
 const index = fs.readFileSync('index.html', 'utf-8');
