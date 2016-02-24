@@ -1,80 +1,85 @@
 'use strict';
 
-var dynamoDoc = function () {};
-var records = {};
+var dynamoDoc = function () {}
+var store = {}
 
-function allRecords() {
-  return Object.keys(records).map(key => {
-    return records[key]  
-  })
+dynamoDoc.prototype.Condition = function (attr, operation, value) {
+  return {
+    attr: attr,
+    operation: operation,
+    value: value,
+  }
 }
 
-dynamoDoc.prototype.Condition = function () {}
-
 dynamoDoc.prototype.scan = function (params, callback) {
-  callback(null, {
-    Items: allRecords()
+  if (!params.TableName) return callback('No TableName param')
+  if (!store[params.TableName]) return callback('Table not found')
+
+  let allOfEm = Object.keys(store[params.TableName]).map(key => {
+    return store[params.TableName][key]  
   })
+
+  if (params.ScanFilter) {
+    if (params.ScanFilter.operation === 'CONTAINS') {
+      allOfEm = allOfEm.filter((item) => {
+        return item[params.ScanFilter.attr].indexOf(params.ScanFilter.value) !== -1
+      }) 
+    }
+  }
+
+  callback(null, { Items: allOfEm })
 };
 
 dynamoDoc.prototype.getItem = function (params, callback) {
-  if (params.TableName === 'rcrd-access-tokens') {
-    if (params.Key 
-        && params.Key.access_token 
-        && params.Key.access_token === 'some_bs_access_token') {
-      callback(); 
-    } else {
-      callback('denied'); 
-    }
-  } else {
-    if (params.Key && params.Key.id && records[params.Key.id]) {
-      callback(null, records[params.Key.id]);
-    } else {
-      callback('Record not found');
-    }
-  }
-};
+  if (!params.TableName) return callback('No TableName param')
+  if (!store[params.TableName]) return callback('Table not found')
+
+  const item = store[params.TableName][params.id]
+  
+  callback(null, item)
+}
 
 dynamoDoc.prototype.deleteItem = function (params, callback) {
-  if (params.Key && params.Key.id) {
-    delete records[params.Key.id];
-    callback(null, null);
-  } else {
-    callback('Record not found');
-  }
-};
+  if (!params.TableName) return callback('No TableName param')
+  if (!store[params.TableName]) return callback('Table not found')
+  if (!store[params.id]) return callback('Not passed id')
+
+  delete store[params.TableName][params.id]
+  callback(null, null);
+}
 
 dynamoDoc.prototype.putItem = function (params, callback) {
-  if (params.Item) {
-    var record = params.Item;
-    if (record.id) {
-      records[record.id] = record;
-      callback(null, record);
-    } else {
-      callback('putItem Item needs id');
-    }
-  } else {
-      callback('putItem not passed Item');
-  }
-};
+  if (!params.TableName) return callback('No TableName param')
+  if (!store[params.TableName]) return callback('Table not found')
+  if (!params.Item) return callback('Not passed Item')
+  if (!params.Item.id) return callback('Not passed Item.id')
 
-function _setRecord(record) {
-  if (!record || !record.id) return;
+  store[params.TableName] = params.Item
+  callback(null, params.Item)
+}
 
-  records[record.id] = record;
-};
+function _set(tableName, item) {
+  store[tableName][item.id] = item
+}
 
-function _getRecord(id) {
-  return records[id];
-};
+function _get(tableName, id) {
+  return store[tableName] && store[tableName][item.id]
+}
+
+function _createTable(tableName) {
+  if (store[tableName]) throw new Error('Table already exists')
+
+  store[tableName] = []
+}
 
 function _clear() {
-  records = {};
+  store = {};
 }
 
 module.exports = {
   DynamoDB: dynamoDoc,
-  _setRecord: _setRecord,
-  _getRecord: _getRecord,
+  _set: _set,
+  _get: _get,
+  _createTable: _createTable,
   _clear: _clear,
 };

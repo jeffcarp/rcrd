@@ -27,6 +27,9 @@ nav a {
   display: inline-block;
   padding-right: 1em;
 }
+nav.localAPI a {
+  color: tomato;
+}
 
 /* ------------------------------ */
 
