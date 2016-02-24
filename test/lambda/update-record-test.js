@@ -7,8 +7,6 @@ const lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 });
 
-const updateRecord = require('../../lambda/update-record')
-
 test('updateRecord fails with no access token', function (t) {
   testLambda({
     operation: 'record.update'

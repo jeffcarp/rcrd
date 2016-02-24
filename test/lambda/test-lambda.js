@@ -3,16 +3,21 @@ const dynamoDocStub = require('./dynamodb-doc-stub')
 
 function testLambda (params, handler, callback) {
   context.callback = callback
-  handler(params, context)
-  dynamoDocStub._clear()
 
-  dynamoDocStub._createTable('rcrd-records')
-
-  dynamoDocStub._createTable('rcrd-access-tokens')
   dynamoDocStub._set('rcrd-access-tokens', {
     id: 'some_bs_access_token',
     owner: 'gcarpenterv@gmail.com',
   })
+
+  dynamoDocStub._set('rcrd-access-tokens', {
+    id: 'expired_access_token',
+    owner: 'gcarpenterv@gmail.com',
+    expiration: '2016-02-23T22:49:05+00:00',
+  })
+
+  handler(params, context)
+
+  dynamoDocStub._clear()
 }
 
 module.exports = testLambda;
