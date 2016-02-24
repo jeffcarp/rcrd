@@ -4,9 +4,16 @@ const dynamoDocStub = require('./dynamodb-doc-stub')
 function testLambda (params, handler, callback) {
   context.callback = callback
 
+  dynamoDocStub._set('rcrd-users', {
+    id: 'hi@jeff.is',
+    hash: '88FvUlobfCBPyVPW19txaNhOv0kC+Dw6N9ETsYwomB8=',
+    time_zone: 'America/Los_Angeles',
+  })
+
   dynamoDocStub._set('rcrd-access-tokens', {
     id: 'some_bs_access_token',
     owner: 'gcarpenterv@gmail.com',
+    // this should fail without expiration
   })
 
   dynamoDocStub._set('rcrd-access-tokens', {
