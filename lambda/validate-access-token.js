@@ -1,11 +1,10 @@
 'use strict';
 
 function validateAccessToken(access_token, dynamo, context, callback) {
-  var dbParams = {}
-  dbParams.TableName = 'rcrd-access-tokens'
-  dbParams.Key = {id: access_token}
-
-  dynamo.getItem(dbParams, function (err, data) {
+  dynamo.getItem({
+    TableName: 'rcrd-access-tokens',
+    Key: { id: access_token },
+  }, function (err, data) {
       if (err) return context.fail('access_token denied')
       if (!data || !data.Item) return context.fail('access_token denied')
 

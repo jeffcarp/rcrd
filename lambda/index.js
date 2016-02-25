@@ -31,6 +31,8 @@ exports.handler = function(params, context) {
         getRecord(dynamo, params, context);
       } else if (params.operation === 'view-data') {
         viewData(dynamo, params, context);
+      } else if (params.operation === 'heartbeat.authenticated') {
+        context.succeed();
       } else {
         context.fail('Operation not found');
       }

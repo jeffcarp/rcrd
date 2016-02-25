@@ -18,14 +18,19 @@ module.exports = function getAccessToken(dynamo, params, context) {
    
     var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64');
     if (suppliedPassHash === user.hash) {
+
+      var now = new Date();
+
+      var accessTokenID = crypto.createHash('sha256').update(user.email + now.toISOString()).digest('base64')
+
+      var newAccessToken = {
+        id: accessTokenID,
+        expiration: (new Date('2016-03-01T00:00:00Z')).toISOString(),
+      }
        
-      // TODO: generate and store an access token
       dynamo.putItem({
         TableName:  'rcrd-access-tokens',
-        Item: {
-          id: 'bogus_access_token_id',
-          expiration: '2017-02-23T22:49:05+00:00',
-        },
+        Item: newAccessToken,
       }, function (err, data) {
         if (err) return context.fail(err)
       
@@ -34,9 +39,7 @@ module.exports = function getAccessToken(dynamo, params, context) {
             id: user.id,
             time_zone: user.time_zone
           },
-          access_token: {
-            id: 'bogus_access_token_id',
-          },
+          access_token: newAccessToken,
         })
       })
     } else {
