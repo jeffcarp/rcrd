@@ -43,6 +43,7 @@
     "react-dom": "^0.14.6",
     "react-router-component": "^0.29.0",
     "reactify": "^1.1.1",
+    "request": "^2.69.0",
     "sinon": "^1.17.2",
     "tap-spec": "^4.1.1",
     "tape": "^4.4.0",
