@@ -15,9 +15,18 @@ test('util.splitRecordsByYears', (t) => {
   t.plan(3)
 
   const records = [
-    {id: 'user_id|2016-05-22T18:19:19+10:00'},
-    {id: 'user_id|2010-12-22T18:19:19-02:00'},
-    {id: 'user_id|2016-02-22T18:19:19+07:00'}
+    {
+      time: '2016-05-22T18:19:19Z',
+      time_zone: 'America/Los_Angeles',
+    },
+    {
+      time: '2010-12-22T18:19:19Z',
+      time_zone: 'America/Los_Angeles',
+    },
+    {
+      time: '2016-02-22T18:19:19Z',
+      time_zone: 'America/Los_Angeles',
+    }
   ]
 
   const actual = util.splitRecordsByYears(records)

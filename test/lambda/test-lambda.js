@@ -12,24 +12,19 @@ function testLambda (params, handler, callback) {
 
   dynamoDocStub._set('rcrd-access-tokens', {
     id: 'some_bs_access_token',
-    owner: 'gcarpenterv@gmail.com',
+    owner: 'hi@jeff.is',
     // this should fail without expiration
   })
 
   dynamoDocStub._set('rcrd-access-tokens', {
     id: 'expired_access_token',
-    owner: 'gcarpenterv@gmail.com',
+    owner: 'hi@jeff.is',
     expiration: '2016-02-23T22:49:05+00:00',
   })
 
   handler(params, context)
 
   dynamoDocStub._clear()
-
-  dynamoDocStub._set('rcrd-access-tokens', 'some_bs_access_token', {
-    access_token: 'some_bs_access_token',
-    owner: '102938' 
-  })
 }
 
 module.exports = testLambda;

@@ -37,7 +37,7 @@ test('getAccessToken generates a new access token', (t) => {
   }, lambda.handler, (status, data) => {
     t.equal(status, 'succeed', 'status is succeed')
     const tokens = dynamoDocStub._getAll('rcrd-access-tokens')
-    t.equal(tokens.length, 2, 'There should now be 2 access tokens')
+    t.equal(tokens.length, 3, 'There should now be 3 access tokens')
 
     t.equal(data.user.id, 'hi@jeff.is', 'Result contains user email')
     t.equal(data.user.time_zone, 'America/Los_Angeles', 'Result contains user TZ')

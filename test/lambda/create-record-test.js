@@ -7,17 +7,15 @@ const test = require('tape')
 const testLambda = require('./test-lambda')
 
 
-var lambda = proxyquire('../../lambda/index', {
+const lambda = proxyquire('../../lambda/index', {
   'dynamodb-doc': dynamoDocStub
-});
+})
 
-const expectedID = '102938|a-record-id'
+const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 
 // Validation
 
 test('cannot create a record without an id', function (t) {
-  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist');
-
   testLambda({
     operation: 'create',
     raw: 'test, raw, test',
@@ -34,7 +32,7 @@ test('cannot create a record without an id', function (t) {
 test('createRecord fails with no access token', function (t) {
   testLambda({
     operation: 'create',
-    id: 'a-record-id',
+    id: expectedID,
     raw: 'test, raw'
   }, lambda.handler, function (status, arg) {
     t.equal(status, 'fail', 'status is fail')
@@ -46,17 +44,14 @@ test('createRecord fails with no access token', function (t) {
 // Correctness
 
 test('createRecord adds a record', (t) => {
-  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist');
-
   testLambda({
     operation: 'create',
-    id: 'a-record-id',
+    id: expectedID,
     raw: 'test, raw',
     access_token: 'some_bs_access_token',
   }, lambda.handler, (status, arg) => {
     t.equal(status, 'succeed');
-    const record = dynamoDocStub._get('rcrd-records', expectedID)
-    let record = dynamoDocStub._get('rcrd-records', 'a-record-id');
+    let record = dynamoDocStub._get('rcrd-records', expectedID);
     t.ok(record, 'a record now exists')
     t.equal(record.id, expectedID)
     t.equal(record.raw, 'test, raw')
@@ -65,13 +60,11 @@ test('createRecord adds a record', (t) => {
 })
 
 test('can create a record with UTF-8 characters', (t) => {
-  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist');
-
   const raw = 'test, テスト, 你别放屁'
 
   testLambda({
     operation: 'create',
-    id: 'a-record-id',
+    id: expectedID,
     raw: raw,
     access_token: 'some_bs_access_token',
   }, lambda.handler, (status, arg) => {
@@ -85,11 +78,9 @@ test('can create a record with UTF-8 characters', (t) => {
 })
 
 test('cannot create a record with duplicate plain cats', function (t) {
-  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist');
-
   testLambda({
     operation: 'create',
-    id: 'a-record-id',
+    id: expectedID,
     raw: 'test, raw, test',
     access_token: 'some_bs_access_token',
   }, lambda.handler, (status, arg) => {
@@ -100,11 +91,9 @@ test('cannot create a record with duplicate plain cats', function (t) {
 })
 
 test('cannot create a record with duplicate cats with mags', (t) => {
-  t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist');
-
   testLambda({
     operation: 'create',
-    id: 'a-record-id',
+    id: expectedID,
     raw: 'run, great, 13 miles, phew, 3 miles',
     access_token: 'some_bs_access_token',
   }, lambda.handler, (status, arg) => {
