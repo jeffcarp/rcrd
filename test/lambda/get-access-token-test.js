@@ -41,8 +41,16 @@ test('getAccessToken generates a new access token', (t) => {
 
     t.equal(data.user.id, 'hi@jeff.is', 'Result contains user email')
     t.equal(data.user.time_zone, 'America/Los_Angeles', 'Result contains user TZ')
-    t.equal(data.access_token.id, 'bogus_access_token_id', 'New access token is returned')
-
-    t.end()
+    t.ok(data.access_token.id, 'New access token is returned')
+    t.ok(data.access_token.expiration, 'access_token.expiration is returned')
+    t.ok(new Date() < new Date(data.access_token.expiration), 'access_token.expiration is in the future')
+   
+    testLambda({
+      operation: 'heartbeat.authenticated',
+      access_token: data.access_token.id,
+    }, lambda.handler, (status, data) => {
+      t.equal(status, 'succeed', 'New access_token passes authentication')
+      t.end()
+    })
   })
 })
