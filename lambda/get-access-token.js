@@ -13,6 +13,8 @@ module.exports = function getAccessToken(dynamo, params, context) {
     if (err) return context.fail(err)
 
     var user = data.Item;
+
+    if (!user) return context.fail('User not found')
    
     var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64');
     if (suppliedPassHash === user.hash) {

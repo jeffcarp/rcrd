@@ -33,22 +33,20 @@ dynamoDoc.prototype.scan = function (params, callback) {
 dynamoDoc.prototype.getItem = function (params, callback) {
   if (!params.TableName) return callback('getItem not passed TableName')
   if (!params.Key) return callback('getItem not passed Key')
-  if (!Object.keys(params.Key).length) return callback('getItem not passed a Key')
+  if (!params.Key.id) return callback('getItem not passed Key.id')
   if (!store[params.TableName]) return callback('Table not found.')
 
-  const key = params.Key[Object.keys(params.Key)[0]]
-  const item = store[params.TableName][key]
-  callback(null, item)
+  const item = store[params.TableName][params.Key.id]
+  callback(null, { Item: item })
 }
 
-dynamoDoc.prototype.getItem = function (params, callback) {
-  if (!params.TableName) return callback('No TableName param')
-  if (!params.Key) return callback('No Key param')
-  if (!store[params.TableName]) return callback('Table not found')
+dynamoDoc.prototype.putItem = function (params, callback) {
+  if (!params.Item) return callback('putItem not passed Item')
+  if (!params.TableName) return callback('putItem not passed TableName')
+  if (!params.Item.id) return callback('putItem not passed Item.id')
 
-  const item = store[params.TableName][params.Key.id]
-  
-  callback(null, { Item: item })
+  _set(params.TableName, params.Item)
+  callback(null, params.Item)
 }
 
 dynamoDoc.prototype.deleteItem = function (params, callback) {
@@ -61,14 +59,6 @@ dynamoDoc.prototype.deleteItem = function (params, callback) {
   callback(null, null);
 };
 
-dynamoDoc.prototype.putItem = function (params, callback) {
-  if (!params.Item) return callback('putItem not passed Item')
-  if (!params.TableName) return callback('putItem not passed TableName')
-  if (!params.Item.id) return callback('putItem not passed Item.id')
-
-  _set(params.TableName, params.Item.id, params.Item)
-  callback(null, params.Item)
-}
 
 function _get(table, id) {
   store[table] = store[table] || {}
@@ -81,9 +71,9 @@ function _getAll(table) {
   })
 }
 
-function _set(table, id, item) {
+function _set(table, item) {
   store[table] = store[table] || {}
-  store[table][id] = item
+  store[table][item.id] = item
 }
 
 function _clear() {

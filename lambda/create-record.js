@@ -19,7 +19,7 @@ function createRecord(dynamo, params, context) {
     // Creating
 
     if (!params.raw || !params.time || !params.time_zone) {
-      context.fail('Missing param');
+      return context.fail('Missing param');
     }
 
     // Add user_id to this
@@ -36,8 +36,7 @@ function createRecord(dynamo, params, context) {
 
   var cats = util.catsFromRaw(params.raw); 
   if (util.hasDupes(cats.map(util.sansMagnitude))) {
-    context.fail('Records cannot have duplicate cats.');
-    return;
+    return context.fail('Records cannot have duplicate cats.');
   }
 
   dynamo.putItem({

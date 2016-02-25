@@ -7,9 +7,12 @@ function validateAccessToken(access_token, dynamo, context, callback) {
 
   dynamo.getItem(dbParams, function (err, data) {
       if (err) return context.fail('access_token denied')
+      if (!data || !data.Item) return context.fail('access_token denied')
+
+      var accessToken = data.Item;
   
       var now = new Date()
-      if (now > new Date(data.expiration)) {
+      if (now > new Date(accessToken.expiration)) {
         context.fail('access_token expired')
         return
       }
