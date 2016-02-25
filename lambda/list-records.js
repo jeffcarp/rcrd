@@ -12,7 +12,8 @@ function listRecords(dynamo, params, context) {
     var records = data.Items;
 
     records.sort(function (a, b) {
-      return Number(b.id) - Number(a.id);
+      // Use time zones
+      return (new Date(b.time)) - (new Date(a.time));
     });
 
     context.succeed(records.slice(0, 50));

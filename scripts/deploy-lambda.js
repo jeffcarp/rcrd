@@ -20,7 +20,6 @@ zip.addLocalFile('./lambda/list-records.js');
 zip.addLocalFile('./lambda/list-records-with-cat.js');
 zip.addLocalFile('./lambda/update-record.js');
 zip.addLocalFile('./lambda/validate-access-token.js');
-zip.addLocalFile('./validate-access-token');
 zip.addLocalFile('./lambda/view-data.js');
 zip.addLocalFile('./lambda/util.js');
 var zipBuffer = zip.toBuffer();

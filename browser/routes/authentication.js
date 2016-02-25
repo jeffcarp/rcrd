@@ -61,7 +61,7 @@ var Authentication = React.createClass({
       if (err) {
         bus.emit('notification', 'There was a problem logging you in.');
       } else {
-        localStorage.email = response.email;
+        localStorage.email = response.id;
         localStorage.access_token = response.access_token;
         localStorage.time_zone = response.time_zone;
         

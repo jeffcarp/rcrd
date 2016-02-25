@@ -32,9 +32,21 @@ test('listRecords fails with incorrect access token', function (t) {
 });
 
 test('listRecords returns sorted records (id DESC)', function (t) {
-  dynamoDocStub._set('rcrd-records', { id: 123 });
-  dynamoDocStub._set('rcrd-records', { id: 321 });
-  dynamoDocStub._set('rcrd-records', { id: 456 });
+  dynamoDocStub._set('rcrd-records', { 
+    id: '1',
+    time: '2016-01-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles' ,
+  })
+  dynamoDocStub._set('rcrd-records', { 
+    id: '2',
+    time: '2015-05-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles', 
+  })
+  dynamoDocStub._set('rcrd-records', { 
+    id: '3',
+    time: '2016-02-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles' ,
+  })
 
   testLambda({
     operation: 'list',
@@ -43,9 +55,9 @@ test('listRecords returns sorted records (id DESC)', function (t) {
     t.equal(status, 'succeed', 'status is succeed')
 
     t.equal(data.length, 3)
-    t.equal(data[0].id, 456)
-    t.equal(data[1].id, 321)
-    t.equal(data[2].id, 123)
+    t.equal(data[0].id, '3')
+    t.equal(data[1].id, '1')
+    t.equal(data[2].id, '2')
 
     t.end();
   });
