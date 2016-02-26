@@ -172,7 +172,8 @@ section h1 {
   padding-bottom: 0.4em;
 }
 section h2 {
-  padding-bottom: 0.4em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
 }
 section h3 {
   padding-bottom: 0.4em;
@@ -222,4 +223,35 @@ ul li {
   margin: 0 0 0.5em;
   font-size: 0.8em;
   border-bottom: solid 1px #eee;
+}
+
+.thing {
+  border: solid 1px #ddd;
+  background-color: #f7f7f7;
+  margin-bottom: 1em;
+}
+.thing > div {
+  padding: 0 0.5rem 1rem;
+}
+.thing .type {
+  font-size: 0.7em;
+  color: #777;
+  padding-top: 0.5rem;
+}
+.thing .field {
+  margin-bottom: 0.75em; 
+  font-size: 0.9em;
+}
+.thing .field .attribute {
+  display: inline-block;
+  min-width: 130px;
+}
+.thing .under {
+  background-color: #ddd;
+  font-size: 0.7em;
+  padding-top: 0.5rem;
+}
+
+.code {
+  font-family: monospace;
 }

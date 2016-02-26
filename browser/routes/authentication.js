@@ -61,11 +61,12 @@ var Authentication = React.createClass({
       if (err) {
         bus.emit('notification', 'There was a problem logging you in.');
       } else {
-        localStorage.email = response.user.id;
-        localStorage.time_zone = response.user.time_zone;
-        localStorage.access_token = response.access_token.id;
+        localStorage.email = response.user.id
+        localStorage.time_zone = response.user.time_zone
+        localStorage.access_token = response.access_token.id
+        localStorage.expiration = response.access_token.expiration
         
-        window.location = '/';
+        window.location = '/'
       }
     }.bind(this));
   }
