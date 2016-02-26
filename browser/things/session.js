@@ -23,7 +23,7 @@ var SessionThing = React.createClass({
         actionOnClick={this.props.actionOnClick}
         />
     )
-  }
+  },
 
 })
 
