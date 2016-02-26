@@ -33,7 +33,7 @@ var Account = React.createClass({
               accessToken={accessToken} 
               current={true}
               actionText='Delete current session (this will log you out)'
-              actiononClick={this.logout}
+              actionOnClick={this.logout}
               />
           </div>
         </section>

@@ -1,9 +1,7 @@
 var User = {};
 
 User.time_zone = function () {
-  var zone = localStorage.time_zone
-  if (!zone) throw new Error()
-  return zone
+  return localStorage.time_zone
 }
 
 module.exports = User;
