@@ -1,21 +1,41 @@
 var React = require('react')
+var SessionThing = require('../things/session')
+var UserThing = require('../things/user')
 
 var Account = React.createClass({
 
   render: function() {
+
+    var accessToken = {
+      id: localStorage.access_token,
+      expiration: localStorage.expiration,
+    }
+
+    var user = {
+      id: localStorage.email,
+    }
+
     return (
       <div className="page">
 
         <section>
-          <h2>Account</h2>
-          <div><b>Email:</b> {localStorage.email}</div>
+          <h2>You</h2>
+          <UserThing 
+            user={user} 
+            />
         </section>
 
         <section>
           <h2>Sessions</h2>
-          
-          <p><b>Current Session</b>: Access Token: <code>{localStorage.access_token}</code></p>
-          <div><a href="#" onClick={this.logout}>Delete current session (this will log you out)</a></div>
+
+          <div>
+            <SessionThing 
+              accessToken={accessToken} 
+              current={true}
+              actionText='Delete current session (this will log you out)'
+              actiononClick={this.logout}
+              />
+          </div>
         </section>
 
       </div>
