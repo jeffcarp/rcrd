@@ -1,19 +1,20 @@
-var proxyquire = require('proxyquire').noCallThru()
-var test = require('tape')
+'use strict'
 
-var dynamoDocStub = require('./dynamodb-doc-stub')
-const testLambda = require('./test-lambda')
+const path = require('path')
+const test = require('tape')
+const tl = require('test-lambda')
 
-var lambda = proxyquire('../../lambda/index', {
-  'dynamodb-doc': dynamoDocStub
-});
-
-var listRecords = require('../../lambda/list-records');
+const dynamoDocStub = tl.dynamo
+const testLambda = tl.test(path.resolve('./lambda/index'), {
+  before: require('./before'),
+  after: require('./after'),
+})
+const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 
 test('listRecords fails with no access token', function (t) {
   testLambda({
     operation: 'list'
-  }, lambda.handler, function (status, arg) {
+  }, function (status, arg) {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token denied', 'error is "access_token denied"');
     t.end();
@@ -24,7 +25,7 @@ test('listRecords fails with incorrect access token', function (t) {
   testLambda({
     operation: 'list',
     access_token: 'some_incorrect_access_token'
-  }, lambda.handler, function (status, arg) {
+  }, function (status, arg) {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token denied', 'error is "access_token denied"');
     t.end();
@@ -51,7 +52,7 @@ test('listRecords returns sorted records (id DESC)', function (t) {
   testLambda({
     operation: 'list',
     access_token: 'some_bs_access_token'
-  }, lambda.handler, function (status, data) {
+  }, function (status, data) {
     t.equal(status, 'succeed', 'status is succeed')
 
     t.equal(data.length, 3)
@@ -71,7 +72,7 @@ test('listRecords returns no more than 50 records', function (t) {
   testLambda({
     operation: 'list',
     access_token: 'some_bs_access_token'
-  }, lambda.handler, function (status, data) {
+  }, function (status, data) {
     t.equal(status, 'succeed', 'status is succeed')
 
     t.equal(data.length, 50)

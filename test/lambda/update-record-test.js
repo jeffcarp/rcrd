@@ -1,18 +1,20 @@
-const dynamoDocStub = require('./dynamodb-doc-stub')
-const proxyquire = require('proxyquire').noCallThru()
+'use strict'
+
+const path = require('path')
 const test = require('tape')
-const testLambda = require('./test-lambda')
+const tl = require('test-lambda')
 
-const lambda = proxyquire('../../lambda/index', {
-  'dynamodb-doc': dynamoDocStub
-});
-
+const dynamoDocStub = tl.dynamo
+const testLambda = tl.test(path.resolve('./lambda/index'), {
+  before: require('./before'),
+  after: require('./after'),
+})
 const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 
 test('updateRecord fails with no access token', function (t) {
   testLambda({
     operation: 'record.update'
-  }, lambda.handler, function (status, arg) {
+  }, function (status, arg) {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token denied', 'error is "access_token denied"');
     t.end();
@@ -23,7 +25,7 @@ test('updateRecord fails with incorrect access token', function (t) {
   testLambda({
     operation: 'record.update',
     access_token: 'some_incorrect_access_token'
-  }, lambda.handler, function (status, arg) {
+  }, function (status, arg) {
     t.equal(status, 'fail', 'status is fail')
     t.equal(arg, 'access_token denied', 'error is "access_token denied"')
     t.end();
@@ -43,7 +45,7 @@ test('updateRecord updates a record', function (t) {
     access_token: 'some_bs_access_token',
     id: expectedID,
     raw: 'nas'
-  }, lambda.handler, function (status, data) {
+  }, function (status, data) {
     t.equal(status, 'succeed', 'status is succeed')
 
     const actual = dynamoDocStub._get('rcrd-records', expectedID);

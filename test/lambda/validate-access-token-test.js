@@ -1,18 +1,22 @@
-const dynamoDocStub = require('./dynamodb-doc-stub')
-const proxyquire = require('proxyquire').noCallThru()
-const test = require('tape')
-const testLambda = require('./test-lambda')
+'use strict'
 
-const lambda = proxyquire('../../lambda/index', {
-  'dynamodb-doc': dynamoDocStub
-});
+const path = require('path')
+const test = require('tape')
+const tl = require('test-lambda')
+
+const dynamoDocStub = tl.dynamo
+const testLambda = tl.test(path.resolve('./lambda/index'), {
+  before: require('./before'),
+  after: require('./after'),
+})
+const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 
 test('expired tokens are rejected', function (t) {
   testLambda({
     operation: 'record.get',
     id: 'a-record-id',
     access_token: 'expired_access_token',
-  }, lambda.handler, function (status, arg) {
+  }, function (status, arg) {
     t.equal(status, 'fail', 'status is fail');
     t.equal(arg, 'access_token expired', 'error is "access_token denied"');
     t.end();
