@@ -1,6 +1,7 @@
 var API = require('../api');
 var bus = require('../bus')()
 var DeleteRecord = require('../delete-record');
+var EditRaw = require('../edit-raw')
 var React = require('react');
 var Record = require('../record');
 var request = require('browser-request');
@@ -39,8 +40,12 @@ var RecordPage = React.createClass({
     if (record) {
       return (
         <section>
-          <Record record={record} />
-          <SelectTimeZone record={record} />
+          <Record 
+            record={record} />
+          <SelectTimeZone 
+            record={record} />
+          <EditRaw 
+            record={record} />
           <DeleteRecord id={record.id} />
         </section>
       )

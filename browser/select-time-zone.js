@@ -47,6 +47,8 @@ var SelectTimeZone = React.createClass({
       raw: this.props.record.raw,
       time_zone: newZone
     }, function (err, data) {
+      if (err) return console.error(err)
+
       this.setState({ loading: false });
 
       console.log(err, data)
