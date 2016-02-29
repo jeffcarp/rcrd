@@ -31,17 +31,4 @@ files.forEach(function (file) {
       console.log(`Successfully uploaded data to ${BUCKET_NAME}/${filePath}`);
     }
   });
-});
-
-
-function confirmCorrectDirectory() {
-  try {
-    var packageJSON = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-  } catch (e) {
-    throw new Error('Must deploy from root of rcrd package');
-  }
-
-  if (packageJSON.name !== 'rcrd') {
-    throw new Error('Must deploy from root of rcrd package');
-  }
-}
+})
