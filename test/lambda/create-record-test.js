@@ -57,6 +57,63 @@ test('createRecord adds a record', (t) => {
   })
 })
 
+test('createRecord creates "top-20-cats" view data if not exists', (t) => {
+
+  const viewDatumID = '2|top-20-cats'
+
+  t.notOk(dynamoDocStub._get('rcrd-view-data', viewDatumID))
+
+  testLambda({
+    operation: 'create',
+    id: expectedID,
+    raw: 'test, raw',
+    access_token: 'some_bs_access_token',
+  }, (status, arg) => {
+    t.equal(status, 'succeed');
+
+    const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
+    t.ok(viewDatum, 'a view datum exists')
+    t.equal(viewDatum.id, viewDatumID)
+    t.deepEqual(viewDatum.cats, [ 'test', 'raw' ])
+
+    t.end()
+  })
+})
+
+test('createRecord updates "top-20-cats" view data if exists', (t) => {
+
+  const viewDatumID = '2|top-20-cats'
+
+  dynamoDocStub._set('rcrd-records', {
+    id: '1',
+    raw: 'yas, nas', 
+  })
+  dynamoDocStub._set('rcrd-records', {
+    id: '2',
+    raw: 'yas', 
+  })
+  dynamoDocStub._set('rcrd-view-data', {
+    id: viewDatumID,
+    cats: ['yas', 'nas'], 
+  })
+
+  testLambda({
+    operation: 'create',
+    id: expectedID,
+    raw: 'test, raw',
+    access_token: 'some_bs_access_token',
+  }, (status, arg) => {
+    t.equal(status, 'succeed');
+
+    const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
+    t.ok(viewDatum, 'a view datum exists')
+    t.equal(viewDatum.id, viewDatumID)
+    t.deepEqual(viewDatum.cats, [ 'yas', 'nas', 'test', 'raw' ])
+
+    t.end()
+  })
+})
+
 test('can create a record with UTF-8 characters', (t) => {
   const raw = 'test, テスト, 你别放屁'
 

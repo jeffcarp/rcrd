@@ -41,10 +41,53 @@ function createRecord(dynamo, params, context) {
 
   dynamo.putItem({
     "TableName": "rcrd-records",
-    "Item": newRecord
-  }, function () {
-    context.succeed(newRecord);
-  });
+    "Item": newRecord,
+  }, function (err) {
+    if (err) return context.fail(err)
+
+    dynamo.scan({
+      TableName: 'rcrd-records'
+    }, function (err, data) {
+      if (err) return context.fail(err)
+
+      var records = data.Items;
+      var catNumbers = {};
+
+      util.allCats(records).forEach(function (name) {
+        name = util.sansMagnitude(name);
+        if (catNumbers[name]) {
+          catNumbers[name] += 1;
+        } else {
+          catNumbers[name] = 1;
+        }
+      });
+
+      var catNumberArray = [];
+      for (var name in catNumbers) {
+        catNumberArray.push({name: name, num: catNumbers[name]})
+      }
+
+      catNumberArray.sort(function (a, b) {
+        return b.num - a.num
+      });
+
+      var top20Cats = catNumberArray
+        .map(function (catNum) { return catNum.name })
+        .slice(0, 20)
+
+      dynamo.putItem({
+        TableName: 'rcrd-view-data',
+        Item: {
+          id: '2|top-20-cats',
+          cats: top20Cats,
+        }
+      }, function (err) {
+        if (err) return context.fail(err)
+
+        context.succeed(newRecord)
+      })
+    })
+  })
 }
 
 module.exports = createRecord;
