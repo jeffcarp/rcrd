@@ -15,7 +15,7 @@ app.listen(8000, function () {
 function seed() {
 
   let record, day;
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 5; i++) {
     day = ("00" + util.rand(25)).substr(-4,4)
     record = {
       raw: randomWords({ min: 3, max: 10 }).join(', '),
