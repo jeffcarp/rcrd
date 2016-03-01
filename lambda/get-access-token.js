@@ -25,7 +25,7 @@ module.exports = function getAccessToken(dynamo, params, context) {
 
       var newAccessToken = {
         id: accessTokenID,
-        expiration: (new Date('2016-03-01T00:00:00Z')).toISOString(),
+        expiration: (new Date('2016-04-01T00:00:00Z')).toISOString(),
       }
        
       dynamo.putItem({
