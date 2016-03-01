@@ -149,7 +149,7 @@ API.fetchRecordsWithCat = function (name, callback) {
 
 API.viewData = function (id, callback) {
 
-  var userID = 'bogus'
+  var userID = '2'
   var fullID = userID + '|' + id
 
   request({

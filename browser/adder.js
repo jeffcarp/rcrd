@@ -12,7 +12,6 @@ var Adder = React.createClass({
 
   getInitialState: function () {
     return {
-      records: [],
       commonCats: []
     };
   },
@@ -22,60 +21,27 @@ var Adder = React.createClass({
   },
 
   render: function() {
-    var records = this.state.records;
-
-    var cats = this.state.commonCats.map(function (catObj) {
-      var name = catObj.name;
-      var frequency = catObj.num;
-      return name;
-    });
-
     return (
       <div className="adder">
         <Editor focus={this.props.focus} />
-        <CatList cats={cats} catOnClick={this.catOnClick} />
+        <CatList cats={this.state.commonCats} catOnClick={this.catOnClick} />
       </div>
     );
   },
 
   catOnClick: function (e) {
     e.preventDefault();
-    bus.emit('add-cat-to-adder', e.target.innerText);
-    bus.emit('focus-editor');
+    bus.emit('add-cat-to-adder', e.target.innerText)
+    bus.emit('focus-editor')
   },
 
   getCommonCats: function () {
-    var self = this;
-
-    API.fetchRecords(function (err, records) {
-      if (err) {
-        return console.error(err);
+    API.viewData('top-20-cats',function (err, data) {
+      if (err) return console.error(err)
+      if (data && data.cats && data.cats.length) {
+        this.setState({ commonCats: data.cats })
       }
-
-      var catNumbers = {};
-
-      util.allCats(records).forEach(function (name) {
-        name = util.sansMagnitude(name);
-        if (catNumbers[name]) {
-          catNumbers[name] += 1;
-        } else {
-          catNumbers[name] = 1;
-        }
-      });
-
-      var catNumberArray = [];
-      for (var name in catNumbers) {
-        catNumberArray.push({name: name, num: catNumbers[name]});
-      }
-
-      catNumberArray.sort(function (a, b) {
-        return b.num - a.num;
-      });
-
-      catNumberArray = catNumberArray.slice(0, 30);
-
-      self.setState({ commonCats: catNumberArray });
-    });
+    }.bind(this))
   }
 
 });
