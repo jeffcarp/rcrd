@@ -21,4 +21,10 @@ util.sansMagnitude = function (str) {
   return str.replace(/^\s*\d+\.*\d*\s*/, '');
 };
 
+util.allCats = function (records) {
+  return records.reduce(function (acc, record) {
+    return acc.concat(util.catsFromRaw(record.raw));
+  }, []);
+}
+
 module.exports = util;
