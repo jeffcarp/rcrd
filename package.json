@@ -5,7 +5,7 @@
   "main": "browser/index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "tape test/*-test.js test/**/*-test.js | tap-spec",
+    "test": "tape test/**/*-test.js | tap-spec",
     "build": "browserify -t reactify browser/index.js > static/index.js",
     "watch": "watchify -t reactify browser/index.js -o static/index.js",
     "deploy": "npm t && node scripts/deploy/lambda.js && npm run build && node scripts/deploy/www.js"
