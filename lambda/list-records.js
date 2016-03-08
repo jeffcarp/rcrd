@@ -12,12 +12,12 @@ function listRecords(dynamo, params, context) {
     var records = data.Items;
 
     records.sort(function (a, b) {
-      // Use time zones
+      // TODO: Use time zones
       return (new Date(b.time)) - (new Date(a.time));
-    });
+    })
 
     context.succeed(records.slice(0, 50));
-  });
+  })
 }
 
 module.exports = listRecords;
