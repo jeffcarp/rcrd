@@ -137,13 +137,7 @@ API.fetchRecordsWithCat = function (name, callback) {
     } else if (response.body.errorMessage) {
       callback(response.body.errorMessage);
     } else {
-      var records = response.body.Items;
-
-      records.sort(function (a, b) {
-        return Number(b.id) - Number(a.id);
-      });
-
-      callback(null, records);
+      callback(null, response.body)
     }
   });
 };
