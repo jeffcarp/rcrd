@@ -1,50 +1,64 @@
-var sinon = require('sinon');
-var test = require('tape');
+'use strict'
 
-var listRecordsWithCat = require('../../lambda/list-records-with-cat');
+const path = require('path')
+const test = require('tape')
+const tl = require('test-lambda')
 
-test('listRecordsWithCat succeeds with params.catName', function (t) {
-
-  var dynamo = {
-    Condition: sinon.spy(),
-    scan: sinon.spy(function (opts, cb) {
-      cb(['a record']);
-    })
-  };
-  var params = {
-    catName: 'yas'
-  };
-  var context = { 
-    fail: sinon.spy(),
-    done: sinon.spy() 
-  };
-
-  listRecordsWithCat(dynamo, params, context);
-
-  t.false(context.fail.called, 'context.fail not called');
-  t.true(context.done.called, 'context.done called');
-
-  t.end();
-});
+const dynamoDocStub = tl.dynamo
+const testLambda = tl.test(path.resolve('./lambda/index'), {
+  before: require('./before'),
+  after: require('./after'),
+})
 
 test('listRecordsWithCat fails without params.catName', function (t) {
+  dynamoDocStub._set('rcrd-records', { 
+    id: '1',
+    raw: 'some, cat',
+    time: '2016-01-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles' ,
+  })
 
-  var dynamo = {
-    Condition: sinon.spy(),
-    scan: sinon.spy(function (opts, cb) {
-      cb(['a record']);
-    })
-  };
-  var params = {};
-  var context = { 
-    fail: sinon.spy(),
-    done: sinon.spy() 
-  };
+  testLambda({
+    operation: 'list-records-with-cat',
+    access_token: 'some_bs_access_token'
+  }, function (status, records) {
+    t.equal(status, 'fail', 'status is succeed')
+    t.end()
+  })
+})
 
-  listRecordsWithCat(dynamo, params, context);
+test('listRecordsWithCat returns sorted records (id DESC)', function (t) {
+  dynamoDocStub._set('rcrd-records', { 
+    id: '1',
+    raw: 'some, cat',
+    time: '2016-01-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles' ,
+  })
+  dynamoDocStub._set('rcrd-records', { 
+    id: '2',
+    raw: 'another, cat',
+    time: '2015-05-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles', 
+  })
+  dynamoDocStub._set('rcrd-records', { 
+    id: '3',
+    raw: 'yup, a, cat',
+    time: '2016-02-22T18:19:19Z', 
+    time_zone: 'America/Los_Angeles' ,
+  })
 
-  t.true(context.fail.called, 'context.fail called');
-  t.false(context.done.called, 'context.done not called');
+  testLambda({
+    operation: 'list-records-with-cat',
+    catName: 'cat',
+    access_token: 'some_bs_access_token'
+  }, function (status, records) {
+    t.equal(status, 'succeed', 'status is succeed')
 
-  t.end();
+    t.equal(records.length, 3)
+    t.equal(records[0].id, '3')
+    t.equal(records[1].id, '1')
+    t.equal(records[2].id, '2')
+
+    t.end();
+  });
 });
