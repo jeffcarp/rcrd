@@ -22,7 +22,6 @@ var SelectTimeZone = React.createClass({
   render: function () {
     var timeStr = util.timeFromRecord(this.props.record)
     var timeZone = this.props.record.time_zone
-    timeZone = 'Europe/London'
     var zoneNotFound = timeZones.indexOf(timeZone) === -1
     if (zoneNotFound) {
       timeZones.unshift(timeZone)
