@@ -8,7 +8,8 @@ var UserThing = React.createClass({
 
     var fields = [
       ['Email', this.props.user.id],
-    ] 
+      ['Time Zone', this.props.user.time_zone],
+    ]
 
     return (
       <Thing

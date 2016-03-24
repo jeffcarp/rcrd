@@ -13,6 +13,7 @@ var Account = React.createClass({
 
     var user = {
       id: localStorage.email,
+      time_zone: localStorage.time_zone
     }
 
     return (
@@ -20,8 +21,8 @@ var Account = React.createClass({
 
         <section>
           <h2>You</h2>
-          <UserThing 
-            user={user} 
+          <UserThing
+            user={user}
             />
         </section>
 
