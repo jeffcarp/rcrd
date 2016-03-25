@@ -1,7 +1,7 @@
 'use strict'
 
 const app = require('../../app')
-const dynamoDocStub = require('../lambda/dynamodb-doc-stub')
+const dynamoDocStub = require('test-lambda').dynamo
 const proxyquire = require('proxyquire').noCallThru()
 const request = require('request')
 const test = require('tape')
@@ -21,8 +21,8 @@ test.skip('does stuff I guess', function (t) {
     console.log('Listening on port 8000');
 
     const expectedRecord = {
-      id: expectedID, 
-      raw: 'yas', 
+      id: expectedID,
+      raw: 'yas',
       time: '2016-05-22T18:19:19Z' ,
       time_zone: 'America/Los_Angeles',
     }
