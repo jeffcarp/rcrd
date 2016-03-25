@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const context = require('./test/lambda/context-stub')
 const cors = require('cors')
 const express = require('express')
-const dynamoDocStub = require('./test/lambda/dynamodb-doc-stub')
+const dynamoDocStub = require('test-lambda').dynamo
 const fs = require('fs')
 const proxyquire = require('proxyquire').noCallThru()
 

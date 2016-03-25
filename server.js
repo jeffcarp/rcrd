@@ -2,7 +2,7 @@
 
 const assignRecordID = require('./lambda/assign-record-id')
 const app = require('./app')
-const dynamoDocStub = require('./test/lambda/dynamodb-doc-stub')
+const dynamoDocStub = require('test-lambda').dynamo
 const randomWords = require('random-words')
 const util = require('./browser/util')
 
