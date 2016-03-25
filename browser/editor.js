@@ -16,7 +16,7 @@ var Editor = React.createClass({
       savedState: 'saved',
       newRecord: true,
       loading: false
-    };  
+    }
   },
 
   addCat: function (catName) {
@@ -127,12 +127,14 @@ var Editor = React.createClass({
 
     this.setState({
       loading: true
-    });
- 
+    })
+
     if (this.state.newRecord) {
+      var time = this.state.timestamp.clone()
+
       API.createRecord({
         raw: this.state.raw,
-        time: this.state.timestamp.utc().format(), 
+        time: time.utc().format(),
         time_zone: User.time_zone()
       }, function (err, data) {
         self.setState({
@@ -150,7 +152,7 @@ var Editor = React.createClass({
         self.setState({
           raw: '',
           newRecord: true,
-        });
+        })
       });
     } else {
       console.log('update (replace) record');

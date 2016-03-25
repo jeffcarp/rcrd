@@ -87,11 +87,12 @@ var EditRaw = React.createClass({
     e.preventDefault()
 
     this.setState({ loading: true })
+    var time = this.state.timestamp.clone()
 
     API.createRecord({
       id: this.props.record.id,
       raw: this.refs.raw.value,
-      time: this.state.timestamp.utc().format(),
+      time: time.utc().format(),
       time_zone: this.props.record.time_zone,
     }, function (err, data) {
       if (err) return console.error(err)
