@@ -27,7 +27,11 @@ function seed() {
   }
 
   dynamoDocStub._set('rcrd-access-tokens', {
-    id: 'some_bs_access_token',
+    id: '9EvgVGYuxdOUiYJQqw4qokHjj8nGsIA6hmt+IhXv3eY=',
     owner: 'gcarpenterv@gmail.com',
+  })
+
+  dynamoDocStub._set('rcrd-view-data', {
+    id: 'nothing right now',
   })
 }
