@@ -30,7 +30,7 @@ var RecordPage = React.createClass({
   fetchRecord: function (id) {
     API.fetchRecord(id, function (err, record) {
       if (err) return console.error(err)
-      this.setState({ record: record }); 
+      this.setState({ record: record })
     }.bind(this));
   },
 
