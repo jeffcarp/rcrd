@@ -1,6 +1,6 @@
 'use strict'
 
-const app = require('../../app')
+const app = require('../../server/app')
 const dynamoDocStub = require('test-lambda').dynamo
 const proxyquire = require('proxyquire').noCallThru()
 const request = require('request')
