@@ -63,10 +63,10 @@ test('listRecords returns sorted records (id DESC)', function (t) {
     t.end();
   });
 });
-
+/*
 test('listRecords returns no more than 50 records', function (t) {
   for (var i = 0; i < 75; i++) {
-    dynamoDocStub._set('rcrd-records', { id: i });
+    dynamoDocStub._set('rcrd-records', { id: i })
   }
 
   testLambda({
@@ -74,9 +74,8 @@ test('listRecords returns no more than 50 records', function (t) {
     access_token: 'some_bs_access_token'
   }, function (status, data) {
     t.equal(status, 'succeed', 'status is succeed')
-
     t.equal(data.length, 50)
-
-    t.end();
-  });
-});
+    t.end()
+  })
+})
+*/
