@@ -1,7 +1,7 @@
 'use strict'
 
 const bodyParser = require('body-parser')
-const context = require('./test/lambda/context-stub')
+const context = require('../test/lambda/context-stub')
 const cors = require('cors')
 const express = require('express')
 const dynamoDocStub = require('test-lambda').dynamo
@@ -10,7 +10,7 @@ const proxyquire = require('proxyquire').noCallThru()
 
 const app = express()
 const index = fs.readFileSync('index.html', 'utf-8');
-const lambda = proxyquire('./lambda/index', {
+const lambda = proxyquire('../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 })
 

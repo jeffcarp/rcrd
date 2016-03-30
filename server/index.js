@@ -1,10 +1,10 @@
 'use strict'
 
-const assignRecordID = require('./lambda/assign-record-id')
+const assignRecordID = require('../lambda/assign-record-id')
 const app = require('./app')
 const dynamoDocStub = require('test-lambda').dynamo
 const randomWords = require('random-words')
-const util = require('./browser/util')
+const util = require('../browser/util')
 
 seed()
 
