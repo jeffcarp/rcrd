@@ -1,8 +1,8 @@
 * {
   margin: 0;
   padding: 0;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 body {
@@ -258,4 +258,9 @@ ul li {
 
 .code {
   font-family: monospace;
+}
+
+.month-name {
+  font-size: 11px;
+  fill: #888;
 }
