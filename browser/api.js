@@ -42,7 +42,7 @@ API.createRecord = function (params, callback) {
       time: params.time,
       time_zone: params.time_zone,
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
@@ -64,7 +64,7 @@ API.fetchRecord = function (id, callback) {
       operation: 'record.get',
       id: id,
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
@@ -87,7 +87,7 @@ API.deleteRecord = function (id, callback) {
       operation: 'record.delete',
       id: id,
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
@@ -105,7 +105,7 @@ API.fetchRecords = function (callback) {
     body: JSON.stringify({
       operation: 'list',
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
@@ -128,7 +128,7 @@ API.fetchRecordsWithCat = function (name, callback) {
       operation: 'list-records-with-cat',
       catName: name,
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
@@ -152,7 +152,7 @@ API.viewData = function (id, callback) {
       operation: 'view-data',
       id: fullID,
       access_token: User.access_token(),
-    })
+    }),
     json: true
   }, function (err, response) {
     if (err) {
