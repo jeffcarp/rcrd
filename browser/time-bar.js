@@ -1,9 +1,8 @@
-var constants = require('./constants');
-var React = require('react');
-var util = require('./util');
+var constants = require('./constants')
+var React = require('react')
+var util = require('./util')
 
 var TimeBar = React.createClass({
-
   width: 366,
   height: 10,
 
@@ -18,25 +17,23 @@ var TimeBar = React.createClass({
     var x = blockSize * dayOfYear
 
     return (
-      <div>
-          <svg 
-            viewBox={'0 0 '+this.width+' '+this.height}
-            width="100%"
-            height={this.height}
-            style={{ backgroundColor: '#eee' }}
-            >
-            <rect 
-              x={x} 
-              y={0} 
-              width={blockSize} 
-              height={this.height} 
-              fill={constants.mainBackgroundColor}
-              />
-          </svg>
-      </div>
-    );
+    <div>
+      <svg
+        viewBox={'0 0 ' + this.width + ' ' + this.height}
+        width="100%"
+        height={this.height}
+        style={{ backgroundColor: '#eee' }}>
+        <rect
+          x={x}
+          y={0}
+          width={blockSize}
+          height={this.height}
+          fill={constants.mainBackgroundColor} />
+      </svg>
+    </div>
+    )
   }
 
-});
+})
 
-module.exports = TimeBar;
+module.exports = TimeBar

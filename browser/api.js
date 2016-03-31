@@ -9,12 +9,12 @@ if (constants.localAPI) {
   var API_URL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/'
 }
 
-var API = {};
+var API = {}
 
 API.login = function (email, password, callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'get-access-token',
       email: email,
@@ -23,19 +23,19 @@ API.login = function (email, password, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
-      callback(null, response.body);
+      callback(null, response.body)
     }
-  });
-};
+  })
+}
 
 API.createRecord = function (params, callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'create',
       id: params.id,
@@ -47,20 +47,20 @@ API.createRecord = function (params, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
       bus.emit('record-created-or-updated', response.body)
-      callback(null, response.body);
+      callback(null, response.body)
     }
-  });
-};
+  })
+}
 
 API.fetchRecord = function (id, callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'record.get',
       id: id,
@@ -69,21 +69,21 @@ API.fetchRecord = function (id, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
-      var record = response.body.Item;
+      var record = response.body.Item
 
-      callback(null, record);
+      callback(null, record)
     }
-  });
-};
+  })
+}
 
 API.deleteRecord = function (id, callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'record.delete',
       id: id,
@@ -92,17 +92,17 @@ API.deleteRecord = function (id, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else {
-      callback(null, null);
+      callback(null, null)
     }
-  });
-};
+  })
+}
 
 API.fetchRecords = function (callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'list',
       access_token: User.access_token(),
@@ -110,21 +110,21 @@ API.fetchRecords = function (callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
-      var records = response.body;
+      var records = response.body
 
-      callback(null, records);
+      callback(null, records)
     }
-  });
-};
+  })
+}
 
 API.fetchRecordsWithCat = function (name, callback) {
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'list-records-with-cat',
       catName: name,
@@ -133,23 +133,22 @@ API.fetchRecordsWithCat = function (name, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
       callback(null, response.body)
     }
-  });
-};
+  })
+}
 
 API.viewData = function (id, callback) {
-
   var userID = '2'
   var fullID = userID + '|' + id
 
   request({
-    method: 'POST', 
-    url: API_URL + 'records', 
+    method: 'POST',
+    url: API_URL + 'records',
     body: JSON.stringify({
       operation: 'view-data',
       id: fullID,
@@ -158,16 +157,15 @@ API.viewData = function (id, callback) {
     json: true
   }, function (err, response) {
     if (err) {
-      callback(err);
+      callback(err)
     } else if (response.body.errorMessage) {
-      callback(response.body.errorMessage);
+      callback(response.body.errorMessage)
     } else {
       var data = response.body.Item
 
       callback(null, data)
     }
-  });
-};
+  })
+}
 
-module.exports = API;
-
+module.exports = API

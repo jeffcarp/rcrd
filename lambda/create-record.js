@@ -1,10 +1,9 @@
-'use strict';
+'use strict'
 
 var crypto = require('crypto')
 var util = require('./util')
 
-function createRecord(dynamo, params, context) {
-
+function createRecord (dynamo, params, context) {
   if (params.id) {
     // Updating
 
@@ -19,7 +18,7 @@ function createRecord(dynamo, params, context) {
     // Creating
 
     if (!params.raw || !params.time || !params.time_zone) {
-      return context.fail('Missing param');
+      return context.fail('Missing param')
     }
 
     // Add user_id to this
@@ -34,14 +33,14 @@ function createRecord(dynamo, params, context) {
     }
   }
 
-  var cats = util.catsFromRaw(params.raw); 
+  var cats = util.catsFromRaw(params.raw)
   if (util.hasDupes(cats.map(util.sansMagnitude))) {
-    return context.fail('Records cannot have duplicate cats.');
+    return context.fail('Records cannot have duplicate cats.')
   }
 
   dynamo.putItem({
-    "TableName": "rcrd-records",
-    "Item": newRecord,
+    'TableName': 'rcrd-records',
+    'Item': newRecord,
   }, function (err) {
     if (err) return context.fail(err)
 
@@ -50,26 +49,26 @@ function createRecord(dynamo, params, context) {
     }, function (err, data) {
       if (err) return context.fail(err)
 
-      var records = data.Items;
-      var catNumbers = {};
+      var records = data.Items
+      var catNumbers = {}
 
       util.allCats(records).forEach(function (name) {
-        name = util.sansMagnitude(name);
+        name = util.sansMagnitude(name)
         if (catNumbers[name]) {
-          catNumbers[name] += 1;
+          catNumbers[name] += 1
         } else {
-          catNumbers[name] = 1;
+          catNumbers[name] = 1
         }
-      });
+      })
 
-      var catNumberArray = [];
+      var catNumberArray = []
       for (var name in catNumbers) {
         catNumberArray.push({name: name, num: catNumbers[name]})
       }
 
       catNumberArray.sort(function (a, b) {
         return b.num - a.num
-      });
+      })
 
       var top20Cats = catNumberArray
         .map(function (catNum) { return catNum.name })
@@ -90,4 +89,4 @@ function createRecord(dynamo, params, context) {
   })
 }
 
-module.exports = createRecord;
+module.exports = createRecord

@@ -1,11 +1,10 @@
-var assert = require('assert'); 
-var React = require('react');
-var ReactDOM = require('react-dom');
-var moment = require('moment');
-var util = require('./util');
+var assert = require('assert')
+var React = require('react')
+var ReactDOM = require('react-dom')
+var moment = require('moment')
+var util = require('./util')
 
 var WeeklyBlocks = React.createClass({
-
   width: 732,
 
   propTypes: {
@@ -23,17 +22,17 @@ var WeeklyBlocks = React.createClass({
     return week
   },
 
-  render: function(context) {
-    var records = this.props.records;
-    var padding = 2;
-    var blockHeight = 10;
+  render: function (context) {
+    var records = this.props.records
+    var padding = 2
+    var blockHeight = 10
     var paddingTop = 5
-    var height = blockHeight * 8 + paddingTop + 5;
-    var time = moment().year(this.props.year).startOf('year');
+    var height = blockHeight * 8 + paddingTop + 5
+    var time = moment().year(this.props.year).startOf('year')
     var blockDimension = Math.floor(this.width / 53)
-    var blockWidth = blockDimension - padding;
-    var dayEls = [];
-    var monthNameEls = [];
+    var blockWidth = blockDimension - padding
+    var dayEls = []
+    var monthNameEls = []
 
     var standInWeek = 52
     var lastMonth
@@ -63,16 +62,15 @@ var WeeklyBlocks = React.createClass({
 
       dayEls.push(
         <rect
-          x={x} 
-          y={y} 
-          width={blockWidth} 
-          height={blockHeight - padding} 
+          x={x}
+          y={y}
+          width={blockWidth}
+          height={blockHeight - padding}
           fill={fill}
-          key={time.dayOfYear()}
-          />
-      ); 
+          key={time.dayOfYear()} />
+      )
 
-      time.add(1, 'day');
+      time.add(1, 'day')
     }
 
     var recordEls = records.map(function (record) {
@@ -83,22 +81,20 @@ var WeeklyBlocks = React.createClass({
       var y = height - ((time.day() + 1) * blockHeight)
 
       return (
-        <rect
-          x={x}
-          y={y} 
-          width={blockWidth}
-          height={blockHeight - padding}
-          fill={'hsl('+this.props.hue+', 50%, 60%)'}
-          key={record.id}
-          />
-      );
-    }.bind(this));
+      <rect
+        x={x}
+        y={y}
+        width={blockWidth}
+        height={blockHeight - padding}
+        fill={'hsl(' + this.props.hue + ', 50%, 60%)'}
+        key={record.id} />
+      )
+    }.bind(this))
 
-    var todayEl;
+    var todayEl
     if (this.props.year) {
-      var today = moment();
+      var today = moment()
       if (today.year() === this.props.year) {
-
         var week = this.weekHack(today)
         var x = (week - 1) * blockDimension
         var y = height - ((today.day() + 1) * blockHeight)
@@ -107,39 +103,34 @@ var WeeklyBlocks = React.createClass({
           <rect
             x={x}
             y={y}
-            width={blockWidth} 
-            height={blockHeight - padding} 
+            width={blockWidth}
+            height={blockHeight - padding}
             fill='none'
             stroke={'#ec6e61'}
-            strokeWidth='1px'
-            />
-        );
+            strokeWidth='1px' />
+        )
       }
     }
 
     return (
-      <div>
-          <svg
-            viewBox={'0 0 '+this.width+' '+height}
-            width="100%"
-            height={height}
-            >
-            <g>
-              {monthNameEls}
-            </g>
-            <g>
-              {dayEls}
-            </g>
-            <g>
-              {recordEls}
-            </g>
-            <g>
-              {todayEl}
-            </g>
-          </svg>
-      </div>
-    );
+    <div>
+      <svg viewBox={'0 0 ' + this.width + ' ' + height} width="100%" height={height}>
+        <g>
+          {monthNameEls}
+        </g>
+        <g>
+          {dayEls}
+        </g>
+        <g>
+          {recordEls}
+        </g>
+        <g>
+          {todayEl}
+        </g>
+      </svg>
+    </div>
+    )
   }
-});
+})
 
-module.exports = WeeklyBlocks;
+module.exports = WeeklyBlocks

@@ -1,24 +1,22 @@
-var API = require('../api');
+var API = require('../api')
 var bus = require('../bus')()
-var DeleteRecord = require('../delete-record');
+var DeleteRecord = require('../delete-record')
 var EditRaw = require('../edit-raw')
-var React = require('react');
-var Record = require('../record');
-var request = require('browser-request');
-var SelectTimeZone = require('../select-time-zone');
-var util = require('../util');
+var React = require('react')
+var Record = require('../record')
+var request = require('browser-request')
+var SelectTimeZone = require('../select-time-zone')
+var util = require('../util')
 
 var RecordPage = React.createClass({
-
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       record: undefined
-    };
+    }
   },
 
   componentWillMount: function () {
-    this.fetchRecord(this.props.id);
-
+    this.fetchRecord(this.props.id)
 
     bus.on('record-created-or-updated', function (record) {
       if (record.id === this.state.record.id) {
@@ -31,38 +29,39 @@ var RecordPage = React.createClass({
     API.fetchRecord(id, function (err, record) {
       if (err) return console.error(err)
       this.setState({ record: record })
-    }.bind(this));
+    }.bind(this))
   },
 
-  render: function() {
+  render: function () {
     var record = this.state.record
 
     if (record) {
       return (
-        <section>
-          <Record 
-            record={record} />
-          <SelectTimeZone 
-            record={record} />
-          <EditRaw 
-            record={record} />
-          <DeleteRecord id={record.id} />
-        </section>
+      <section>
+        <Record record={record} />
+        <SelectTimeZone record={record} />
+        <EditRaw record={record} />
+        <DeleteRecord id={record.id} />
+      </section>
       )
     } else if (record === null) {
       return (
-        <section>
-          <div className="faded">Error loading record.</div>
-        </section>
+      <section>
+        <div className="faded">
+          Error loading record.
+        </div>
+      </section>
       )
     } else {
       return (
-        <section>
-          <div className="faded">Loading record...</div>
-        </section>
+      <section>
+        <div className="faded">
+          Loading record...
+        </div>
+      </section>
       )
     }
   }
-});
+})
 
-module.exports = RecordPage;
+module.exports = RecordPage

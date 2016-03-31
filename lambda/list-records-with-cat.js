@@ -1,4 +1,4 @@
-function listRecordsWithCat(dynamo, params, context) {
+function listRecordsWithCat (dynamo, params, context) {
   if (!params.catName) return context.fail('Missing param catName')
 
   dynamo.scan({

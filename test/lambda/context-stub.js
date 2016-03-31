@@ -2,7 +2,7 @@
 
 var context = {}
 
-context.callback = null;
+context.callback = null
 
 context.done = function (err, arg) {
   err ? context.fail(arg) : context.succeed(arg)

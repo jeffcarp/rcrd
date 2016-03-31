@@ -9,24 +9,23 @@ AWS.config.update({region: 'us-east-1'})
 
 const dynamo = new doc.DynamoDB()
 
-pg.defaults.poolSize = 1;
+pg.defaults.poolSize = 1
 
-pg.connect(conString, function(err, client, done) {
+pg.connect(conString, function (err, client, done) {
   if (err) {
-    return console.error('error fetching client from pool', err);
+    return console.error('error fetching client from pool', err)
   }
 
-  client.query('SELECT * from records', [], function(err, result) {
-    //call `done()` to release the client back to the pool
+  client.query('SELECT * from records', [], function (err, result) {
+    // call `done()` to release the client back to the pool
     done()
 
     if (err) {
-      return console.error('error running query', err);
+      return console.error('error running query', err)
     }
 
     result.rows.forEach(function (record, index) {
       setTimeout(function () {
-
         var time = moment.parseZone(record.target).utc()
         var hashThis = time + record.raw
         var id = crypto.createHash('sha256').update(hashThis).digest('hex')
@@ -39,18 +38,16 @@ pg.connect(conString, function(err, client, done) {
         }
 
         dynamo.putItem({
-          "TableName": "rcrd-records",
-          "Item": newRecord
+          'TableName': 'rcrd-records',
+          'Item': newRecord
         }, function (err, data) {
           console.log(err, newRecord)
         })
 
-
         if (index === result.rows.length - 1) {
           client.end()
         }
-      }, 1e3 * index * 10)  
+      }, 1e3 * index * 10)
     })
-
-  });
-});
+  })
+})

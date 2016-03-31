@@ -1,1 +1,1 @@
-module.exports = 'yaaasss lady gaga';
+module.exports = 'yaaasss lady gaga'

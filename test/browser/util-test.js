@@ -4,7 +4,6 @@ const test = require('tape')
 const util = require('../../browser/util')
 
 test('util.hasMagnitude', function (t) {
-
   t.true(util.hasMagnitude('2 drinks'), 'has magnitude: "2 drinks"')
 
   t.false(util.hasMagnitude('party'), 'does not have magnitude: "party"')
@@ -12,19 +11,18 @@ test('util.hasMagnitude', function (t) {
 })
 
 test('util.splitRecordsByYears', (t) => {
-
   const records = [
     {
       time: '2016-05-22T18:19:19Z',
-      time_zone: 'America/Los_Angeles',
+      time_zone: 'America/Los_Angeles'
     },
     {
       time: '2010-12-22T18:19:19Z',
-      time_zone: 'America/Los_Angeles',
+      time_zone: 'America/Los_Angeles'
     },
     {
       time: '2016-02-22T18:19:19Z',
-      time_zone: 'America/Los_Angeles',
+      time_zone: 'America/Los_Angeles'
     }
   ]
 
