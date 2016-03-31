@@ -28,14 +28,14 @@ var CatRecordsPage = React.createClass({
 
   render: function () {
     return (
-    <div>
-      <section>
-        <h2>All records with <Cat name={this.state.name} /></h2>
-      </section>
-      <section>
-        <RecordList records={this.state.records} loading={this.state.loadingRecords} />
-      </section>
-    </div>
+      <div>
+        <section>
+          <h2>All records with <Cat name={this.state.name} /></h2>
+        </section>
+        <section>
+          <RecordList records={this.state.records} loading={this.state.loadingRecords} />
+        </section>
+      </div>
     )
   }
 })

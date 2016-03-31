@@ -1,10 +1,7 @@
 var CatList = require('./cat-list')
-var Editor = require('./editor')
 var Link = require('react-router-component').Link
-var moment = require('moment-timezone')
 var React = require('react')
 var TimeBar = require('./time-bar')
-var User = require('./services/user')
 var util = require('./util')
 
 var Record = React.createClass({
@@ -28,13 +25,13 @@ var Record = React.createClass({
     var timestamp = util.timeFromRecord(record).format('MMMM Do YYYY, h:mm:ss a')
 
     return (
-    <div className="record">
-      <TimeBar record={this.props.record} />
-      <Link className="time" href={url}>
-      {timestamp + ' in ' + record.time_zone}
-      </Link>
-      <CatList raw={record.raw} />
-    </div>
+      <div className='record'>
+        <TimeBar record={this.props.record} />
+        <Link className='time' href={url}>
+        {timestamp + ' in ' + record.time_zone}
+        </Link>
+        <CatList raw={record.raw} />
+      </div>
     )
   },
 

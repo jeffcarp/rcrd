@@ -17,20 +17,20 @@ var TimeBar = React.createClass({
     var x = blockSize * dayOfYear
 
     return (
-    <div>
-      <svg
-        viewBox={'0 0 ' + this.width + ' ' + this.height}
-        width="100%"
-        height={this.height}
-        style={{ backgroundColor: '#eee' }}>
-        <rect
-          x={x}
-          y={0}
-          width={blockSize}
+      <div>
+        <svg
+          viewBox={'0 0 ' + this.width + ' ' + this.height}
+          width='100%'
           height={this.height}
-          fill={constants.mainBackgroundColor} />
-      </svg>
-    </div>
+          style={{ backgroundColor: '#eee' }}>
+          <rect
+            x={x}
+            y={0}
+            width={blockSize}
+            height={this.height}
+            fill={constants.mainBackgroundColor} />
+        </svg>
+      </div>
     )
   }
 

@@ -5,7 +5,8 @@
   "main": "browser/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "lint": "echo want to transition to pretest once done && standard",
+    "lint": "standard",
+    "pretest": "standard",
     "test": "tape test/**/*-test.js | tap-spec",
     "build": "browserify -t reactify browser/index.js > static/index.js",
     "watch": "watchify -t reactify browser/index.js -o static/index.js",

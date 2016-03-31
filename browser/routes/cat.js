@@ -1,11 +1,7 @@
 var API = require('../api')
-var bus = require('../bus')()
 var Cat = require('../cat')
-var ManyMonths = require('../many-months')
-var MagGraph = require('../mag-graph')
 var React = require('react')
 var Record = require('../record')
-var request = require('browser-request')
 var TogetherCats = require('../together-cats')
 var util = require('../util')
 var WeeklyBlocksYears = require('../weekly-blocks-years')
@@ -99,19 +95,14 @@ var CatPage = React.createClass({
     var cats = this.state.contemporaneousCatNames
     var name = this.state.name
     var hue = util.catNameToHue(name)
-    var alsoHue = util.catNameToHue(this.state.alsoName)
     var recordDivs = []
-    var catElems = []
-    var oneYear
 
     if (records.length > 0) {
       recordDivs = records.slice(0, 3).map(function (record) {
         return <Record record={record} key={record.id} />
       })
     } else {
-      recordDivs = <div className="faded">
-                     'Loading records..'
-                   </div>
+      recordDivs = <div className='faded'>'Loading records..'</div>
     }
 
     var also
@@ -120,23 +111,23 @@ var CatPage = React.createClass({
     }
 
     return (
-    <div>
-      <section>
-        <h2><Cat name={name} />{also}</h2>
-      </section>
-      <WeeklyBlocksYears records={records} hue={hue} />
-      <section>
-        <h2>Last 3 records</h2>
-        {recordDivs}
-        <div>
-          <a href={'/cats/' + name + '/records'}>See all records with <Cat name={name} onClick={null} /></a>
-        </div>
-      </section>
-      <section>
-        <h2>Commonly seen together</h2>
-        <TogetherCats cats={cats} rootCatName={name} totalRootRecords={records.length} />
-      </section>
-    </div>
+      <div>
+        <section>
+          <h2><Cat name={name} />{also}</h2>
+        </section>
+        <WeeklyBlocksYears records={records} hue={hue} />
+        <section>
+          <h2>Last 3 records</h2>
+          {recordDivs}
+          <div>
+            <a href={'/cats/' + name + '/records'}>See all records with <Cat name={name} onClick={null} /></a>
+          </div>
+        </section>
+        <section>
+          <h2>Commonly seen together</h2>
+          <TogetherCats cats={cats} rootCatName={name} totalRootRecords={records.length} />
+        </section>
+      </div>
     )
   }
 })

@@ -1,7 +1,5 @@
 var API = require('./api')
 var React = require('react')
-var ReactDOM = require('react-dom')
-var util = require('./util')
 
 var timeZones = [
   'Pacific/Honolulu',
@@ -19,7 +17,6 @@ var SelectTimeZone = React.createClass({
   },
 
   render: function () {
-    var timeStr = util.timeFromRecord(this.props.record)
     var timeZone = this.props.record.time_zone
     var zoneNotFound = timeZones.indexOf(timeZone) === -1
     if (zoneNotFound) {
@@ -27,20 +24,22 @@ var SelectTimeZone = React.createClass({
     }
 
     return (
-    <div className='m1-0b'>
-      <select
-        value={timeZone}
-        name='select-time-zone'
-        ref='selectTimeZone'
-        onChange={this.onChange}
-        disabled={zoneNotFound || this.state.loading}>
-        {timeZones.map(function (zone) {
-           return <option value={zone} key={zone}>
-                    {zone}
-                  </option>
-         })}
-      </select>
-    </div>
+      <div className='m1-0b'>
+        <select
+          value={timeZone}
+          name='select-time-zone'
+          ref='selectTimeZone'
+          onChange={this.onChange}
+          disabled={zoneNotFound || this.state.loading}>
+          {timeZones.map(function (zone) {
+            return (
+              <option value={zone} key={zone}>
+                {zone}
+              </option>
+            )
+          })}
+        </select>
+      </div>
     )
   },
 

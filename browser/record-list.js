@@ -11,24 +11,16 @@ var RecordList = React.createClass({
     var records = this.props.records || []
     if (records.length > 0) {
       return (
-      <div>
-        {records.map(function (record) {
-           return <Record record={record} key={record.id} />
-         })}
-      </div>
+        <div>
+          {records.map(function (record) {
+            return <Record record={record} key={record.id} />
+          })}
+        </div>
       )
-
-      return <div>
-               {recordDivs}
-             </div>
     } else if (this.props.loading) {
-      return <div className="faded">
-               Loading records...
-             </div>
+      return <div className='faded'>Loading records...</div>
     } else {
-      return <div className="faded">
-               No records to show.
-             </div>
+      return <div className='faded'>No records to show.</div>
     }
   }
 

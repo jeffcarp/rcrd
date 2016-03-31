@@ -10,18 +10,17 @@ var SessionThing = React.createClass({
     var fields = [
       ['Device', 'Browser'],
       ['Access token', this.props.accessToken.id, 'code'],
-      ['Expires', expiration.format('dddd, MMMM Do YYYY, h:mm:ss a')],
+      ['Expires', expiration.format('dddd, MMMM Do YYYY, h:mm:ss a')]
     ]
 
     return (
-    <Thing
-      type='Session'
-      fields={fields}
-      actionText={this.props.actionText}
-      actionOnClick={this.props.actionOnClick} />
+      <Thing
+        type='Session'
+        fields={fields}
+        actionText={this.props.actionText}
+        actionOnClick={this.props.actionOnClick} />
     )
-  },
-
+  }
 })
 
 module.exports = SessionThing
