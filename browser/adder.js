@@ -1,12 +1,8 @@
 var React = require('react')
-var request = require('browser-request')
-var moment = require('moment')
-
 var API = require('./api')
 var bus = require('./bus')()
 var CatList = require('./cat-list')
 var Editor = require('./editor')
-var util = require('./util')
 
 var Adder = React.createClass({
   getInitialState: function () {
@@ -21,10 +17,10 @@ var Adder = React.createClass({
 
   render: function () {
     return (
-    <div className="adder">
-      <Editor focus={this.props.focus} />
-      <CatList cats={this.state.commonCats} catOnClick={this.catOnClick} />
-    </div>
+      <div className='adder'>
+        <Editor focus={this.props.focus} />
+        <CatList cats={this.state.commonCats} catOnClick={this.catOnClick} />
+      </div>
     )
   },
 

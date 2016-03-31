@@ -4,10 +4,11 @@ var crypto = require('crypto')
 var util = require('./util')
 
 function createRecord (dynamo, params, context) {
+  var newRecord
   if (params.id) {
     // Updating
 
-    var newRecord = {
+    newRecord = {
       id: params.id
     }
 
@@ -25,7 +26,7 @@ function createRecord (dynamo, params, context) {
     var hashThis = params.time + params.raw
     var id = crypto.createHash('sha256').update(hashThis).digest('hex')
 
-    var newRecord = {
+    newRecord = {
       id: id,
       raw: params.raw,
       time: params.time,
@@ -40,7 +41,7 @@ function createRecord (dynamo, params, context) {
 
   dynamo.putItem({
     'TableName': 'rcrd-records',
-    'Item': newRecord,
+    'Item': newRecord
   }, function (err) {
     if (err) return context.fail(err)
 
@@ -78,7 +79,7 @@ function createRecord (dynamo, params, context) {
         TableName: 'rcrd-view-data',
         Item: {
           id: '2|top-20-cats',
-          cats: top20Cats,
+          cats: top20Cats
         }
       }, function (err) {
         if (err) return context.fail(err)

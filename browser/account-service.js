@@ -1,7 +1,7 @@
 var AccountService = {}
 
 AccountService.isLoggedIn = function () {
-  return localStorage.email && localStorage.access_token
+  return window.localStorage.email && window.localStorage.access_token
 }
 
 AccountService.logout = function () {}

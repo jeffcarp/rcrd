@@ -1,6 +1,5 @@
 var AdmZip = require('adm-zip')
 var AWS = require('aws-sdk')
-var fs = require('fs')
 
 require('./confirm-correct-directory')()
 
@@ -27,7 +26,7 @@ var zipBuffer = zip.toBuffer()
 lambda.updateFunctionCode({
   FunctionName: 'test-write-to-dynamo',
   ZipFile: zipBuffer,
-  Publish: true,
+  Publish: true
 }, function (err, data) {
   if (err) {
     console.error(err, err.stack)
