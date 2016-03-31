@@ -92,7 +92,7 @@ var MonthBlocks = React.createClass({
 
       return (
       <rect
-        x={;(this.props.numDays - daysFromToday - 1) * blockWidth}
+        x={(this.props.numDays - daysFromToday - 1) * blockWidth}
         y={padding}
         width={blockWidth}
         height={this.height - padding * 2}
