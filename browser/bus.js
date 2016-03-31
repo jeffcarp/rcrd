@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
-var EventEmitter = require('event-emitter');
-var _bus;
+var EventEmitter = require('event-emitter')
+var _bus
 
-function bus() {
+function bus () {
   if (!_bus) {
-    _bus = EventEmitter();
+    _bus = EventEmitter()
   }
 
-  return _bus;
+  return _bus
 }
 
-module.exports = bus;
+module.exports = bus

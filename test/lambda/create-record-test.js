@@ -7,7 +7,7 @@ const tl = require('test-lambda')
 const dynamoDocStub = tl.dynamo
 const testLambda = tl.test(path.resolve('./lambda/index'), {
   before: require('./before'),
-  after: require('./after'),
+  after: require('./after')
 })
 const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 
@@ -17,10 +17,10 @@ test('cannot create a record without an id', function (t) {
   testLambda({
     operation: 'create',
     raw: 'test, raw, test',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
     t.equal(status, 'fail')
-    t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record was not created');
+    t.notOk(dynamoDocStub._get('rcrd-records', expectedID), 'a record was not created')
     t.end()
   })
 })
@@ -46,10 +46,10 @@ test('createRecord adds a record', (t) => {
     operation: 'create',
     id: expectedID,
     raw: 'test, raw',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
-    t.equal(status, 'succeed');
-    let record = dynamoDocStub._get('rcrd-records', expectedID);
+    t.equal(status, 'succeed')
+    let record = dynamoDocStub._get('rcrd-records', expectedID)
     t.ok(record, 'a record now exists')
     t.equal(record.id, expectedID)
     t.equal(record.raw, 'test, raw')
@@ -58,7 +58,6 @@ test('createRecord adds a record', (t) => {
 })
 
 test('createRecord creates "top-20-cats" view data if not exists', (t) => {
-
   const viewDatumID = '2|top-20-cats'
 
   t.notOk(dynamoDocStub._get('rcrd-view-data', viewDatumID))
@@ -67,9 +66,9 @@ test('createRecord creates "top-20-cats" view data if not exists', (t) => {
     operation: 'create',
     id: expectedID,
     raw: 'test, raw',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
-    t.equal(status, 'succeed');
+    t.equal(status, 'succeed')
 
     const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
     t.ok(viewDatum, 'a view datum exists')
@@ -81,29 +80,28 @@ test('createRecord creates "top-20-cats" view data if not exists', (t) => {
 })
 
 test('createRecord updates "top-20-cats" view data if exists', (t) => {
-
   const viewDatumID = '2|top-20-cats'
 
   dynamoDocStub._set('rcrd-records', {
     id: '1',
-    raw: 'yas, nas', 
+    raw: 'yas, nas'
   })
   dynamoDocStub._set('rcrd-records', {
     id: '2',
-    raw: 'yas', 
+    raw: 'yas'
   })
   dynamoDocStub._set('rcrd-view-data', {
     id: viewDatumID,
-    cats: ['yas', 'nas'], 
+    cats: ['yas', 'nas']
   })
 
   testLambda({
     operation: 'create',
     id: expectedID,
     raw: 'test, raw',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
-    t.equal(status, 'succeed');
+    t.equal(status, 'succeed')
 
     const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
     t.ok(viewDatum, 'a view datum exists')
@@ -121,9 +119,9 @@ test('can create a record with UTF-8 characters', (t) => {
     operation: 'create',
     id: expectedID,
     raw: raw,
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
-    t.equal(status, 'succeed');
+    t.equal(status, 'succeed')
     const record = dynamoDocStub._get('rcrd-records', expectedID)
     t.ok(record, 'a record now exists')
     t.equal(record.id, expectedID)
@@ -137,10 +135,10 @@ test('cannot create a record with duplicate plain cats', function (t) {
     operation: 'create',
     id: expectedID,
     raw: 'test, raw, test',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
     t.equal(status, 'fail')
-    t.notOk(dynamoDocStub._get(expectedID), 'a record was not created');
+    t.notOk(dynamoDocStub._get(expectedID), 'a record was not created')
     t.end()
   })
 })
@@ -150,11 +148,11 @@ test('cannot create a record with duplicate cats with mags', (t) => {
     operation: 'create',
     id: expectedID,
     raw: 'run, great, 13 miles, phew, 3 miles',
-    access_token: 'some_bs_access_token',
+    access_token: 'some_bs_access_token'
   }, (status, arg) => {
     t.equal(status, 'fail')
 
-    t.notOk(dynamoDocStub._get(expectedID), 'a record was not created');
+    t.notOk(dynamoDocStub._get(expectedID), 'a record was not created')
     t.end()
   })
 })

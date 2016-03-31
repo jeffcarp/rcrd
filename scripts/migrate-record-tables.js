@@ -12,13 +12,12 @@ dynamo.scan({
 }, function (err, data) {
   if (err) return console.error(err)
 
-  var records = data.Items;
+  var records = data.Items
   var record
 
   var i = 0
 
   var inter = setInterval(function () {
-
     if (i === records.length) return clearInterval(inter)
 
     record = records[i]
@@ -31,7 +30,6 @@ dynamo.scan({
     var hashThis = time + record.raw
     var id = crypto.createHash('sha256').update(hashThis).digest('hex')
 
-
     var newRecord = {
       id: id,
       raw: record.raw,
@@ -40,11 +38,10 @@ dynamo.scan({
     }
 
     dynamo.putItem({
-      "TableName": "rcrd-records",
-      "Item": newRecord
+      'TableName': 'rcrd-records',
+      'Item': newRecord
     }, function (err, data) {
       console.log(err, data)
-    });
-
+    })
   }, 3e3)
 })

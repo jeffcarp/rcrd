@@ -12,7 +12,6 @@ var timeZones = [
 ]
 
 var SelectTimeZone = React.createClass({
-
   getInitialState: function () {
     return {
       loading: false
@@ -28,18 +27,20 @@ var SelectTimeZone = React.createClass({
     }
 
     return (
-      <div className='m1-0b'>
-        <select
-          value={timeZone}
-          name='select-time-zone'
-          ref='selectTimeZone'
-          onChange={this.onChange}
-          disabled={zoneNotFound || this.state.loading}>
-          {timeZones.map(function (zone) {
-            return <option value={zone} key={zone}>{zone}</option>
-          })}
-        </select>
-      </div>
+    <div className='m1-0b'>
+      <select
+        value={timeZone}
+        name='select-time-zone'
+        ref='selectTimeZone'
+        onChange={this.onChange}
+        disabled={zoneNotFound || this.state.loading}>
+        {timeZones.map(function (zone) {
+           return <option value={zone} key={zone}>
+                    {zone}
+                  </option>
+         })}
+      </select>
+    </div>
     )
   },
 
@@ -56,11 +57,11 @@ var SelectTimeZone = React.createClass({
     }, function (err, data) {
       if (err) return console.error(err)
 
-      this.setState({ loading: false });
+      this.setState({ loading: false })
 
       console.log(err, data)
     }.bind(this))
   }
-});
+})
 
-module.exports = SelectTimeZone;
+module.exports = SelectTimeZone

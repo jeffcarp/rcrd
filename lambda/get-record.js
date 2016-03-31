@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-function getRecord(dynamo, params, context) {
-  if (!params.id) return context.fail('Missing param.id');
+function getRecord (dynamo, params, context) {
+  if (!params.id) return context.fail('Missing param.id')
 
   // Validate permissions
 
@@ -10,11 +10,11 @@ function getRecord(dynamo, params, context) {
     'Key': {id: params.id}
   }, function (err, record) {
     if (err) {
-      context.fail(err);
+      context.fail(err)
     } else {
-      context.succeed(record);
+      context.succeed(record)
     }
-  });
+  })
 }
 
-module.exports = getRecord;
+module.exports = getRecord

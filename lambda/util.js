@@ -1,30 +1,30 @@
-var util = {};
+var util = {}
 
 util.catsFromRaw = function (str) {
   return str.split(',').map(function (cat) {
-    return cat.trim();
-  });
-};
+    return cat.trim()
+  })
+}
 
 util.hasDupes = function (arr) {
-  var foundDupe = false;
+  var foundDupe = false
   arr.forEach(function (x, i) {
     arr.forEach(function (y, j) {
-      if (i !== j && x === y) foundDupe = true; 
-    });
-  });
+      if (i !== j && x === y) foundDupe = true
+    })
+  })
 
-  return foundDupe;
-};
+  return foundDupe
+}
 
 util.sansMagnitude = function (str) {
-  return str.replace(/^\s*\d+\.*\d*\s*/, '');
-};
+  return str.replace(/^\s*\d+\.*\d*\s*/, '')
+}
 
 util.allCats = function (records) {
   return records.reduce(function (acc, record) {
-    return acc.concat(util.catsFromRaw(record.raw));
-  }, []);
+    return acc.concat(util.catsFromRaw(record.raw))
+  }, [])
 }
 
-module.exports = util;
+module.exports = util

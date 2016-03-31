@@ -1,10 +1,9 @@
-var AccountService = {};
+var AccountService = {}
 
 AccountService.isLoggedIn = function () {
-  return localStorage.email && localStorage.access_token;
-};
+  return localStorage.email && localStorage.access_token
+}
 
-AccountService.logout = function () {
-};
+AccountService.logout = function () {}
 
-module.exports = AccountService;
+module.exports = AccountService

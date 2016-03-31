@@ -1,18 +1,17 @@
-var React = require('react');
+var React = require('react')
 
-var Adder = require('../adder');
-var Blocks = require('../blocks');
+var Adder = require('../adder')
+var Blocks = require('../blocks')
 
 var Index = React.createClass({
-
-  render: function() {
+  render: function () {
     return (
-      <div>
-        <Adder focus={true} />
-      </div>
-    );
+    <div>
+      <Adder focus={true} />
+    </div>
+    )
   }
 
-});
+})
 
-module.exports = Index;
+module.exports = Index

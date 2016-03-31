@@ -9,7 +9,7 @@ const fs = require('fs')
 const proxyquire = require('proxyquire').noCallThru()
 
 const app = express()
-const index = fs.readFileSync('index.html', 'utf-8');
+const index = fs.readFileSync('index.html', 'utf-8')
 const lambda = proxyquire('../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 })
@@ -19,20 +19,19 @@ app.use(bodyParser.json())
 app.use(express.static('.'))
 
 app.post('/api/*', function (req, res) {
-
   context.callback = function (status, data) {
     if (status !== 'fail') {
       res.json(data)
     } else {
       console.error(status, data)
     }
-  };
+  }
 
-  lambda.handler(req.body, context);
+  lambda.handler(req.body, context)
 })
 
 app.get('*', function (req, res) {
-  res.send(index);
+  res.send(index)
 })
 
 module.exports = app

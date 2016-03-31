@@ -1,34 +1,34 @@
-var AWS = require('aws-sdk');
-var fs = require('fs');
+var AWS = require('aws-sdk')
+var fs = require('fs')
 
-require('./confirm-correct-directory')();
+require('./confirm-correct-directory')()
 
-AWS.config.region = 'us-east-1';
-const BUCKET_NAME = 'app.rcrd.org';
-var s3bucket = new AWS.S3({params: {Bucket: BUCKET_NAME}});
+AWS.config.region = 'us-east-1'
+const BUCKET_NAME = 'app.rcrd.org'
+var s3bucket = new AWS.S3({params: {Bucket: BUCKET_NAME}})
 
 const files = [
   ['index.html', 'text/html'],
   ['static/index.js', 'application/javascript'],
   ['static/style.css', 'text/css'],
-];
+]
 
 files.forEach(function (file) {
-  var filePath = file[0];
-  var contentType = file[1];
+  var filePath = file[0]
+  var contentType = file[1]
 
-  var str = fs.readFileSync(filePath, 'utf-8');
+  var str = fs.readFileSync(filePath, 'utf-8')
   var params = {
-    Key: filePath, 
+    Key: filePath,
     Body: str,
     ContentType: contentType
-  };
+  }
 
-  s3bucket.upload(params, function(err, data) {
+  s3bucket.upload(params, function (err, data) {
     if (err) {
-      console.log("Error uploading data: ", err);
+      console.log('Error uploading data: ', err)
     } else {
-      console.log(`Successfully uploaded data to ${BUCKET_NAME}/${filePath}`);
+      console.log(`Successfully uploaded data to ${BUCKET_NAME}/${filePath}`)
     }
-  });
+  })
 })

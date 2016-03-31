@@ -9,14 +9,13 @@ const util = require('../browser/util')
 seed()
 
 app.listen(8000, function () {
-  console.log('Listening on port 8000');
-});
+  console.log('Listening on port 8000')
+})
 
-function seed() {
-
-  let record, day;
+function seed () {
+  let record, day
   for (var i = 0; i < 5; i++) {
-    day = ("00" + util.rand(25)).substr(-4,4)
+    day = ('00' + util.rand(25)).substr(-4, 4)
     record = {
       raw: randomWords({ min: 3, max: 10 }).join(', '),
       time: `2016-02-23T${day}:02:36+00:00`,
@@ -28,10 +27,10 @@ function seed() {
 
   dynamoDocStub._set('rcrd-access-tokens', {
     id: '9EvgVGYuxdOUiYJQqw4qokHjj8nGsIA6hmt+IhXv3eY=',
-    owner: 'gcarpenterv@gmail.com',
+    owner: 'gcarpenterv@gmail.com'
   })
 
   dynamoDocStub._set('rcrd-view-data', {
-    id: 'nothing right now',
+    id: 'nothing right now'
   })
 }

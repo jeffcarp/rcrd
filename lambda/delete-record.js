@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-function standardHandler(context) {
+function standardHandler (context) {
   return function (err) {
     if (err) {
       context.fail(err)
@@ -10,13 +10,13 @@ function standardHandler(context) {
   }
 }
 
-function deleteRecord(dynamo, params, context) {
-  if (!params.id) return context.fail('Missing param.id');
+function deleteRecord (dynamo, params, context) {
+  if (!params.id) return context.fail('Missing param.id')
 
   dynamo.deleteItem({
     'TableName': 'rcrd-records',
     'Key': {id: params.id}
-  }, standardHandler(context));
+  }, standardHandler(context))
 }
 
-module.exports = deleteRecord;
+module.exports = deleteRecord

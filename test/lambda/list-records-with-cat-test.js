@@ -7,15 +7,15 @@ const tl = require('test-lambda')
 const dynamoDocStub = tl.dynamo
 const testLambda = tl.test(path.resolve('./lambda/index'), {
   before: require('./before'),
-  after: require('./after'),
+  after: require('./after')
 })
 
 test('listRecordsWithCat fails without params.catName', function (t) {
-  dynamoDocStub._set('rcrd-records', { 
+  dynamoDocStub._set('rcrd-records', {
     id: '1',
     raw: 'some, cat',
-    time: '2016-01-22T18:19:19Z', 
-    time_zone: 'America/Los_Angeles' ,
+    time: '2016-01-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
   })
 
   testLambda({
@@ -28,23 +28,23 @@ test('listRecordsWithCat fails without params.catName', function (t) {
 })
 
 test('listRecordsWithCat returns sorted records (id DESC)', function (t) {
-  dynamoDocStub._set('rcrd-records', { 
+  dynamoDocStub._set('rcrd-records', {
     id: '1',
     raw: 'some, cat',
-    time: '2016-01-22T18:19:19Z', 
-    time_zone: 'America/Los_Angeles' ,
+    time: '2016-01-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
   })
-  dynamoDocStub._set('rcrd-records', { 
+  dynamoDocStub._set('rcrd-records', {
     id: '2',
     raw: 'another, cat',
-    time: '2015-05-22T18:19:19Z', 
-    time_zone: 'America/Los_Angeles', 
+    time: '2015-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
   })
-  dynamoDocStub._set('rcrd-records', { 
+  dynamoDocStub._set('rcrd-records', {
     id: '3',
     raw: 'yup, a, cat',
-    time: '2016-02-22T18:19:19Z', 
-    time_zone: 'America/Los_Angeles' ,
+    time: '2016-02-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
   })
 
   testLambda({
@@ -59,6 +59,6 @@ test('listRecordsWithCat returns sorted records (id DESC)', function (t) {
     t.equal(records[1].id, '1')
     t.equal(records[2].id, '2')
 
-    t.end();
-  });
-});
+    t.end()
+  })
+})
