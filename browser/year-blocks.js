@@ -1,9 +1,6 @@
 var React = require('react')
-var ReactDOM = require('react-dom')
 var canvasDpiScaler = require('canvas-dpi-scaler')
 var moment = require('moment')
-
-var util = require('./util')
 
 var YearBlocks = React.createClass({
   height: 20,
@@ -18,8 +15,6 @@ var YearBlocks = React.createClass({
   },
 
   componentDidMount: function () {
-    var self = this
-
     var canvasElem = this.refs.viz
     var context = canvasElem.getContext('2d')
     canvasDpiScaler(canvasElem, context)
@@ -66,16 +61,16 @@ var YearBlocks = React.createClass({
 
   render: function () {
     return (
-    <div>
-      <div style={{ fontSize: '0.8em' }}>
-        2016
+      <div>
+        <div style={{ fontSize: '0.8em' }}>
+          2016
+        </div>
+        <canvas
+          height={this.height}
+          width={this.width}
+          className='blocks'
+          ref='viz'></canvas>
       </div>
-      <canvas
-        height={this.height}
-        width={this.width}
-        className='blocks'
-        ref='viz'></canvas>
-    </div>
     )
   }
 })

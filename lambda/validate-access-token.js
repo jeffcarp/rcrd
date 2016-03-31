@@ -3,7 +3,7 @@
 function validateAccessToken (access_token, dynamo, context, callback) {
   dynamo.getItem({
     TableName: 'rcrd-access-tokens',
-    Key: { id: access_token },
+    Key: { id: access_token }
   }, function (err, data) {
     if (err) return context.fail('access_token denied')
     if (!data || !data.Item) return context.fail('access_token denied')

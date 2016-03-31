@@ -10,7 +10,7 @@ var s3bucket = new AWS.S3({params: {Bucket: BUCKET_NAME}})
 const files = [
   ['index.html', 'text/html'],
   ['static/index.js', 'application/javascript'],
-  ['static/style.css', 'text/css'],
+  ['static/style.css', 'text/css']
 ]
 
 files.forEach(function (file) {

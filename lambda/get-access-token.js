@@ -24,12 +24,12 @@ module.exports = function getAccessToken (dynamo, params, context) {
 
       var newAccessToken = {
         id: accessTokenID,
-        expiration: (new Date('2016-04-01T00:00:00Z')).toISOString(),
+        expiration: (new Date('2016-04-01T00:00:00Z')).toISOString()
       }
 
       dynamo.putItem({
         TableName: 'rcrd-access-tokens',
-        Item: newAccessToken,
+        Item: newAccessToken
       }, function (err, data) {
         if (err) return context.fail(err)
 
@@ -38,7 +38,7 @@ module.exports = function getAccessToken (dynamo, params, context) {
             id: user.id,
             time_zone: user.time_zone
           },
-          access_token: newAccessToken,
+          access_token: newAccessToken
         })
       })
     } else {

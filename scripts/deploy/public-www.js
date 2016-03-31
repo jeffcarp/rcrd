@@ -8,7 +8,7 @@ const BUCKET_NAME = 'www.rcrd.org'
 var s3bucket = new AWS.S3({params: {Bucket: BUCKET_NAME}})
 
 const files = [
-  ['www/index.html', 'index.html', 'text/html'],
+  ['www/index.html', 'index.html', 'text/html']
 ]
 
 files.forEach(function (file) {

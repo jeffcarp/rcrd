@@ -29,7 +29,7 @@ var Blocks = React.createClass({
     for (var y = 0; y < this.height / 10; y++) {
       var hue = rand(256)
       for (var x = 0; x < 46; x++) {
-        if (rand(5) == 0) {
+        if (rand(5) === 0) {
           context.fillStyle = 'hsl(' + hue + ', 50%, 50%)'
           context.fillRect(x * 10, y * 10, 10, 10)
         } else {
