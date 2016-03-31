@@ -1,16 +1,13 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
-var request = require('browser-request')
 var Router = require('react-router-component')
 
 var AccountService = require('./account-service')
-var bus = require('./bus')()
 var Header = require('./header')
 
 var Account = require('./routes/account')
 var Authentication = require('./routes/authentication')
 var CatPage = require('./routes/cat')
-var CatExpPage = require('./routes/cat-exp')
 var CatRecordsPage = require('./routes/cat-records')
 var Everything = require('./routes/everything')
 var Index = require('./routes/index')
@@ -24,20 +21,19 @@ var NotFound = Router.NotFound
 var Root = React.createClass({
   render: function () {
     return (
-    <div>
-      <Header />
-      <Locations>
-        <Location path="/" handler={Index} />
-        <Location path="/everything" handler={Everything} />
-        <Location path="/login" handler={Authentication} />
-        <Location path="/account" handler={Account} />
-        <Location path="/cats/:name/records" handler={CatRecordsPage} />
-        <Location path="/cats/:name" handler={CatPage} />
-        <Location path="/cats-exp/*" handler={CatExpPage} />
-        <Location path="/records/:id" handler={RecordPage} />
-        <NotFound handler={NotFoundPage} />
-      </Locations>
-    </div>
+      <div>
+        <Header />
+        <Locations>
+          <Location path='/' handler={Index} />
+          <Location path='/everything' handler={Everything} />
+          <Location path='/login' handler={Authentication} />
+          <Location path='/account' handler={Account} />
+          <Location path='/cats/:name/records' handler={CatRecordsPage} />
+          <Location path='/cats/:name' handler={CatPage} />
+          <Location path='/records/:id' handler={RecordPage} />
+          <NotFound handler={NotFoundPage} />
+        </Locations>
+      </div>
     )
   }
 })

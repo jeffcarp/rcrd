@@ -1,11 +1,10 @@
 var API = require('./api')
 var bus = require('./bus')()
 var React = require('react')
-var util = require('./util')
 
 var DeleteRecord = React.createClass({
   propTypes: {
-    id: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired
   },
 
   getInitialState: function () {
@@ -15,12 +14,10 @@ var DeleteRecord = React.createClass({
   },
 
   render: function () {
-    var id = this.props.id
-
     return (
-    <button className={'button' + (this.state.loading ? ' loading' : '')} onClick={this.onClick}>
-      Delete
-    </button>
+      <button className={'button' + (this.state.loading ? ' loading' : '')} onClick={this.onClick}>
+        Delete
+      </button>
     )
   },
 
@@ -32,7 +29,7 @@ var DeleteRecord = React.createClass({
       return
     }
 
-    if (!confirm('Currently records are permanently deleted. You cannot undo this.')) return
+    if (!window.confirm('Currently records are permanently deleted. You cannot undo this.')) return
 
     this.setState({ loading: true })
 

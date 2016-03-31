@@ -1,6 +1,5 @@
 var moment = require('moment')
 var React = require('react')
-var request = require('browser-request')
 
 var API = require('./api')
 var bus = require('./bus')()
@@ -70,60 +69,60 @@ var Editor = React.createClass({
   render: function () {
     var timestamp = this.state.timestamp.format('MMMM Do YYYY, h:mm:ss a')
     return (
-    <form className="small-section" onSubmit={this.onSubmit}>
-      <input
-        type="text"
-        name="raw"
-        ref="raw"
-        autoCorrect="off"
-        autoCapitalize="none"
-        placeholder="rcrd, comma, separated"
-        onChange={this.onRawChange}
-        value={this.state.raw}
-        disabled={this.state.loading} />
-      <div className="time m1-0b">
-        {timestamp}
-      </div>
-      <div className='m1-0b'>
-        <a
-          onClick={this.augmentTime}
-          data-num={-1}
-          data-unit={'day'}
-          className='button'>-1 day</a>
-        <a
-          onClick={this.augmentTime}
-          data-num={1}
-          data-unit={'day'}
-          className='button'>+1 day</a>
-        {' '}
-        <a
-          onClick={this.augmentTime}
-          data-num={-1}
-          data-unit={'hours'}
-          className='button'>-1 hours</a>
-        <a
-          onClick={this.augmentTime}
-          data-num={1}
-          data-unit={'hours'}
-          className='button'>+1 hour</a>
-        {' '}
-        <a
-          onClick={this.augmentTime}
-          data-num={-10}
-          data-unit={'minutes'}
-          className='button'>-10 min</a>
-        <a
-          onClick={this.augmentTime}
-          data-num={10}
-          data-unit={'minutes'}
-          className='button'>+10 min</a>
-      </div>
-      <div className='m1-0b'>
-        Current time zone:
-        {User.time_zone()}
-      </div>
-      <input type="submit" value="Create record" disabled={this.state.loading} />
-    </form>
+      <form className='small-section' onSubmit={this.onSubmit}>
+        <input
+          type='text'
+          name='raw'
+          ref='raw'
+          autoCorrect='off'
+          autoCapitalize='none'
+          placeholder='rcrd, comma, separated'
+          onChange={this.onRawChange}
+          value={this.state.raw}
+          disabled={this.state.loading} />
+        <div className='time m1-0b'>
+          {timestamp}
+        </div>
+        <div className='m1-0b'>
+          <a
+            onClick={this.augmentTime}
+            data-num={-1}
+            data-unit={'day'}
+            className='button'>-1 day</a>
+          <a
+            onClick={this.augmentTime}
+            data-num={1}
+            data-unit={'day'}
+            className='button'>+1 day</a>
+          {' '}
+          <a
+            onClick={this.augmentTime}
+            data-num={-1}
+            data-unit={'hours'}
+            className='button'>-1 hours</a>
+          <a
+            onClick={this.augmentTime}
+            data-num={1}
+            data-unit={'hours'}
+            className='button'>+1 hour</a>
+          {' '}
+          <a
+            onClick={this.augmentTime}
+            data-num={-10}
+            data-unit={'minutes'}
+            className='button'>-10 min</a>
+          <a
+            onClick={this.augmentTime}
+            data-num={10}
+            data-unit={'minutes'}
+            className='button'>+10 min</a>
+        </div>
+        <div className='m1-0b'>
+          Current time zone:
+          {User.time_zone()}
+        </div>
+        <input type='submit' value='Create record' disabled={this.state.loading} />
+      </form>
     )
   },
 
@@ -170,7 +169,7 @@ var Editor = React.createClass({
 
         self.setState({
           raw: '',
-          newRecord: true,
+          newRecord: true
         })
       })
     } else {

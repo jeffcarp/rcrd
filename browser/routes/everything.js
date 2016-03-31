@@ -1,5 +1,4 @@
 var React = require('react')
-var ReactDOM = require('react-dom')
 
 var API = require('../api')
 var RecordList = require('../record-list')
@@ -20,11 +19,11 @@ var Everything = React.createClass({
 
   render: function () {
     return (
-    <div>
-      <div className="small-section">
-        <RecordList records={this.state.records} />
+      <div>
+        <div className='small-section'>
+          <RecordList records={this.state.records} />
+        </div>
       </div>
-    </div>
     )
   }
 })

@@ -24,35 +24,31 @@ var Header = React.createClass({
 
   render: function () {
     var message = this.state.notification
-    var inner
     var classes = classNames('small-section', {
       'localAPI': constants.localAPI
     })
 
     if (message) {
       return (
-      <nav className={classes} style={{  backgroundColor: constants.mainBackgroundColor,  color: 'white'}}>
-        <span>{message}</span>
-      </nav>
+        <nav className={classes} style={{backgroundColor: constants.mainBackgroundColor, color: 'white'}}>
+          <span>{message}</span>
+        </nav>
       )
     } else {
       if (AccountService.isLoggedIn()) {
         return (
-        <nav className={classes}>
-          <span className="right"><Link href="/account"> {localStorage.email} </Link></span>
-          <Link href="/">
-          <b>rcrd</b>
-          </Link>
-          <Link href="/everything"> everything
-          </Link>
-        </nav>
+          <nav className={classes}>
+            <span className='right'><Link href='/account'>{window.localStorage.email}</Link></span>
+            <Link href='/'><b>rcrd</b></Link>
+            <Link href='/everything'>everything</Link>
+          </nav>
         )
       } else {
         return (
-        <nav className={classes}>
-          <b>rcrd</b>
-          <span className="right"><Link href="/login"> login </Link></span>
-        </nav>
+          <nav className={classes}>
+            <b>rcrd</b>
+            <span className='right'><Link href='/login'> login </Link></span>
+          </nav>
         )
       }
     }

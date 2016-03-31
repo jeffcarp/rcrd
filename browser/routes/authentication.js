@@ -1,7 +1,5 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-
 var API = require('../api')
+var React = require('react')
 var bus = require('../bus')()
 
 var Authentication = React.createClass({
@@ -13,30 +11,30 @@ var Authentication = React.createClass({
 
   render: function () {
     return (
-    <section>
-      <h1>Login</h1>
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          name="email"
-          ref="email"
-          placeholder="email@email.com"
-          disabled={this.state.loading}
-          autoCapitalize="off"
-          autoCorrect="off"
-          required />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          ref="password"
-          disabled={this.state.loading}
-          required />
-        <div>
-          <input type="submit" value="Authenticate" disabled={this.state.loading} />
-        </div>
-      </form>
-    </section>
+      <section>
+        <h1>Login</h1>
+        <form onSubmit={this.onSubmit}>
+          <input
+            type='text'
+            name='email'
+            ref='email'
+            placeholder='email@email.com'
+            disabled={this.state.loading}
+            autoCapitalize='off'
+            autoCorrect='off'
+            required />
+          <input
+            type='password'
+            name='password'
+            placeholder='password'
+            ref='password'
+            disabled={this.state.loading}
+            required />
+          <div>
+            <input type='submit' value='Authenticate' disabled={this.state.loading} />
+          </div>
+        </form>
+      </section>
     )
   },
 
@@ -53,10 +51,10 @@ var Authentication = React.createClass({
       if (err) {
         bus.emit('notification', 'There was a problem logging you in.')
       } else {
-        localStorage.email = response.user.id
-        localStorage.time_zone = response.user.time_zone
-        localStorage.access_token = response.access_token.id
-        localStorage.expiration = response.access_token.expiration
+        window.localStorage.email = response.user.id
+        window.localStorage.time_zone = response.user.time_zone
+        window.localStorage.access_token = response.access_token.id
+        window.localStorage.expiration = response.access_token.expiration
 
         window.location = '/'
       }

@@ -1,6 +1,4 @@
-var assert = require('assert')
 var React = require('react')
-var ReactDOM = require('react-dom')
 var moment = require('moment')
 var util = require('./util')
 
@@ -33,12 +31,10 @@ var WeeklyBlocks = React.createClass({
     var blockWidth = blockDimension - padding
     var dayEls = []
     var monthNameEls = []
-
-    var standInWeek = 52
     var lastMonth
 
     while (time.year() === this.props.year) {
-      var light = time.month() % 2 == 0
+      var light = time.month() % 2 === 0
 
       var week = this.weekHack(time)
 
@@ -51,8 +47,8 @@ var WeeklyBlocks = React.createClass({
         monthNameEls.push(
           <text
             x={x}
-            y="15"
-            className="month-name"
+            y='15'
+            className='month-name'
             key={time.month()}>
             {time.format('MMM')}
           </text>
@@ -81,13 +77,13 @@ var WeeklyBlocks = React.createClass({
       var y = height - ((time.day() + 1) * blockHeight)
 
       return (
-      <rect
-        x={x}
-        y={y}
-        width={blockWidth}
-        height={blockHeight - padding}
-        fill={'hsl(' + this.props.hue + ', 50%, 60%)'}
-        key={record.id} />
+        <rect
+          x={x}
+          y={y}
+          width={blockWidth}
+          height={blockHeight - padding}
+          fill={'hsl(' + this.props.hue + ', 50%, 60%)'}
+          key={record.id} />
       )
     }.bind(this))
 
@@ -95,14 +91,10 @@ var WeeklyBlocks = React.createClass({
     if (this.props.year) {
       var today = moment()
       if (today.year() === this.props.year) {
-        var week = this.weekHack(today)
-        var x = (week - 1) * blockDimension
-        var y = height - ((today.day() + 1) * blockHeight)
-
         todayEl = (
           <rect
-            x={x}
-            y={y}
+            x={(this.weekHack(today) - 1) * blockDimension}
+            y={height - ((today.day() + 1) * blockHeight)}
             width={blockWidth}
             height={blockHeight - padding}
             fill='none'
@@ -113,22 +105,25 @@ var WeeklyBlocks = React.createClass({
     }
 
     return (
-    <div>
-      <svg viewBox={'0 0 ' + this.width + ' ' + height} width="100%" height={height}>
-        <g>
-          {monthNameEls}
-        </g>
-        <g>
-          {dayEls}
-        </g>
-        <g>
-          {recordEls}
-        </g>
-        <g>
-          {todayEl}
-        </g>
-      </svg>
-    </div>
+      <div>
+        <svg
+          viewBox={'0 0 ' + this.width + ' ' + height}
+          width='100%'
+          height={height}>
+          <g>
+            {monthNameEls}
+          </g>
+          <g>
+            {dayEls}
+          </g>
+          <g>
+            {recordEls}
+          </g>
+          <g>
+            {todayEl}
+          </g>
+        </svg>
+      </div>
     )
   }
 })

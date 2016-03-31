@@ -14,21 +14,18 @@ var CatList = React.createClass({
   },
 
   render: function () {
+    var rawCats
     if (this.props.raw) {
-      var rawCats = this.props.raw.split(',')
+      rawCats = this.props.raw.split(',')
     } else {
-      var rawCats = this.props.cats
+      rawCats = this.props.cats
     }
 
     var cats = rawCats.map(function (name) {
-      return (
-      <Cat name={name} key={name} onClick={this.props.catOnClick} />
-      )
+      return <Cat name={name} key={name} onClick={this.props.catOnClick} />
     }.bind(this))
 
-    return <div className="cat-list">
-             {cats}
-           </div>
+    return <div className='cat-list'>{cats}</div>
   }
 
 })

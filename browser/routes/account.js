@@ -5,32 +5,32 @@ var UserThing = require('../things/user')
 var Account = React.createClass({
   render: function () {
     var accessToken = {
-      id: localStorage.access_token,
-      expiration: localStorage.expiration,
+      id: window.localStorage.access_token,
+      expiration: window.localStorage.expiration
     }
 
     var user = {
-      id: localStorage.email,
-      time_zone: localStorage.time_zone
+      id: window.localStorage.email,
+      time_zone: window.localStorage.time_zone
     }
 
     return (
-    <div className="page">
-      <section>
-        <h2>You</h2>
-        <UserThing user={user} />
-      </section>
-      <section>
-        <h2>Sessions</h2>
-        <div>
-          <SessionThing
-            accessToken={accessToken}
-            current={true}
-            actionText='Delete current session (this will log you out)'
-            actionOnClick={this.logout} />
-        </div>
-      </section>
-    </div>
+      <div className='page'>
+        <section>
+          <h2>You</h2>
+          <UserThing user={user} />
+        </section>
+        <section>
+          <h2>Sessions</h2>
+          <div>
+            <SessionThing
+              accessToken={accessToken}
+              current
+              actionText='Delete current session (this will log you out)'
+              actionOnClick={this.logout} />
+          </div>
+        </section>
+      </div>
     )
   },
 
@@ -39,8 +39,8 @@ var Account = React.createClass({
 
     console.log('logout')
 
-    delete localStorage.email
-    delete localStorage.access_token
+    delete window.localStorage.email
+    delete window.localStorage.access_token
 
     window.location = '/login'
   }
