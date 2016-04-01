@@ -1,5 +1,6 @@
 var React = require('react')
 var SessionThing = require('../things/session')
+var User = require('../services/user')
 var UserThing = require('../things/user')
 
 var Account = React.createClass({
@@ -36,13 +37,7 @@ var Account = React.createClass({
 
   logout: function (e) {
     e.preventDefault()
-
-    console.log('logout')
-
-    delete window.localStorage.email
-    delete window.localStorage.access_token
-
-    window.location = '/login'
+    User.logout()
   }
 
 })

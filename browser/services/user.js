@@ -8,4 +8,11 @@ User.access_token = function () {
   return window.localStorage.access_token
 }
 
+User.logout = function () {
+  delete window.localStorage.email
+  delete window.localStorage.access_token
+
+  window.location = '/login'
+}
+
 module.exports = User
