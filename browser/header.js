@@ -1,9 +1,9 @@
-var AccountService = require('./account-service')
 var bus = require('./bus')()
 var classNames = require('classnames')
 var constants = require('./constants')
-var React = require('react')
 var Link = require('react-router-component').Link
+var React = require('react')
+var User = require('./services/user')
 
 var Header = React.createClass({
   getInitialState: function () {
@@ -35,10 +35,10 @@ var Header = React.createClass({
         </nav>
       )
     } else {
-      if (AccountService.isLoggedIn()) {
+      if (User.isLoggedIn()) {
         return (
           <nav className={classes}>
-            <span className='right'><Link href='/account'>{window.localStorage.email}</Link></span>
+            <span className='right'><Link href='/account'>{User.email()}</Link></span>
             <Link href='/'><b>rcrd</b></Link>
             <Link href='/everything'>everything</Link>
           </nav>

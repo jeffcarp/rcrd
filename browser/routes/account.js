@@ -6,13 +6,13 @@ var UserThing = require('../things/user')
 var Account = React.createClass({
   render: function () {
     var accessToken = {
-      id: window.localStorage.access_token,
-      expiration: window.localStorage.expiration
+      id: User.access_token(),
+      expiration: User.expiration()
     }
 
     var user = {
-      id: window.localStorage.email,
-      time_zone: window.localStorage.time_zone
+      id: User.email(),
+      time_zone: User.time_zone()
     }
 
     return (

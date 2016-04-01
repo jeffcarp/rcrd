@@ -2,7 +2,7 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var Router = require('react-router-component')
 
-var AccountService = require('./account-service')
+var User = require('./services/user')
 var Header = require('./header')
 
 var Account = require('./routes/account')
@@ -38,7 +38,7 @@ var Root = React.createClass({
   }
 })
 
-if (!AccountService.isLoggedIn() && window.location.pathname !== '/login') {
+if (!User.isLoggedIn() && window.location.pathname !== '/login') {
   window.location = '/login'
 } else {
   ReactDOM.render(<Root />, document.getElementById('records'))
