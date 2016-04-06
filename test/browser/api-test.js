@@ -28,7 +28,7 @@ test.skip('does stuff I guess', function (t) {
 
     API.fetchRecord(expectedID, function (err, record) {
       console.log(err, record)
-      t.true(true)
+      t.ok(record)
       t.end()
       server.close()
     })

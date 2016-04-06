@@ -24,9 +24,10 @@ var RecordPage = React.createClass({
   },
 
   fetchRecord: function (id) {
-    API.fetchRecord(id, function (err, record) {
-      if (err) return console.error(err)
-      this.setState({ record: record })
+    API.fetchRecord(id, function (err, data) {
+      if (err) throw new Error(err)
+      if (!data.Item) throw new Error('no record found')
+      this.setState({ record: data.Item })
     }.bind(this))
   },
 
