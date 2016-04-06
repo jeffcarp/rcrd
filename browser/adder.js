@@ -32,7 +32,7 @@ var Adder = React.createClass({
 
   getCommonCats: function () {
     API.viewData('top-20-cats', function (err, data) {
-      if (err) new Error(err)
+      if (err) return new Error(err)
       if (data.Item && data.Item.cats && data.Item.cats.length) {
         this.setState({ commonCats: data.Item.cats })
       }
