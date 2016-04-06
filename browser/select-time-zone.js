@@ -44,7 +44,6 @@ var SelectTimeZone = React.createClass({
   },
 
   onChange: function () {
-    console.log(this.refs.selectTimeZone.value)
     var newZone = this.refs.selectTimeZone.value
 
     this.setState({ loading: true })
