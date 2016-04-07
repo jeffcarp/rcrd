@@ -1,10 +1,18 @@
-# rcrd
+<p align="center">
+  <img alt="rcrd" src="https://cloud.githubusercontent.com/assets/916028/14357151/38739352-fcad-11e5-99fd-54e3cebdca97.png" width="287" />
+</p>
 
-[![Build Status](https://travis-ci.org/jeffcarp/rcrd.svg?branch=master)](https://travis-ci.org/jeffcarp/rcrd)
+<p align="center">
+  <b>rcrd</b> is an exoskeleton for human memory. It aspires to be an easy way to record and recall the nouns in your life.
+</p>
 
-This repository is currently in a state of flux! If you want to learn more about the current status, please contact me.
+<p align="center">
+  <a href="https://travis-ci.org/jeffcarp/rcrd"><img alt="Build Status" src="https://img.shields.io/travis/jeffcarp/rcrd/master.svg?style=flat-square" /></a>
+</p>
 
-rcrd is a tool I built to track habits, like exercise or drinking.
+-----
+
+:rotating_light: Note: this repository is currently in a state of flux! If you want to learn more about the current status, please contact me.
 
 ## Development
 
