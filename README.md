@@ -24,7 +24,7 @@ rcrd comes with a development server and mock seed data. That is the easiest way
 
 ```sh
 npm install
-MOCK=true npm start
+API=local npm start
 ```
 
 ### Directory structure

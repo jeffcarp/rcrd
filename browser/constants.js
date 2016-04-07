@@ -1,4 +1,4 @@
 module.exports = {
-  localAPI: Boolean(window.localStorage.localAPI),
+  localAPI: Boolean(window.localAPI),
   mainBackgroundColor: 'hsl(150, 50%, 50%)'
 }

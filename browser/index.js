@@ -41,5 +41,5 @@ var Root = React.createClass({
 if (!User.isLoggedIn() && window.location.pathname !== '/login') {
   window.location = '/login'
 } else {
-  ReactDOM.render(<Root />, document.getElementById('records'))
+  ReactDOM.render(<Root />, document.getElementById('container'))
 }
