@@ -34,9 +34,11 @@ function createRecord (dynamo, params, context) {
     }
   }
 
-  var cats = util.catsFromRaw(params.raw)
-  if (util.hasDupes(cats.map(util.sansMagnitude))) {
-    return context.fail('Records cannot have duplicate cats.')
+  if (params.raw) {
+    var cats = util.catsFromRaw(params.raw)
+    if (util.hasDupes(cats.map(util.sansMagnitude))) {
+      return context.fail('Records cannot have duplicate cats.')
+    }
   }
 
   dynamo.putItem({

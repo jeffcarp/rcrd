@@ -48,7 +48,12 @@ API.createRecord = function (params, callback) {
     time: params.time,
     time_zone: params.time_zone,
     access_token: User.access_token()
-  }, callback)
+  }, function (err, record) {
+    if (record) {
+      bus.emit('record-created-or-updated', record)
+    }
+    callback(err, record)
+  })
 }
 
 API.fetchRecord = function (id, callback) {

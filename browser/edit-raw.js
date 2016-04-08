@@ -19,8 +19,6 @@ var EditRaw = React.createClass({
   },
 
   render: function () {
-    console.log(this.props)
-
     var timestamp = this.state.timestamp.format('MMMM Do YYYY, h:mm:ss a')
 
     return (

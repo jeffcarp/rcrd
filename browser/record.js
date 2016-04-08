@@ -28,7 +28,7 @@ var Record = React.createClass({
       <div className='record'>
         <TimeBar record={this.props.record} />
         <Link className='time' href={url}>
-        {timestamp + ' in ' + record.time_zone}
+          {timestamp + ' in ' + record.time_zone}
         </Link>
         <CatList raw={record.raw} />
       </div>
