@@ -27,7 +27,6 @@ test.skip('does stuff I guess', function (t) {
     dynamoDocStub._set('rcrd-records', expectedRecord)
 
     API.fetchRecord(expectedID, function (err, record) {
-      console.log(err, record)
       t.ok(record)
       t.end()
       server.close()

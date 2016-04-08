@@ -164,7 +164,6 @@ var Editor = React.createClass({
           return
         }
 
-        console.log(data)
         bus.emit('record-added')
 
         self.setState({
@@ -173,7 +172,7 @@ var Editor = React.createClass({
         })
       })
     } else {
-      console.log('update (replace) record')
+      // update (replace) record
     }
   },
 

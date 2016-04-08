@@ -114,8 +114,6 @@ var EditRaw = React.createClass({
       if (err) return console.error(err)
 
       this.setState({ loading: false })
-
-      console.log(err, data)
     }.bind(this))
   }
 })
