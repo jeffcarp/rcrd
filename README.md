@@ -25,6 +25,8 @@ npm install
 API=local npm start
 ```
 
+The server will start at [localhost:8000](http://localhost:8000).
+
 ### Directory structure
 
 ```
