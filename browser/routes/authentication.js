@@ -1,6 +1,7 @@
 var API = require('../api')
-var React = require('react')
 var bus = require('../bus')()
+var constants = require('../constants')
+var React = require('react')
 
 var Authentication = React.createClass({
   getInitialState: function () {
@@ -10,9 +11,18 @@ var Authentication = React.createClass({
   },
 
   render: function () {
+    var autoLogin
+
+    if (constants.localAPI) {
+      autoLogin = (
+        <div><a onClick={this.autoLogin}>Auto login as dev@rcrd.org</a></div>
+      )
+    }
+
     return (
       <section>
         <h1>Login</h1>
+        {autoLogin}
         <form onSubmit={this.onSubmit}>
           <input
             type='text'
@@ -40,8 +50,14 @@ var Authentication = React.createClass({
 
   onSubmit: function (e) {
     e.preventDefault()
+    this.login()
+  },
+
+  login: function () {
     var email = this.refs.email.value
     var password = this.refs.password.value
+
+    if (this.state.loading) return
 
     this.setState({ loading: true })
 
@@ -59,6 +75,13 @@ var Authentication = React.createClass({
         window.location = '/'
       }
     }.bind(this))
+  },
+
+  autoLogin: function (e) {
+    e.preventDefault()
+    this.refs.email.value = 'dev@rcrd.org'
+    this.refs.password.value = 'dev'
+    this.login()
   }
 
 })

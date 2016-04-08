@@ -20,8 +20,6 @@
 
 rcrd comes with a development server and mock seed data. That is the easiest way to get started. 
 
-:rotating_light: however! the mock seed data only works for @jeffcarp so work is needed to abstract it further.
-
 ```sh
 npm install
 API=local npm start

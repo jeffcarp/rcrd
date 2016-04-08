@@ -23,6 +23,8 @@ if (process.env.API === 'local') {
   index = tmpIndex.join('\n')
 }
 
+app.get('/', (req, res) => res.send(index))
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(express.static('.'))
@@ -41,8 +43,6 @@ app.post('/api/*', function (req, res) {
   lambda.handler(req.body, context)
 })
 
-app.get('*', function (req, res) {
-  res.send(index)
-})
+app.get('*', (req, res) => res.send(index))
 
 module.exports = app
