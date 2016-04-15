@@ -32,6 +32,13 @@ function seed (num) {
         sixteenWeeks: '2.4',
         eightWeeks: '2.7',
         fourWeeks: '2.9'
+      },
+      {
+        type: 'averages',
+        catName: 'drink',
+        sixteenWeeks: '2.4',
+        eightWeeks: '2.7',
+        fourWeeks: '2.9'
       }
     ]
   })

@@ -152,6 +152,12 @@ header {
 table {
   width: 100%;
 }
+table td {
+  padding: 0.4em;
+}
+table td:first-child {
+  width: 20%;
+}
 
 section {
   padding: 0.4em 0.4em 1em;

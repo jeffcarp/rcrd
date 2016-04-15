@@ -47,7 +47,6 @@ var ChartWeekAverages = React.createClass({
 
   render: function (context) {
     var charts = this.props.charts
-console.log(charts)
     if (!charts || !charts.length) {
       return <div></div>
     }
