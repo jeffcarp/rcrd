@@ -40,18 +40,16 @@ var Index = React.createClass({
   },
 
   render: function () {
-
-
     return (
       <div>
         <div className='small-section'>
           <Adder focus />
         </div>
-        { this.state.charts.length ? (
+        {this.state.charts.length ? (
           <div className='small-section'>
             <ChartWeekAverages charts={this.state.charts} />
           </div>
-        ) : null }
+        ) : null}
         <div className='small-section'>
           <RecordList
             records={this.state.records}
