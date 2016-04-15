@@ -12,7 +12,7 @@ var RecordList = React.createClass({
     var records = this.props.records || []
     if (records.length > 0) {
       return (
-        <div className={classnames({ loading: this.props.loading })}>
+        <div className={classnames('record-list', { loading: this.props.loading })}>
           {records.map(function (record) {
             return <Record record={record} key={record.id} />
           })}

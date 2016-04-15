@@ -272,7 +272,11 @@ ul li {
   padding: 3em 0;
 }
 
+.record-list {
+  transition: opacity 0.4s ease;
+}
+
 .loading {
   opacity: 0.5;
-  transition: opacity 1s ease;
+  pointer-events: none;
 }
