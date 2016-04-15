@@ -40,7 +40,6 @@ var Header = React.createClass({
           <nav className={classes}>
             <span className='right'><Link href='/account'>{User.email()}</Link></span>
             <Link href='/'><b>rcrd</b></Link>
-            <Link href='/everything'>everything</Link>
           </nav>
         )
       } else {
