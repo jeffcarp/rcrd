@@ -9,7 +9,6 @@ var Account = require('./routes/account')
 var Authentication = require('./routes/authentication')
 var CatPage = require('./routes/cat')
 var CatRecordsPage = require('./routes/cat-records')
-var Everything = require('./routes/everything')
 var Index = require('./routes/index')
 var RecordPage = require('./routes/record')
 var NotFoundPage = require('./routes/not-found-page')
@@ -25,7 +24,6 @@ var Root = React.createClass({
         <Header />
         <Locations>
           <Location path='/' handler={Index} />
-          <Location path='/everything' handler={Everything} />
           <Location path='/login' handler={Authentication} />
           <Location path='/account' handler={Account} />
           <Location path='/cats/:name/records' handler={CatRecordsPage} />
