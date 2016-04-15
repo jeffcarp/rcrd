@@ -69,7 +69,7 @@ var Editor = React.createClass({
   render: function () {
     var timestamp = this.state.timestamp.format('MMMM Do YYYY, h:mm:ss a')
     return (
-      <form className='small-section' onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit}>
         <input
           type='text'
           name='raw'

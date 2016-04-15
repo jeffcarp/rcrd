@@ -24,7 +24,16 @@ function seed (num) {
   })
 
   dynamoDocStub._set('rcrd-view-data', {
-    id: 'nothing right now'
+    id: '2|quick-charts',
+    charts: [
+      {
+        type: 'averages',
+        catName: 'yas',
+        sixteenWeeks: '2.4',
+        eightWeeks: '2.7',
+        fourWeeks: '2.9'
+      }
+    ]
   })
 }
 
