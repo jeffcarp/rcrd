@@ -1,3 +1,4 @@
+var classnames = require('classnames')
 var React = require('react')
 var Record = require('./record')
 
@@ -11,7 +12,7 @@ var RecordList = React.createClass({
     var records = this.props.records || []
     if (records.length > 0) {
       return (
-        <div>
+        <div className={classNames({ loading: this.props.loading })>
           {records.map(function (record) {
             return <Record record={record} key={record.id} />
           })}

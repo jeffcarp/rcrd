@@ -271,3 +271,8 @@ ul li {
   text-align: center;
   padding: 3em 0;
 }
+
+.loading {
+  opacity: 0.5;
+  transition: opacity 1s ease;
+}

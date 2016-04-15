@@ -32,11 +32,13 @@ app.use(express.static('.'))
 app.post('/api/*', function (req, res) {
   context.callback = function (status, data) {
     if (status !== 'fail') {
-      res.json(data)
+      setTimeout(() => {
+        res.json(data)
+      }, 1e3)
     } else {
-      res.json({
-        errorMessage: data
-      })
+      setTimeout(() => {
+        res.json({ errorMessage: data })
+      }, 1e3)
     }
   }
 

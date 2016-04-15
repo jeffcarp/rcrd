@@ -1,5 +1,6 @@
 var Adder = require('../adder')
 var API = require('../api')
+var bus = require('../bus')()
 var React = require('react')
 var RecordList = require('../record-list')
 
@@ -13,6 +14,15 @@ var Index = React.createClass({
   },
 
   componentDidMount: function () {
+    this.fetchRecords()
+
+    bus.on('record-created-or-updated', function () {
+      this.setState({ loadingRecords: true })
+      this.fetchRecords()
+    }.bind(this))
+  },
+
+  fetchRecords: function () {
     API.fetchRecords(function (err, records) {
       this.setState({ loadingRecords: false })
       if (err) return console.error(err)
