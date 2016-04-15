@@ -7,12 +7,14 @@ var Index = React.createClass({
 
   getInitialState: function () {
     return {
-      records: []
+      records: [],
+      loadingRecords: true
     }
   },
 
   componentDidMount: function () {
     API.fetchRecords(function (err, records) {
+      this.setState({ loadingRecords: false })
       if (err) return console.error(err)
       this.setState({ records: records })
     }.bind(this))
@@ -23,7 +25,10 @@ var Index = React.createClass({
       <div>
         <Adder focus />
         <div className='small-section'>
-          <RecordList records={this.state.records} />
+          <RecordList
+            records={this.state.records}
+            loading={this.state.loadingRecords}
+            />
         </div>
       </div>
     )

@@ -6,9 +6,8 @@ var RecordList = require('../record-list')
 var CatRecordsPage = React.createClass({
   getInitialState: function () {
     return {
-      records: [],
-      name: '',
-      loadingRecords: true
+      records: null,
+      name: ''
     }
   },
 
@@ -20,7 +19,6 @@ var CatRecordsPage = React.createClass({
 
   refreshRecords: function (name) {
     API.fetchRecordsWithCat(name, function (err, records) {
-      this.setState({ loadingRecords: false })
       if (err) return console.error(err)
       this.setState({ records: records })
     }.bind(this))
@@ -33,7 +31,7 @@ var CatRecordsPage = React.createClass({
           <h2>All records with <Cat name={this.state.name} /></h2>
         </section>
         <section>
-          <RecordList records={this.state.records} loading={this.state.loadingRecords} />
+          <RecordList records={this.state.records} />
         </section>
       </div>
     )
