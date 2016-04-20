@@ -1,6 +1,7 @@
 var doc = require('dynamodb-doc')
 var createRecord = require('./create-record')
 var deleteRecord = require('./delete-record')
+var generateGraphs = require('./generate-graphs')
 var getAccessToken = require('./get-access-token')
 var getRecord = require('./get-record')
 var listRecords = require('./list-records')
@@ -14,6 +15,8 @@ var dynamo = new doc.DynamoDB()
 exports.handler = function (params, context) {
   if (params.operation === 'get-access-token') {
     getAccessToken(dynamo, params, context)
+  } else if (params.operation === 'generate-graphs') {
+    generateGraphs(dynamo, params, context)
   } else {
     validateAccessToken(params.access_token, dynamo, context, function () {
       // Move to object { 'list', listRecords }
