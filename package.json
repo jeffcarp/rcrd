@@ -1,7 +1,7 @@
 {
   "name": "rcrd",
   "version": "1.0.0",
-  "description": "",
+  "description": "A service to keep track of the nouns in your life",
   "main": "browser/index.js",
   "scripts": {
     "start": "node server/index.js",
