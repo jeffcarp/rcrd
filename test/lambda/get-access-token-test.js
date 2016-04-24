@@ -45,6 +45,7 @@ test('getAccessToken generates a new access token', (t) => {
     t.ok(data.access_token.id, 'New access token is returned')
     t.ok(data.access_token.expiration, 'access_token.expiration is returned')
     t.ok(new Date() < new Date(data.access_token.expiration), 'access_token.expiration is in the future')
+    t.equal(data.access_token.user_id, data.user.id, 'New access token contains user_id')
 
     testLambda({
       operation: 'heartbeat.authenticated',
