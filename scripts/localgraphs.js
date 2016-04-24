@@ -21,7 +21,7 @@ dynamo.scan({
   let chartData = { charts: [], id: '2|quick-charts' }
   const keyCats = ['floss']
 
-  keyCats.forEach(keyCat => {
+  keyCats.forEach((keyCat) => {
     let chart = { catName: keyCat }
 
     WEEK_KEYS.forEach((weekKey, index) => {
@@ -30,7 +30,7 @@ dynamo.scan({
       const endDate = moment.utc()
 
       let total = 0
-      records.forEach(record => {
+      records.forEach((record) => {
         const cats = util.baseCatsFromRaw(record.raw)
         if (cats.indexOf(keyCat) !== -1) {
           const time = util.timeFromRecord(record)
