@@ -26,6 +26,12 @@ util.catsFromRaw = function (str) {
   })
 }
 
+util.baseCatsFromRaw = function (str) {
+  return str.split(',').map(function (cat) {
+    return util.sansMagnitude(cat.trim())
+  })
+}
+
 util.allCats = function (records) {
   return records.reduce(function (acc, record) {
     return acc.concat(util.catsFromRaw(record.raw))
