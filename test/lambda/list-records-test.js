@@ -1,33 +1,26 @@
 'use strict'
-
-const path = require('path')
-const test = require('tape')
-const tl = require('test-lambda')
-
-const dynamoDocStub = tl.dynamo
-const testLambda = tl.test(path.resolve('./lambda/index'), {
-  before: require('./before'),
-  after: require('./after')
-})
+import test from 'ava'
+const dynamoDocStub = require('test-lambda').dynamo
+import lambdaTest from '../support/lambda-test'
 
 test('listRecords fails with no access token', function (t) {
-  testLambda({
+  lambdaTest({
     operation: 'list'
   }, function (status, arg) {
-    t.equal(status, 'fail', 'status is fail')
-    t.equal(arg, 'access_token denied', 'error is "access_token denied"')
-    t.end()
+    t.is(status, 'fail', 'status is fail')
+    t.is(arg, 'access_token denied', 'error is "access_token denied"')
+    t.pass()
   })
 })
 
 test('listRecords fails with incorrect access token', function (t) {
-  testLambda({
+  lambdaTest({
     operation: 'list',
     access_token: 'some_incorrect_access_token'
   }, function (status, arg) {
-    t.equal(status, 'fail', 'status is fail')
-    t.equal(arg, 'access_token denied', 'error is "access_token denied"')
-    t.end()
+    t.is(status, 'fail', 'status is fail')
+    t.is(arg, 'access_token denied', 'error is "access_token denied"')
+    t.pass()
   })
 })
 
@@ -48,18 +41,18 @@ test('listRecords returns sorted records (id DESC)', function (t) {
     time_zone: 'America/Los_Angeles'
   })
 
-  testLambda({
+  lambdaTest({
     operation: 'list',
     access_token: 'some_bs_access_token'
   }, function (status, data) {
-    t.equal(status, 'succeed', 'status is succeed')
+    t.is(status, 'succeed', 'status is succeed')
 
-    t.equal(data.length, 3)
-    t.equal(data[0].id, '3')
-    t.equal(data[1].id, '1')
-    t.equal(data[2].id, '2')
+    t.is(data.length, 3)
+    t.is(data[0].id, '3')
+    t.is(data[1].id, '1')
+    t.is(data[2].id, '2')
 
-    t.end()
+    t.pass()
   })
 })
 
@@ -73,13 +66,13 @@ test('listRecords returns no more than 50 records', function (t) {
     dynamoDocStub._set('rcrd-records', { id: i })
   }
 
-  testLambda({
+  lambdaTest({
     operation: 'list',
     access_token: 'some_bs_access_token'
   }, function (status, data) {
-    t.equal(status, 'succeed', 'status is succeed')
-    t.equal(data.length, 50)
-    t.end()
+    t.is(status, 'succeed', 'status is succeed')
+    t.is(data.length, 50)
+    t.pass()
   })
 })
 */

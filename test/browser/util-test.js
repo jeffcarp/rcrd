@@ -1,13 +1,12 @@
 'use strict'
 
-const test = require('tape')
+import test from 'ava'
 const util = require('../../browser/util')
 
 test('util.hasMagnitude', function (t) {
   t.true(util.hasMagnitude('2 drinks'), 'has magnitude: "2 drinks"')
-
   t.false(util.hasMagnitude('party'), 'does not have magnitude: "party"')
-  t.end()
+  t.pass()
 })
 
 test('util.splitRecordsByYears', (t) => {
@@ -29,8 +28,8 @@ test('util.splitRecordsByYears', (t) => {
   const actual = util.splitRecordsByYears(records)
 
   t.deepEqual(actual['2016'], [records[0], records[2]])
-  t.equal(actual['2015'], undefined)
+  t.is(actual['2015'], undefined)
   t.deepEqual(actual['2010'], [records[1]])
 
-  t.end()
+  t.pass()
 })

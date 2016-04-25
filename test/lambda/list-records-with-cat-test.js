@@ -1,14 +1,7 @@
 'use strict'
-
-const path = require('path')
-const test = require('tape')
-const tl = require('test-lambda')
-
-const dynamoDocStub = tl.dynamo
-const testLambda = tl.test(path.resolve('./lambda/index'), {
-  before: require('./before'),
-  after: require('./after')
-})
+import test from 'ava'
+const dynamoDocStub = require('test-lambda').dynamo
+import lambdaTest from '../support/lambda-test'
 
 test('listRecordsWithCat fails without params.catName', function (t) {
   dynamoDocStub._set('rcrd-records', {
@@ -18,12 +11,12 @@ test('listRecordsWithCat fails without params.catName', function (t) {
     time_zone: 'America/Los_Angeles'
   })
 
-  testLambda({
+  lambdaTest({
     operation: 'list-records-with-cat',
     access_token: 'some_bs_access_token'
   }, function (status, records) {
-    t.equal(status, 'fail', 'status is succeed')
-    t.end()
+    t.is(status, 'fail', 'status is succeed')
+    t.pass()
   })
 })
 
@@ -47,18 +40,18 @@ test('listRecordsWithCat returns sorted records (id DESC)', function (t) {
     time_zone: 'America/Los_Angeles'
   })
 
-  testLambda({
+  lambdaTest({
     operation: 'list-records-with-cat',
     catName: 'cat',
     access_token: 'some_bs_access_token'
   }, function (status, records) {
-    t.equal(status, 'succeed', 'status is succeed')
+    t.is(status, 'succeed', 'status is succeed')
 
-    t.equal(records.length, 3)
-    t.equal(records[0].id, '3')
-    t.equal(records[1].id, '1')
-    t.equal(records[2].id, '2')
+    t.is(records.length, 3)
+    t.is(records[0].id, '3')
+    t.is(records[1].id, '1')
+    t.is(records[2].id, '2')
 
-    t.end()
+    t.pass()
   })
 })

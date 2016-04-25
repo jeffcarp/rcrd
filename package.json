@@ -7,7 +7,7 @@
     "start": "node server/index.js",
     "lint": "standard",
     "pretest": "standard",
-    "test": "tape test/**/*-test.js | tap-spec",
+    "test": "ava",
     "build": "browserify -t reactify browser/index.js > static/index.js",
     "watch": "watchify -t reactify browser/index.js -o static/index.js",
     "deploy": "npm t && node scripts/deploy/lambda.js && npm run build && node scripts/deploy/app.js"
@@ -54,5 +54,11 @@
     "tape": "^4.4.0",
     "test-lambda": "^1.0.0",
     "watchify": "^3.7.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js",
+      "!test/support/*"
+    ]
   }
 }

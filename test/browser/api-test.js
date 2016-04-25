@@ -4,7 +4,7 @@ const app = require('../../server/app')
 const dynamoDocStub = require('test-lambda').dynamo
 const proxyquire = require('proxyquire').noCallThru()
 const request = require('request')
-const test = require('tape')
+import test from 'ava'
 
 const API = proxyquire('../../browser/api', {
   './constants': { localAPI: true },
@@ -29,7 +29,7 @@ test.skip('does stuff I guess', function (t) {
     API.fetchRecord(expectedID, function (err, record) {
       if (err) return console.error(err)
       t.ok(record)
-      t.end()
+      t.pass()
       server.close()
     })
   })

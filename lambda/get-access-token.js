@@ -19,7 +19,6 @@ module.exports = function getAccessToken (dynamo, params, context) {
     var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64')
     if (suppliedPassHash === user.hash) {
       var buffer = crypto.randomBytes(24)
-      console.log(user)
 
       var newAccessToken = {
         id: buffer.toString('hex'),
