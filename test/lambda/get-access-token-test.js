@@ -33,7 +33,7 @@ test('getAccessToken generates a new access token', (t) => {
   }, (status, data) => {
     t.is(status, 'succeed', 'status is succeed')
     const tokens = dynamoDocStub._getAll('rcrd-access-tokens')
-    t.is(tokens.length, 3, 'There should now be 3 access tokens')
+    t.is(tokens.length, 4, 'There should now be 4 access tokens')
 
     t.is(data.user.id, 'hi@jeff.is', 'Result contains user email')
     t.is(data.user.time_zone, 'America/Los_Angeles', 'Result contains user TZ')

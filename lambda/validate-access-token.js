@@ -18,7 +18,7 @@ function validateAccessToken (access_token, dynamo, context, callback) {
 
     // TODO: This also needs to return a user context to support access control
 
-    callback()
+    callback(null, accessToken.user_id)
   })
 }
 

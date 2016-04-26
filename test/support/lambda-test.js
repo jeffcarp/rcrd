@@ -13,15 +13,20 @@ module.exports = testLambda.test(path.resolve('../../lambda/index'), {
 
     dynamoDocStub._set('rcrd-access-tokens', {
       id: 'some_bs_access_token',
-      owner: 'hi@jeff.is'
+      user_id: 'hi@jeff.is'
       // this should fail without expiration
-      // and without user_id
     })
 
     dynamoDocStub._set('rcrd-access-tokens', {
       id: 'expired_access_token',
-      owner: 'hi@jeff.is',
+      user_id: 'hi@jeff.is',
       expiration: '2016-02-23T22:49:05+00:00'
+    })
+
+    dynamoDocStub._set('rcrd-access-tokens', {
+      id: 'another_user_access_token',
+      user_id: 'hi2@jeff.is',
+      expiration: '2016-06-23T22:49:05+00:00'
     })
   },
   after: () => {

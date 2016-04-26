@@ -87,6 +87,13 @@ API.fetchRecordsWithCat = function (name, callback) {
   }, callback)
 }
 
+API.getSessions = function (callback) {
+  APIrequest({
+    operation: 'sessions.list',
+    access_token: User.access_token()
+  }, callback)
+}
+
 API.viewData = function (id, callback) {
   // hard coded prototyping, will change
   var userID = '2'

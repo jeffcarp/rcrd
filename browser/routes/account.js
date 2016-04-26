@@ -1,15 +1,27 @@
+var API = require('../api')
 var React = require('react')
 var SessionThing = require('../things/session')
 var User = require('../services/user')
 var UserThing = require('../things/user')
 
 var Account = React.createClass({
-  render: function () {
-    var accessToken = {
-      id: User.access_token(),
-      expiration: User.expiration()
-    }
 
+  getInitialState: function () {
+    return {
+      sessions: []
+    }
+  },
+
+  componentWillMount: function () {
+    API.getSessions(function (err, sessions) {
+      if (err) return console.error(err)
+      if (sessions) {
+        this.setState({ sessions: sessions })
+      }
+    }.bind(this))
+  },
+
+  render: function () {
     var user = {
       id: User.email(),
       time_zone: User.time_zone()
@@ -24,20 +36,19 @@ var Account = React.createClass({
         <section>
           <h2>Sessions</h2>
           <div>
-            <SessionThing
-              accessToken={accessToken}
-              current
-              actionText='Delete current session (this will log you out)'
-              actionOnClick={this.logout} />
+            {this.state.sessions.map(function (session, i) {
+              return (
+                <SessionThing
+                  session={session}
+                  key={i}
+                  current={User.access_token() === session.id}
+                  />
+              )
+            })}
           </div>
         </section>
       </div>
     )
-  },
-
-  logout: function (e) {
-    e.preventDefault()
-    User.logout()
   }
 
 })

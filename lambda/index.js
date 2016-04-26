@@ -3,6 +3,7 @@ var createRecord = require('./create-record')
 var deleteRecord = require('./delete-record')
 var generateGraphs = require('./generate-graphs')
 var getAccessToken = require('./get-access-token')
+var getSessions = require('./get-sessions')
 var getRecord = require('./get-record')
 var listRecords = require('./list-records')
 var listRecordsWithCat = require('./list-records-with-cat')
@@ -18,8 +19,10 @@ exports.handler = function (params, context) {
   } else if (params.operation === 'generate-graphs') {
     generateGraphs(dynamo, params, context)
   } else {
-    validateAccessToken(params.access_token, dynamo, context, function () {
-      // Move to object { 'list', listRecords }
+    validateAccessToken(params.access_token, dynamo, context, function (err, userID) {
+      if (err) return context.fail(err)
+
+      // TODO: Move to object { 'list', listRecords }
       if (params.operation === 'list') {
         listRecords(dynamo, params, context)
       } else if (params.operation === 'create') {
@@ -32,6 +35,8 @@ exports.handler = function (params, context) {
         deleteRecord(dynamo, params, context)
       } else if (params.operation === 'record.get') {
         getRecord(dynamo, params, context)
+      } else if (params.operation === 'sessions.list') {
+        getSessions(dynamo, params, context, userID)
       } else if (params.operation === 'view-data') {
         viewData(dynamo, params, context)
       } else if (params.operation === 'heartbeat.authenticated') {
