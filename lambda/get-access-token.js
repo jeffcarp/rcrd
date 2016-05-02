@@ -22,7 +22,7 @@ module.exports = function getAccessToken (dynamo, params, context) {
 
       var newAccessToken = {
         id: buffer.toString('hex'),
-        expiration: (new Date('2016-05-01T00:00:00Z')).toISOString(),
+        expiration: (new Date('2016-06-01T00:00:00Z')).toISOString(),
         user_id: user.id
       }
 
