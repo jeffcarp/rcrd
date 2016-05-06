@@ -35,6 +35,9 @@ var Account = React.createClass({
         </section>
         <section>
           <h2>Sessions</h2>
+          <div className="pfv">
+            <a onClick={User.logout} href="#">Log out current session</a>
+          </div>
           <div>
             {this.state.sessions.map(function (session, i) {
               return (

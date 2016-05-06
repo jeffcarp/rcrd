@@ -148,6 +148,9 @@ header {
 .bdb {
   border-bottom: solid 1px #ddd;
 }
+.pfv {
+  padding: 1em 0;
+}
 
 table {
   width: 100%;
