@@ -1,3 +1,4 @@
+'use strict'
 var API = require('../api')
 var bus = require('../bus')()
 var CatList = require('../cat-list')
@@ -20,14 +21,14 @@ var Index = React.createClass({
   componentDidMount: function () {
     this.fetchRecords()
 
-    API.viewData('quick-charts', function (err, data) {
+    API.viewDataCached('quick-charts', function (err, data) {
       if (err) return console.error(err)
       if (data.Item && data.Item.charts && data.Item.charts.length) {
         this.setState({ charts: data.Item.charts })
       }
     }.bind(this))
 
-    API.viewData('top-20-cats', function (err, data) {
+    API.viewDataCached('top-20-cats', function (err, data) {
       if (err) return new Error(err)
       if (data.Item && data.Item.cats && data.Item.cats.length) {
         this.setState({ commonCats: data.Item.cats })

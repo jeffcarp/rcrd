@@ -279,3 +279,6 @@ ul li {
   opacity: 0.5;
   pointer-events: none;
 }
+.adder form {
+  margin-bottom: 1em;
+}

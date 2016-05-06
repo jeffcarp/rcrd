@@ -1,6 +1,8 @@
+'use strict'
 var bus = require('./bus')()
 var constants = require('./constants')
 var request = require('browser-request')
+var store = require('store')
 var User = require('./services/user')
 
 var API_URL = 'https://08j98anr5k.execute-api.us-east-1.amazonaws.com/Production/'
@@ -104,6 +106,21 @@ API.viewData = function (id, callback) {
     id: fullID,
     access_token: User.access_token()
   }, callback)
+}
+
+API.viewDataCached = function (id, callback) {
+  // hard coded prototyping, will change
+  var key = '2|' + id
+  var cached = store.get(key)
+  if (cached) {
+    callback(null, cached)
+    // In the future, may want to also fetch
+  } else {
+    API.viewData(id, function (err, data) {
+      if (!err) store.set(key, data)
+      callback(err, data)
+    })
+  }
 }
 
 module.exports = API
