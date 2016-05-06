@@ -35,11 +35,11 @@ app.post('/api/*', function (req, res) {
     if (status !== 'fail') {
       setTimeout(() => {
         res.json(data)
-      }, 1e3)
+      }, 500)
     } else {
       setTimeout(() => {
         res.json({ errorMessage: data })
-      }, 1e3)
+      }, 500)
     }
   }
 
