@@ -1,7 +1,8 @@
-var Adder = require('../adder')
 var API = require('../api')
 var bus = require('../bus')()
+var CatList = require('../cat-list')
 var ChartWeekAverages = require('../chart-week-averages')
+var Editor = require('../editor')
 var React = require('react')
 var RecordList = require('../record-list')
 
@@ -11,7 +12,8 @@ var Index = React.createClass({
     return {
       records: [],
       loadingRecords: true,
-      charts: []
+      charts: [],
+      commonCats: []
     }
   },
 
@@ -22,6 +24,13 @@ var Index = React.createClass({
       if (err) return console.error(err)
       if (data.Item && data.Item.charts && data.Item.charts.length) {
         this.setState({ charts: data.Item.charts })
+      }
+    }.bind(this))
+
+    API.viewData('top-20-cats', function (err, data) {
+      if (err) return new Error(err)
+      if (data.Item && data.Item.cats && data.Item.cats.length) {
+        this.setState({ commonCats: data.Item.cats })
       }
     }.bind(this))
 
@@ -43,7 +52,15 @@ var Index = React.createClass({
     return (
       <div>
         <div className='small-section'>
-          <Adder focus />
+          <div className='adder'>
+            <Editor focus />
+            <CatList
+              cats={this.state.commonCats}
+              catOnClick={function (e) {
+                bus.emit('add-cat-to-adder', e.target.innerText)
+                bus.emit('focus-editor')
+              }} />
+          </div>
         </div>
         {this.state.charts.length ? (
           <div className='small-section'>

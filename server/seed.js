@@ -42,6 +42,11 @@ function seed (num) {
       }
     ]
   })
+
+  dynamoDocStub._set('rcrd-view-data', {
+    id: '2|top-20-cats',
+    cats: randomWords({ exactly: 20 })
+  })
 }
 
 module.exports = seed
