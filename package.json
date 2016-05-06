@@ -10,7 +10,8 @@
     "test": "ava",
     "build": "browserify -t reactify browser/index.js > static/index.js",
     "watch": "watchify -t reactify browser/index.js -o static/index.js",
-    "deploy": "npm t && node scripts/deploy/lambda.js && npm run build && node scripts/deploy/app.js"
+    "predeploy": "npm test",
+    "deploy": "node scripts/deploy/lambda.js && npm run build && node scripts/deploy/app.js"
   },
   "repository": {
     "type": "git",
