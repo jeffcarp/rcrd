@@ -155,9 +155,6 @@ header {
 table {
   width: 100%;
 }
-table td {
-  padding: 0.4em;
-}
 table td:first-child {
   width: 20%;
 }
@@ -281,4 +278,8 @@ ul li {
 }
 .adder form {
   margin-bottom: 1em;
+}
+.chart {
+  padding: 0.5em 0;
+  border-bottom: solid #eee 1px;
 }

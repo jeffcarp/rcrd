@@ -64,9 +64,7 @@ var Index = React.createClass({
           </div>
         </div>
         {this.state.charts.length ? (
-          <div className='small-section'>
-            <ChartWeekAverages charts={this.state.charts} />
-          </div>
+          <ChartWeekAverages charts={this.state.charts} />
         ) : null}
         <div className='small-section'>
           <RecordList

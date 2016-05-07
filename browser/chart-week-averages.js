@@ -1,37 +1,36 @@
 var Cat = require('./cat')
 var React = require('react')
+var util = require('./util')
+
+var ChartTimeSince = React.createClass({
+  render: function () {
+    var timeSince = util.timeFromRecord(this.props.chart.record).fromNow(true)
+    return (
+      <div className='chart'>
+        <b>{timeSince}</b> since last <Cat name={this.props.chart.catName} />
+      </div>
+    )
+  }
+})
 
 var CatChart = React.createClass({
-  width: 732,
-  height: 50,
-
-  propTypes: {
-  },
-
-  render: function (context) {
+  render: function () {
     var chart = this.props.chart
-    if (!chart) {
-      return <div></div>
-    }
-
     return (
-      <table>
+      <table className='chart'>
         <tbody>
           <tr>
             <td>
               <Cat name={chart.catName} />
             </td>
             <td>
-              <div>{chart.sixteenWeeks}<small>/day</small></div>
-              <div><small>last 16 weeks</small></div>
+              <div><b>{chart.sixteenWeeks}</b><small>/day last <b>16</b> weeks</small></div>
             </td>
             <td>
-              <div>{chart.eightWeeks}<small>/day</small></div>
-              <div><small>last 8 weeks</small></div>
+              <div><b>{chart.eightWeeks}</b><small>/day last <b>8</b> weeks</small></div>
             </td>
             <td>
-              <div>{chart.fourWeeks}<small>/day</small></div>
-              <div><small>last 4 weeks</small></div>
+              <div><b>{chart.fourWeeks}</b><small>/day last <b>4</b> weeks</small></div>
             </td>
           </tr>
         </tbody>
@@ -43,18 +42,20 @@ var CatChart = React.createClass({
 var ChartWeekAverages = React.createClass({
 
   propTypes: {
+    charts: React.PropTypes.array.isRequired
   },
 
-  render: function (context) {
+  render: function () {
     var charts = this.props.charts
-    if (!charts || !charts.length) {
-      return <div></div>
-    }
 
     return (
       <div>
         {charts.map(function (chart, i) {
-          return <CatChart chart={chart} key={i} />
+          if (chart.type === 'averages') {
+            return <CatChart chart={chart} key={i} />
+          } else if (chart.type === 'time-since') {
+            return <ChartTimeSince chart={chart} key={i} />
+          }
         })}
       </div>
     )

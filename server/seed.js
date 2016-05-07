@@ -39,6 +39,15 @@ function seed (num) {
         sixteenWeeks: '2.4',
         eightWeeks: '2.7',
         fourWeeks: '2.9'
+      },
+      {
+        type: 'time-since',
+        catName: 'haircut',
+        record: {
+          raw: 'haircut, good',
+          time: '2016-02-05T19:02:24Z',
+          time_zone: 'America/Los_Angeles'
+        }
       }
     ]
   })
