@@ -21,9 +21,7 @@ User.expiration = function () {
 }
 
 User.logout = function () {
-  delete window.localStorage.email
-  delete window.localStorage.access_token
-
+  window.localStorage.clear()
   window.location = '/login'
 }
 
