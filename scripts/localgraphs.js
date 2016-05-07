@@ -22,7 +22,10 @@ dynamo.scan({
   const keyCats = ['floss']
 
   keyCats.forEach((keyCat) => {
-    let chart = { catName: keyCat }
+    let chart = {
+      catName: keyCat,
+      type: 'averages'
+    }
 
     WEEK_KEYS.forEach((weekKey, index) => {
       const NUM_WEEKS = WEEKS[index]
@@ -47,5 +50,38 @@ dynamo.scan({
     chartData.charts.push(chart)
   })
 
-  console.log(JSON.stringify(chartData))
+  // Generate "time since" charts
+  const timeSinceCats = ['haircut']
+  timeSinceCats.forEach((timeSinceCat) => {
+    let chart = {
+      catName: timeSinceCat,
+      type: 'time-since'
+    }
+
+    let latestRecord
+    records.forEach((record) => {
+      const cats = util.baseCatsFromRaw(record.raw)
+      if (cats.indexOf(timeSinceCat) !== -1) {
+        const time = util.timeFromRecord(record)
+
+        if (!latestRecord || time.isAfter(util.timeFromRecord(latestRecord))) {
+          latestRecord = record
+        }
+      }
+    })
+
+    if (latestRecord) {
+      console.log('latest', timeSinceCat, latestRecord)
+      chart.record = latestRecord
+      chartData.charts.push(chart)
+    }
+  })
+
+  dynamo.put({
+    TableName: 'rcrd-view-data',
+    Item: chartData
+  }, function (err) {
+    if (err) return console.error(err)
+    else return console.log(chartData)
+  })
 })
