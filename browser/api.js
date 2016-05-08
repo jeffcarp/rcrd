@@ -111,16 +111,16 @@ API.viewData = function (id, callback) {
 API.viewDataCached = function (id, callback) {
   // hard coded prototyping, will change
   var key = '2|' + id
+
   var cached = store.get(key)
   if (cached) {
     callback(null, cached)
-    // In the future, may want to also fetch
-  } else {
-    API.viewData(id, function (err, data) {
-      if (!err) store.set(key, data)
-      callback(err, data)
-    })
   }
+
+  API.viewData(id, function (err, data) {
+    if (!err) store.set(key, data)
+    callback(err, data)
+  })
 }
 
 module.exports = API
