@@ -9,7 +9,7 @@ test('expired tokens are rejected', function (t) {
     access_token: 'expired_access_token'
   }, function (status, arg) {
     t.is(status, 'fail', 'status is fail')
-    t.is(arg, 'access_token expired', 'error is "access_token denied"')
+    t.is(arg, 'access_token expired', 'error is "access_token expired"')
     t.pass()
   })
 })

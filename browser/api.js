@@ -25,6 +25,9 @@ function APIrequest (body, callback) {
       if (response.body.errorMessage === 'access_token denied') {
         bus.emit('notification', 'Your access token is no longer valid, please log in again.')
         setTimeout(User.logout, 2e3)
+      } else if (response.body.errorMessage === 'access_token expired') {
+        bus.emit('notification', 'Your access token has expired, please log in again.')
+        setTimeout(User.logout, 2e3)
       } else {
         callback(response.body.errorMessage)
       }
