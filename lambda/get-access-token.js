@@ -20,9 +20,12 @@ module.exports = function getAccessToken (dynamo, params, context) {
     if (suppliedPassHash === user.hash) {
       var buffer = crypto.randomBytes(24)
 
+      var expirationDate = new Date()
+      expirationDate.setDate(expirationDate.getDate() + 30)
+
       var newAccessToken = {
         id: buffer.toString('hex'),
-        expiration: (new Date('2016-06-01T00:00:00Z')).toISOString(),
+        expiration: expirationDate.toISOString(),
         user_id: user.id
       }
 
