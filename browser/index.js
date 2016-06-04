@@ -12,6 +12,7 @@ var CatRecordsPage = require('./routes/cat-records')
 var Index = require('./routes/index')
 var RecordPage = require('./routes/record')
 var NotFoundPage = require('./routes/not-found-page')
+var GraphsPage = require('./routes/graphs')
 
 var Locations = Router.Locations
 var Location = Router.Location
@@ -29,6 +30,7 @@ var Root = React.createClass({
           <Location path='/cats/:name/records' handler={CatRecordsPage} />
           <Location path='/cats/:name' handler={CatPage} />
           <Location path='/records/:id' handler={RecordPage} />
+          <Location path='/graphs' handler={GraphsPage} />
           <NotFound handler={NotFoundPage} />
         </Locations>
       </div>
