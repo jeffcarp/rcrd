@@ -1,46 +1,16 @@
 const React = require('react')
 const ReactDOMServer = require('react-dom/server')
-const fetching = require('./fetching')
+const Records = require('./records')
+require('babel-register')
 
-const Bars = (props) => (
-  <g>
-    {props.days.map((dayOfYear) => (
-      <rect
-        key={dayOfYear}
-        x={String(100 / 366 * dayOfYear) + '%'}
-        y={0}
-        width={String(100 / 366) + '%'}
-        height={props.height} />
-    ))}
-  </g>
-)
+const Embed = React.createFactory(require('./embed'))
 
-var Embed = React.createClass({
-  height: 30,
+const records = Records.withCat('book')
 
-  propTypes: {
-  },
-
-  render: function () {
-    const days = [0, 50, 365]
-
-    return (
-      <svg
-        width='100%'
-        height={this.height}
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
-        <Bars days={days} height={this.height} />
-      </svg>
-    )
-  }
-
+const embed = Embed({
+  records: records
 })
 
-fetching.allRecordsWithCat('book', (err, records) => {
-  if (err) return console.error(err)
-
-  console.log(records)
-
-  console.log(ReactDOMServer.renderToStaticMarkup(<Embed />))
-})
-
+console.log('<?xml version="1.0" encoding="utf-8"?>')
+console.log('<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">')
+console.log(ReactDOMServer.renderToStaticMarkup(embed))

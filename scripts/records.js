@@ -1,18 +1,14 @@
+const fs = require('fs')
 const util = require('../browser/util')
 
-const Record = {}
+const _records = require('../local-records.json')
 
-Record.allRecordsWithCat = (catName, cb) => {
-/*
-  fetching.allRecords((err, records) => {
-    if (err) return console.error(err)
+const Records = {}
 
-    cb(null, records.filter((record) => {
-      const cats = util.baseCatsFromRaw(record.raw)
-      return cats.indexOf(catName) !== -1
-    }))
-  })
-*/
+Records.withCat = (catName) => {
+  return _records.filter((record) => (
+    util.baseCatsFromRaw(record.raw).indexOf(catName) !== -1
+  ))
 }
 
-module.exports = Record
+module.exports = Records
