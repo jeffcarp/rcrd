@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 static/index.js
 local-records.json
+lambda/index-dist.js

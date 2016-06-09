@@ -10,19 +10,7 @@ var lambda = new AWS.Lambda({
 })
 
 var zip = new AdmZip()
-zip.addLocalFile('./lambda/index.js')
-zip.addLocalFile('./lambda/create-record.js')
-zip.addLocalFile('./lambda/delete-record.js')
-zip.addLocalFile('./lambda/generate-graphs.js')
-zip.addLocalFile('./lambda/get-access-token.js')
-zip.addLocalFile('./lambda/get-sessions.js')
-zip.addLocalFile('./lambda/get-record.js')
-zip.addLocalFile('./lambda/list-records.js')
-zip.addLocalFile('./lambda/list-records-with-cat.js')
-zip.addLocalFile('./lambda/update-record.js')
-zip.addLocalFile('./lambda/validate-access-token.js')
-zip.addLocalFile('./lambda/view-data.js')
-zip.addLocalFile('./lambda/util.js')
+zip.addLocalFile('./lambda/index-dist.js')
 var zipBuffer = zip.toBuffer()
 
 lambda.updateFunctionCode({
