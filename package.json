@@ -10,9 +10,10 @@
     "test": "ava",
     "build": "browserify -t reactify browser/index.js > static/index.js",
     "watch": "watchify -t reactify browser/index.js -o static/index.js",
-    "predeploy-lambda": "npm test && browserify lambda/index.js > lambda/index-dist.js",
+    "predeploy-lambda": "npm test",
     "deploy-lambda": "node scripts/deploy/lambda.js",
-    "deploy-browser": "npm run build && node scripts/deploy/app.js",
+    "predeploy-browser": "npm run build",
+    "deploy-browser": "node scripts/deploy/app.js",
     "deploy": "npm run deploy-lambda && npm run deploy-browser"
   },
   "repository": {
