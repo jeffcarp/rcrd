@@ -3,6 +3,7 @@ var createRecord = require('./create-record')
 var deleteRecord = require('./delete-record')
 var generateGraphs = require('./generate-graphs')
 var getAccessToken = require('./get-access-token')
+var getRecordsLast90Days = require('./get-records-last-90-days')
 var getSessions = require('./get-sessions')
 var getRecord = require('./get-record')
 var listRecords = require('./list-records')
@@ -39,6 +40,8 @@ exports.handler = function (params, context) {
         getSessions(dynamo, params, context, userID)
       } else if (params.operation === 'view-data') {
         viewData(dynamo, params, context)
+      } else if (params.operation === 'record.get-last-90-days') {
+        getRecordsLast90Days(dynamo, params, context)
       } else if (params.operation === 'heartbeat.authenticated') {
         context.succeed()
       } else {
