@@ -1,5 +1,8 @@
-const moment = require('moment')
-const util = require('../browser/util')
+const moment = require('moment-timezone')
+
+function timeFromRecord (record) {
+  return moment.tz(record.time, record.time_zone)
+}
 
 function getRecordsLast90Days (dynamo, params, context) {
   dynamo.scan({
@@ -11,7 +14,7 @@ function getRecordsLast90Days (dynamo, params, context) {
     const ninetyDaysAgo = moment().subtract(90, 'days')
 
     const recordsLast90Days = records.filter((record) => (
-      util.timeFromRecord(record).isAfter(ninetyDaysAgo)
+      timeFromRecord(record).isAfter(ninetyDaysAgo)
     ))
 
     context.succeed(recordsLast90Days)

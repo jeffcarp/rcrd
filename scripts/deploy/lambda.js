@@ -25,6 +25,7 @@ zip.addLocalFile('./lambda/validate-access-token.js')
 zip.addLocalFile('./lambda/view-data.js')
 zip.addLocalFile('./lambda/util.js')
 zip.addLocalFile('./node_modules/moment/moment.js')
+zip.addLocalFile('./node_modules/moment-timezone/moment-timezone.js')
 var zipBuffer = zip.toBuffer()
 
 lambda.updateFunctionCode({
