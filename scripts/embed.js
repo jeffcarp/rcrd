@@ -1,5 +1,5 @@
 const React = require('react')
-const ReactDOMServer = require('react-dom/server')
+// const ReactDOMServer = require('react-dom/server')
 const util = require('../browser/util')
 
 const Bars = (props) => (
@@ -31,8 +31,8 @@ var Embed = React.createClass({
       <svg
         width='100%'
         height={this.height}
-        version="1.1"
-        xmlns="http://www.w3.org/2000/svg"
+        version='1.1'
+        xmlns='http://www.w3.org/2000/svg'
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
         <Bars days={days} height={this.height} />
       </svg>

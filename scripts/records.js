@@ -1,4 +1,3 @@
-const fs = require('fs')
 const util = require('../browser/util')
 
 const _records = require('../local-records.json')
