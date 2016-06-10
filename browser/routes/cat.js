@@ -34,6 +34,18 @@ var CatPage = React.createClass({
   refreshRecords: function () {
     var self = this
 
+    API.last90DaysCached(function (err, records) {
+      if (err) {
+        return console.error(err)
+      }
+
+      var filteredRecords = util.matchingCat(self.state.name, records)
+
+      if (!self.state.records.length) {
+        self.setState({ records: filteredRecords })
+      }
+    })
+
     API.fetchRecordsWithCat(this.state.name, function (err, records) {
       if (err) {
         return console.error(err)

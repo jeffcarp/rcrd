@@ -126,4 +126,26 @@ API.viewDataCached = function (id, callback) {
   })
 }
 
+API.last90Days = function (callback) {
+  APIrequest({
+    operation: 'record.get-last-90-days',
+    access_token: User.access_token()
+  }, callback)
+}
+
+API.last90DaysCached = function (callback) {
+  // hard coded prototyping, will change
+  var key = '2|last-90'
+
+  var cached = store.get(key)
+  if (cached) {
+    callback(null, cached)
+  }
+
+  API.last90Days(function (err, data) {
+    if (!err) store.set(key, data)
+    callback(err, data)
+  })
+}
+
 module.exports = API

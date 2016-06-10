@@ -88,4 +88,10 @@ util.splitRecordsByYears = function (records) {
   return output
 }
 
+util.matchingCat = function (cat, records) {
+  return records.filter(function (record) {
+    return util.baseCatsFromRaw(record.raw).indexOf(cat) !== -1
+  })
+}
+
 module.exports = util

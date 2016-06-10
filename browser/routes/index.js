@@ -2,7 +2,7 @@
 var API = require('../api')
 var bus = require('../bus')()
 var CatList = require('../cat-list')
-var ChartWeekAverages = require('../chart-week-averages')
+var Charts = require('../charts')
 var Editor = require('../editor')
 var React = require('react')
 var RecordList = require('../record-list')
@@ -13,18 +13,19 @@ var Index = React.createClass({
     return {
       records: [],
       loadingRecords: true,
-      charts: [],
-      commonCats: []
+      commonCats: [],
+      last90Days: []
     }
   },
 
   componentDidMount: function () {
     this.fetchRecords()
 
-    API.viewDataCached('quick-charts', function (err, data) {
-      if (err) return console.error(err)
-      if (data.Item && data.Item.charts && data.Item.charts.length) {
-        this.setState({ charts: data.Item.charts })
+
+    API.last90DaysCached(function (err, records) {
+      if (err) return new Error(err)
+      if (records && records.length) {
+        this.setState({ last90Days: records })
       }
     }.bind(this))
 
@@ -63,9 +64,7 @@ var Index = React.createClass({
               }} />
           </div>
         </div>
-        {this.state.charts.length ? (
-          <ChartWeekAverages charts={this.state.charts} />
-        ) : null}
+        <Charts last90Days={this.state.last90Days} />
         <div className='small-section'>
           <RecordList
             records={this.state.records}
