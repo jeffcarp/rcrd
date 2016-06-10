@@ -25,6 +25,9 @@ var Index = React.createClass({
       if (err) return new Error(err)
       if (records && records.length) {
         this.setState({ last90Days: records })
+        if (!this.records.length) {
+          this.setState({ records: records })
+        }
       }
     }.bind(this))
 
