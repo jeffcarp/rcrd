@@ -21,7 +21,6 @@ var Index = React.createClass({
   componentDidMount: function () {
     this.fetchRecords()
 
-
     API.last90DaysCached(function (err, records) {
       if (err) return new Error(err)
       if (records && records.length) {

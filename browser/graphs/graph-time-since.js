@@ -11,7 +11,6 @@ var GraphTimeSince = React.createClass({
   },
 
   render: function () {
-
     var records = this.props.last90Days
     var latestRecord
 
@@ -31,12 +30,13 @@ var GraphTimeSince = React.createClass({
       var now = moment()
       var timeDivision = this.props.timeDivision
       var recordTime = util.timeFromRecord(latestRecord)
+      var timeSince
       if (timeDivision) {
-        var timeSince = now.diff(recordTime, timeDivision)
+        timeSince = now.diff(recordTime, timeDivision)
 
         msg = <span><b>{timeSince} {timeDivision}</b> since last <Cat name={this.props.catName} /></span>
       } else {
-        var timeSince = recordTime.fromNow(true)
+        timeSince = recordTime.fromNow(true)
         msg = <span><b>{timeSince}</b> since last <Cat name={this.props.catName} /></span>
       }
     } else {
