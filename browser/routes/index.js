@@ -6,7 +6,6 @@ var Charts = require('../charts')
 var Editor = require('../editor')
 var React = require('react')
 var RecordList = require('../record-list')
-var records = require('../services/records')
 var moment = require('moment')
 var util = require('../util')
 
@@ -21,7 +20,6 @@ var Index = React.createClass({
   },
 
   componentDidMount: function () {
-
     API.last90DaysCachedOptimistically((err, records) => {
       if (err) return new Error(err)
       if (records && records.length) {
@@ -57,15 +55,13 @@ var Index = React.createClass({
   },
 
   render: function () {
-
-
     var daysAgo14 = moment().subtract(14, 'days')
     var last14Days = this.state.last90Days.filter((record) => (
       util.timeFromRecord(record).isAfter(daysAgo14)
     )).sort((a, b) => {
       if (util.timeFromRecord(a).isAfter(util.timeFromRecord(b))) {
         return -1
-      } else if (util.timeFromRecord(a).isBefore(util.timeFromRecord(b)))  {
+      } else if (util.timeFromRecord(a).isBefore(util.timeFromRecord(b))) {
         return 1
       } else {
         return 0

@@ -29,7 +29,6 @@ var CatPage = React.createClass({
       })
     })
 
-
     /*
     setTimeout(function () {
       this.refreshRecords()
@@ -82,9 +81,9 @@ var CatPage = React.createClass({
   },
 
   getContemporaneousCats: function () {
+    /*
     var self = this
 
-    /*
     API.fetchRecords(function (err, records) {
       if (err) {
         return console.error(err)
