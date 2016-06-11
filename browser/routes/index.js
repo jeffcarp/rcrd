@@ -6,12 +6,14 @@ var Charts = require('../charts')
 var Editor = require('../editor')
 var React = require('react')
 var RecordList = require('../record-list')
+var records = require('../services/records')
+var moment = require('moment')
+var util = require('../util')
 
 var Index = React.createClass({
 
   getInitialState: function () {
     return {
-      records: [],
       loadingRecords: true,
       commonCats: [],
       last90Days: []
@@ -19,43 +21,57 @@ var Index = React.createClass({
   },
 
   componentDidMount: function () {
-    this.fetchRecords()
 
-    API.last90DaysCached(function (err, records) {
+    API.last90DaysCachedOptimistically((err, records) => {
       if (err) return new Error(err)
       if (records && records.length) {
-        this.setState({ last90Days: records })
-        if (!this.state.records.length) {
-          this.setState({
-            records: records,
-            loadingRecords: false
-          })
-        }
+        this.setState({
+          last90Days: records,
+          loadingRecords: false
+        })
       }
-    }.bind(this))
+    })
 
+    /*
+    TODO: restore with last90
     API.viewDataCached('top-20-cats', function (err, data) {
       if (err) return new Error(err)
       if (data.Item && data.Item.cats && data.Item.cats.length) {
         this.setState({ commonCats: data.Item.cats })
       }
     }.bind(this))
+    */
 
-    bus.on('record-created-or-updated', function () {
+    bus.on('record-created-or-updated', () => {
       this.setState({ loadingRecords: true })
-      this.fetchRecords()
-    }.bind(this))
-  },
-
-  fetchRecords: function () {
-    API.fetchRecords(function (err, records) {
-      this.setState({ loadingRecords: false })
-      if (err) return console.error(err)
-      this.setState({ records: records })
-    }.bind(this))
+      API.last90Days((err, records) => {
+        if (err) return new Error(err)
+        if (records && records.length) {
+          this.setState({
+            last90Days: records,
+            loadingRecords: false
+          })
+        }
+      })
+    })
   },
 
   render: function () {
+
+
+    var daysAgo14 = moment().subtract(14, 'days')
+    var last14Days = this.state.last90Days.filter((record) => (
+      util.timeFromRecord(record).isAfter(daysAgo14)
+    )).sort((a, b) => {
+      if (util.timeFromRecord(a).isAfter(util.timeFromRecord(b))) {
+        return -1
+      } else if (util.timeFromRecord(a).isBefore(util.timeFromRecord(b)))  {
+        return 1
+      } else {
+        return 0
+      }
+    })
+
     return (
       <div>
         <div className='small-section'>
@@ -72,7 +88,7 @@ var Index = React.createClass({
         <Charts last90Days={this.state.last90Days} />
         <div className='small-section'>
           <RecordList
-            records={this.state.records}
+            records={last14Days}
             loading={this.state.loadingRecords}
             />
         </div>

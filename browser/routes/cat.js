@@ -18,8 +18,19 @@ var CatPage = React.createClass({
   },
 
   componentWillMount: function () {
-    this.setState({ name: decodeURIComponent(this.props.name) })
+    this.setState({
+      name: decodeURIComponent(this.props.name)
+    }, () => {
+      API.last90DaysCachedOptimistically((err, records) => {
+        if (err) return console.error(err)
 
+        var filteredRecords = util.matchingCat(this.state.name, records)
+        this.setState({ records: filteredRecords })
+      })
+    })
+
+
+    /*
     setTimeout(function () {
       this.refreshRecords()
       this.getContemporaneousCats()
@@ -29,12 +40,13 @@ var CatPage = React.createClass({
         this.refreshAlsoRecords(decodeURIComponent(this.props._query.also))
       }
     }.bind(this), 1)
+    */
   },
 
   refreshRecords: function () {
     var self = this
 
-    API.last90DaysCached(function (err, records) {
+    API.last90DaysCachedOptimistically(function (err, records) {
       if (err) {
         return console.error(err)
       }
@@ -46,6 +58,7 @@ var CatPage = React.createClass({
       }
     })
 
+    /*
     API.fetchRecordsWithCat(this.state.name, function (err, records) {
       if (err) {
         return console.error(err)
@@ -53,9 +66,11 @@ var CatPage = React.createClass({
 
       self.setState({ records: records })
     })
+    */
   },
 
   refreshAlsoRecords: function (name) {
+    /*
     API.fetchRecordsWithCat(name, function (err, records) {
       if (err) {
         return console.error(err)
@@ -63,11 +78,13 @@ var CatPage = React.createClass({
 
       this.setState({ alsoRecords: records })
     }.bind(this))
+    */
   },
 
   getContemporaneousCats: function () {
     var self = this
 
+    /*
     API.fetchRecords(function (err, records) {
       if (err) {
         return console.error(err)
@@ -100,6 +117,7 @@ var CatPage = React.createClass({
 
       self.setState({ contemporaneousCatNames: catNumberArray })
     })
+    */
   },
 
   render: function () {
@@ -128,6 +146,7 @@ var CatPage = React.createClass({
           <h2><Cat name={name} />{also}</h2>
         </section>
         <WeeklyBlocksYears records={records} hue={hue} />
+        <p style={{ marginTop: 10, color: '#aaa' }}><small>Showing last 90 days</small></p>
         <section>
           <h2>Last 3 records</h2>
           {recordDivs}

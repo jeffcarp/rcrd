@@ -14,7 +14,7 @@ var GraphTimeSince = React.createClass({
     var records = this.props.last90Days
     var latestRecord
 
-    records.forEach(function (record) {
+    records.forEach((record) => {
       var cats = util.baseCatsFromRaw(record.raw)
       if (cats.indexOf(this.props.catName) !== -1) {
         var time = util.timeFromRecord(record)
@@ -23,7 +23,7 @@ var GraphTimeSince = React.createClass({
           latestRecord = record
         }
       }
-    }.bind(this))
+    })
 
     var msg
     if (latestRecord) {
