@@ -1,7 +1,6 @@
 'use strict'
 var API = require('../api')
 var bus = require('../bus')()
-var CatList = require('../cat-list')
 var Charts = require('../charts')
 var Editor = require('../editor')
 var React = require('react')
