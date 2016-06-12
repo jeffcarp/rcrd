@@ -1,4 +1,4 @@
-var Cat = require('../cat')
+var LinkedCat = require('../linked-cat')
 var moment = require('moment')
 var React = require('react')
 var util = require('../util')
@@ -34,7 +34,7 @@ var GraphWeekAverages = React.createClass({
         <tbody>
           <tr>
             <td>
-              <Cat name={this.props.catName} />
+              <LinkedCat name={this.props.catName} />
             </td>
             <td>
               <div><b>{this.averageSinceNumWeeksAgo(16)}</b><small>/week last <b>16</b> weeks</small></div>

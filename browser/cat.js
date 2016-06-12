@@ -1,6 +1,7 @@
 var React = require('react')
 var pluralize = require('pluralize')
 var util = require('./util')
+var Link = require('react-router-component').Link
 
 var Cat = React.createClass({
   propTypes: {
@@ -14,18 +15,36 @@ var Cat = React.createClass({
     var bareNameEscaped = encodeURIComponent(bareNameSingular)
     var url = '/cats/' + bareNameEscaped
     var hue = util.catNameToHue(name)
+    var style = {backgroundColor: 'hsl(' + hue + ', 50%, 60%)'}
+    var outerStyle = {backgroundColor: 'hsl(' + hue + ', 50%, 40%)'}
 
-    var onClick = this.props.onClick || function () {
-      window.location = url
-    }
+    var Elem = this.props.noLink ? React.DOM.span : Link
 
     if (util.hasMagnitude(name)) {
       return (
-        <span className='split-cat' onClick={onClick} href={url}><span style={{backgroundColor: 'hsl(' + hue + ', 50%, 40%)'}} className='magnitude' >{util.magnitudePortion(name)}</span><span style={{backgroundColor: 'hsl(' + hue + ', 50%, 60%)'}} className='name'>{util.sansMagnitude(name)}</span></span>
+        <span
+          className='split-cat'>
+          <span
+            style={outerStyle}
+            className='magnitude'>
+            {util.magnitudePortion(name)}
+          </span>
+          <span
+            style={style}
+            className='name'>
+            {util.sansMagnitude(name)}
+          </span>
+        </span>
       )
     } else {
       return (
-        <span className='cat' onClick={onClick} href={url}><span style={{backgroundColor: 'hsl(' + hue + ', 50%, 60%)'}}>{name}</span></span>
+        <span
+          className='cat'>
+          <span
+            style={style}>
+            {name}
+          </span>
+        </span>
       )
     }
   }

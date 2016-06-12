@@ -1,5 +1,8 @@
 var React = require('react')
-var Cat = require('./cat')
+var LinkedCat = require('./linked-cat')
+var pluralize = require('pluralize')
+var util = require('./util')
+var Link = require('react-router-component').Link
 
 var CatList = React.createClass({
   propTypes: {
@@ -22,7 +25,9 @@ var CatList = React.createClass({
     }
 
     var cats = rawCats.map(function (name) {
-      return <Cat name={name} key={name} onClick={this.props.catOnClick} />
+      return (
+        <LinkedCat key={name} name={name} />
+      )
     }.bind(this))
 
     return <div className='cat-list'>{cats}</div>

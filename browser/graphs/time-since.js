@@ -1,4 +1,4 @@
-var Cat = require('../cat')
+var LinkedCat = require('../linked-cat')
 var moment = require('moment')
 var React = require('react')
 var util = require('../util')
@@ -34,13 +34,13 @@ var GraphTimeSince = React.createClass({
       if (timeDivision) {
         timeSince = now.diff(recordTime, timeDivision)
 
-        msg = <span><b>{timeSince} {timeDivision}</b> since last <Cat name={this.props.catName} /></span>
+        msg = <span><b>{timeSince} {timeDivision}</b> since last <LinkedCat name={this.props.catName} /></span>
       } else {
         timeSince = recordTime.fromNow(true)
-        msg = <span><b>{timeSince}</b> since last <Cat name={this.props.catName} /></span>
+        msg = <span><b>{timeSince}</b> since last <LinkedCat name={this.props.catName} /></span>
       }
     } else {
-      msg = <span>No <Cat name={this.props.catName} /> in the last 90 days</span>
+      msg = <span>No <LinkedCat name={this.props.catName} /> in the last 90 days</span>
     }
 
     return (

@@ -5,6 +5,7 @@ var Record = require('../record')
 var TogetherCats = require('../together-cats')
 var util = require('../util')
 var WeeklyBlocksYears = require('../weekly-blocks-years')
+var Link = require('react-router-component').Link
 
 var CatPage = React.createClass({
   getInitialState: function () {
@@ -40,6 +41,21 @@ var CatPage = React.createClass({
       }
     }.bind(this), 1)
     */
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    console.log(nextProps)
+
+    this.setState({
+      name: decodeURIComponent(nextProps.name)
+    }, () => {
+      API.last90DaysCachedOptimistically((err, records) => {
+        if (err) return console.error(err)
+
+        var filteredRecords = util.matchingCat(this.state.name, records)
+        this.setState({ records: filteredRecords })
+      })
+    })
   },
 
   refreshRecords: function () {
@@ -150,7 +166,7 @@ var CatPage = React.createClass({
           <h2>Last 3 records</h2>
           {recordDivs}
           <div>
-            <a href={'/cats/' + name + '/records'}>See all records with <Cat name={name} onClick={null} /></a>
+            <Link href={'/cats/' + name + '/records'}>See all records with <Cat name={name} /></Link>
           </div>
         </section>
         <section>

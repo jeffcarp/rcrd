@@ -73,12 +73,6 @@ var Index = React.createClass({
         <div className='small-section'>
           <div className='adder'>
             <Editor focus />
-            <CatList
-              cats={this.state.commonCats}
-              catOnClick={function (e) {
-                bus.emit('add-cat-to-adder', e.target.innerText)
-                bus.emit('focus-editor')
-              }} />
           </div>
         </div>
         <Charts last90Days={this.state.last90Days} />
