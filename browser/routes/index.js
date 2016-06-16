@@ -39,17 +39,22 @@ var Index = React.createClass({
     }.bind(this))
     */
 
-    bus.on('record-created-or-updated', () => {
-      this.setState({ loadingRecords: true })
-      API.last90Days((err, records) => {
-        if (err) return new Error(err)
-        if (records && records.length) {
-          this.setState({
-            last90Days: records,
-            loadingRecords: false
-          })
-        }
-      })
+    bus.on('record-created-or-updated', () => this.refreshRecords())
+  },
+
+  refreshRecords: function () {
+    if (this.state.loadingRecords) return
+
+    this.setState({ loadingRecords: true })
+
+    API.last90Days((err, records) => {
+      if (err) return new Error(err)
+      if (records && records.length) {
+        this.setState({
+          last90Days: records,
+          loadingRecords: false
+        })
+      }
     })
   },
 
@@ -76,6 +81,7 @@ var Index = React.createClass({
         </div>
         <Charts last90Days={this.state.last90Days} />
         <div className='small-section'>
+          <button onClick={this.refreshRecords}>Refresh records</button>
           <RecordList
             records={last14Days}
             loading={this.state.loadingRecords}
