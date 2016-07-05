@@ -15,7 +15,7 @@
     "predeploy-browser": "npm run build",
     "deploy-browser": "node scripts/deploy/app.js",
     "deploy": "npm run deploy-lambda && npm run deploy-browser",
-    "react-native:start": "node node_modules/react-native/local-cli/cli.js start --project-path='./react-native/'"
+    "react-native:start": "react-native start"
   },
   "repository": {
     "type": "git",

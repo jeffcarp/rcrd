@@ -78,7 +78,7 @@ class AwesomeProject extends Component {
     }
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     fetch('http://localhost:8000/api/records', {
       method: 'POST',
       headers: {
@@ -102,7 +102,7 @@ class AwesomeProject extends Component {
     })
   }
 
-  _onPressButton = () => {
+  _onPressButton() {
     console.log('yes', this)
     this.setState({
       text: this.state.text + ', workout'
