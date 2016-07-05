@@ -13,10 +13,7 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-
-function sansMagnitude (str) {
-  return str.replace(/^\s*\d+\.*\d*\s*/, '')
-}
+import util from './lib/util'
 
 function strTo256 (str) {
   var num = 0
@@ -28,7 +25,7 @@ function strTo256 (str) {
 }
 
 function catNameToHue (name) {
-  var bareName = sansMagnitude(name.trim()).trim()
+  var bareName = util.sansMagnitude(name.trim()).trim()
   // var bareNameSingular = pluralize(bareName, 1)
   return strTo256(bareName)
 }
