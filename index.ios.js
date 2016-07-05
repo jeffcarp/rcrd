@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   AppRegistry,
   ListView,
@@ -12,13 +12,13 @@ import {
   TextInput,
   TouchableHighlight,
   View
-} from 'react-native';
+} from 'react-native'
 
 function sansMagnitude (str) {
   return str.replace(/^\s*\d+\.*\d*\s*/, '')
 }
 
-function strTo256(str) {
+function strTo256 (str) {
   var num = 0
   for (var i in str) {
     num += (Number(str.charCodeAt(i)) * 10)
@@ -27,36 +27,38 @@ function strTo256(str) {
   return num % 256
 }
 
-function catNameToHue(name) {
+function catNameToHue (name) {
   var bareName = sansMagnitude(name.trim()).trim()
-  //var bareNameSingular = pluralize(bareName, 1)
+  // var bareNameSingular = pluralize(bareName, 1)
   return strTo256(bareName)
 }
 
 const Cat = (props) => (
-  <Text style={{
+  <Text
+    style={{
       color: 'white',
       backgroundColor: `hsl(${catNameToHue(props.name)}, 50%, 60%)`,
       borderRadius: 4,
       padding: 8,
       marginBottom: 4,
-      marginRight: 4,
+      marginRight: 4
     }}>
     {props.name}
   </Text>
 )
 
-function catsFromRaw(raw) {
+function catsFromRaw (raw) {
   raw = raw || ''
   return raw.split(', ')
 }
 
 const Record = (props) => (
-  <View style={{
+  <View
+    style={{
       flexWrap: 'wrap',
       alignItems: 'flex-start',
       flexDirection: 'row',
-      padding: 8,
+      padding: 8
     }}>
     {catsFromRaw(props.record.raw).map((catName) => <Cat name={catName} key={catName} />)}
   </View>
@@ -64,7 +66,7 @@ const Record = (props) => (
 
 class AwesomeProject extends Component {
 
-  constructor(props, context) {
+  constructor (props, context) {
     super(props, context)
 
     var ds = new ListView.DataSource({
@@ -78,23 +80,23 @@ class AwesomeProject extends Component {
     }
   }
 
-  componentWillMount() {
-    fetch('http://localhost:8000/api/records', {
+  componentWillMount () {
+    window.fetch('http://localhost:8000/api/records', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        operation: "list",
-        access_token: "5d21024b3242c1721ab386be709d970b8b61826fdd84a414"
+        operation: 'list',
+        access_token: '211f8f0b1b7ce545c90016a3a9a89a052aa448dc259cef9d'
       })
     })
     .then((response) => response.json())
     .then((records) => {
       this.setState({
         records: records,
-        dataSource: this.state.dataSource.cloneWithRows(records),
+        dataSource: this.state.dataSource.cloneWithRows(records)
       })
     })
     .catch((error) => {
@@ -102,26 +104,27 @@ class AwesomeProject extends Component {
     })
   }
 
-  _onPressButton() {
+  _onPressButton () {
     console.log('yes', this)
     this.setState({
       text: this.state.text + ', workout'
     })
   }
 
-  render() {
+  render () {
     return (
-      <View style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        backgroundColor: '#F5FCFF',
-        paddingTop: 30
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          justifyContent: 'flex-start',
+          backgroundColor: '#F5FCFF',
+          paddingTop: 30
         }}>
         <View
           style={{
             flex: 1,
-            padding: 10,
+            padding: 10
           }}>
           <TextInput
             style={{
@@ -129,40 +132,40 @@ class AwesomeProject extends Component {
               borderColor: 'gray',
               borderWidth: 1,
               padding: 4,
-              marginBottom: 10,
+              marginBottom: 10
             }}
-            placeholder="One, two, three"
+            placeholder='One, two, three'
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
             />
-          <View style={{
+          <View
+            style={{
               flexWrap: 'wrap',
               alignItems: 'flex-start',
-              flexDirection: 'row',
+              flexDirection: 'row'
             }}>
-            <TouchableHighlight onPress={this._onPressButton}>
-              <Text style={{
+            <TouchableHighlight onPress={this._onPressButton.bind(this)}>
+              <Text
+                style={{
                   color: 'hsl(14, 50%, 60%)',
                   borderColor: 'hsl(14, 50%, 60%)',
                   borderWidth: 1,
                   borderRadius: 4,
-                  padding: 8,
+                  padding: 8
                 }}>
                 Workout
               </Text>
             </TouchableHighlight>
           </View>
         </View>
-        <View style={{
-            flex: 3,
-          }}>
+        <View style={{ flex: 3 }}>
           <ListView
             style={{
               borderTopColor: '#ccc',
-              borderTopWidth: 1,
+              borderTopWidth: 1
             }}
             dataSource={this.state.dataSource}
-            enableEmptySections={true}
+            enableEmptySections
             renderRow={(record) => <Record record={record} key={record.id} />}
           />
         </View>
@@ -171,4 +174,4 @@ class AwesomeProject extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject)
