@@ -4,62 +4,18 @@
  * @flow
  */
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import {
   AppRegistry,
   ListView,
+  Navigator,
   Text,
   TextInput,
   TouchableHighlight,
   View
 } from 'react-native'
-import util from './lib/util'
-
-function strTo256 (str) {
-  var num = 0
-  for (var i in str) {
-    num += (Number(str.charCodeAt(i)) * 10)
-  }
-
-  return num % 256
-}
-
-function catNameToHue (name) {
-  var bareName = util.sansMagnitude(name.trim()).trim()
-  // var bareNameSingular = pluralize(bareName, 1)
-  return strTo256(bareName)
-}
-
-const Cat = (props) => (
-  <Text
-    style={{
-      color: 'white',
-      backgroundColor: `hsl(${catNameToHue(props.name)}, 50%, 60%)`,
-      borderRadius: 4,
-      padding: 8,
-      marginBottom: 4,
-      marginRight: 4
-    }}>
-    {props.name}
-  </Text>
-)
-
-function catsFromRaw (raw) {
-  raw = raw || ''
-  return raw.split(', ')
-}
-
-const Record = (props) => (
-  <View
-    style={{
-      flexWrap: 'wrap',
-      alignItems: 'flex-start',
-      flexDirection: 'row',
-      padding: 8
-    }}>
-    {catsFromRaw(props.record.raw).map((catName) => <Cat name={catName} key={catName} />)}
-  </View>
-)
+import Cat from './native/cat'
+import Record from './native/record'
 
 class AwesomeProject extends Component {
 
@@ -86,7 +42,7 @@ class AwesomeProject extends Component {
       },
       body: JSON.stringify({
         operation: 'list',
-        access_token: '211f8f0b1b7ce545c90016a3a9a89a052aa448dc259cef9d'
+        access_token: '0fdf2f89b058cc301a8ea8829c94f4c05c3d7d23ea1917e4'
       })
     })
     .then((response) => response.json())
@@ -102,7 +58,6 @@ class AwesomeProject extends Component {
   }
 
   _onPressButton () {
-    console.log('yes', this)
     this.setState({
       text: this.state.text + ', workout'
     })
@@ -163,7 +118,13 @@ class AwesomeProject extends Component {
             }}
             dataSource={this.state.dataSource}
             enableEmptySections
-            renderRow={(record) => <Record record={record} key={record.id} />}
+            renderRow={(record) => (
+              <Record
+                record={record}
+                key={record.id}
+                onCatPress={this.props.navigateForward}
+                />
+            )}
           />
         </View>
       </View>
@@ -171,4 +132,68 @@ class AwesomeProject extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject)
+class SimpleNavigationApp extends Component {
+  render() {
+    return (
+      <Navigator
+        initialRoute={{ title: 'My Initial Scene', index: 0 }}
+        renderScene={(route, navigator) => {
+          //if (route.index === 0) {
+            return (
+              <AwesomeProject
+                  navigateForward={() => {
+                    console.log('navigate forward')
+                    const nextIndex = route.index + 1
+                    navigator.push({
+                      title: 'Scene ' + nextIndex,
+                      index: nextIndex
+                    })
+                  }}
+                 />
+            )
+          //}
+/*
+          <MyScene
+            title={route.title}
+            onForward={ () => {
+              const nextIndex = route.index + 1;
+              navigator.push({
+                title: 'Scene ' + nextIndex,
+                index: nextIndex,
+              });
+            }}
+            onBack={() => {
+              if (route.index > 0) {
+                navigator.pop();
+              }
+            }}
+          />
+*/
+        }}
+      />
+    )
+  }
+}
+
+class MyScene extends Component {
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    onForward: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+  }
+  render() {
+    return (
+      <View>
+        <Text>Current Scene: { this.props.title }</Text>
+        <TouchableHighlight onPress={this.props.onForward}>
+          <Text>Tap me to load the next scene</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this.props.onBack}>
+          <Text>Tap me to go back</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+}
+
+AppRegistry.registerComponent('AwesomeProject', () => SimpleNavigationApp)
