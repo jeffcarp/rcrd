@@ -14,6 +14,8 @@ const lambda = proxyquire('../lambda/index', {
   'dynamodb-doc': dynamoDocStub
 })
 
+const FAKE_LATENCY_MS = 0
+
 if (process.env.API === 'local') {
   let tmpIndex = index.split('\n')
   const JSindex = tmpIndex.reduce((acc, cur, i) => {
@@ -35,11 +37,11 @@ app.post('/api/*', function (req, res) {
     if (status !== 'fail') {
       setTimeout(() => {
         res.json(data)
-      }, 500)
+      }, FAKE_LATENCY_MS)
     } else {
       setTimeout(() => {
         res.json({ errorMessage: data })
-      }, 500)
+      }, FAKE_LATENCY_MS)
     }
   }
 

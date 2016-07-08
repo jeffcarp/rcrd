@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import {
   AppRegistry,
   AsyncStorage,
@@ -20,11 +20,8 @@ import {
 import Cat from './native/cat'
 import Record from './native/record'
 import api from './lib/api'
-import styles from './native/styles'
-
-const User = {
-  isLoggedIn: false
-}
+import LoadingPage from './native/loading-page'
+import LoginPage from './native/login-page'
 
 class AwesomeProject extends Component {
 
@@ -43,17 +40,18 @@ class AwesomeProject extends Component {
   }
 
   componentWillMount () {
-    api.fetchLatestRecords()
+    AsyncStorage.getItem('access_token')
+      .then((access_token) => api.fetchLatestRecords(access_token))
       .then((records) => {
-/*
-TODO
         this.setState({
           records: records,
           dataSource: this.state.dataSource.cloneWithRows(records)
         })
-*/
       })
-      .catch((error) => console.warn(error))
+      .catch((err) => {
+        console.log(err)
+        this.props.logout()
+      })
   }
 
   _onPressButton () {
@@ -133,7 +131,7 @@ TODO
 }
 
 class CatPage extends Component {
-  render() {
+  render () {
     return (
       <View
         style={{
@@ -169,104 +167,25 @@ class CatPage extends Component {
   }
 }
 
-class LoginPage extends Component {
-
-  constructor() {
-    super()
-    this.state = {
-      email: '',
-      password: ''
-    }
-  }
-
-  autoLogin() {
-    console.log('autologin')
-    this.setState({
-      email: 'dev@rcrd.org',
-      password: 'dev'
-    })
-
-    setTimeout(() => this.login(), 500)
-  }
-
-  login() {
-    //this.setState({ loading: true })
-    console.log('login')
-    api.login({
-      email: this.state.email,
-      password: this.state.password
-    }).then((response) => {
-      console.log(response)
-      //this.setState({ loading: false })
-      AsyncStorage.setItem('email', response.user.id)
-      AsyncStorage.setItem('time_zone', response.user.time_zone)
-      AsyncStorage.setItem('access_token', response.access_token.id)
-      AsyncStorage.setItem('expiration', response.access_token.expiration)
-      console.log('we good')
-      User.isLoggedIn = true
-      // navigate
-      this.props.loginSuccess()
-    })
-  }
-
-  render() {
-    return (
-      <View style={styles.basicPage}>
-        <StatusBar barStyle='default' />
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            marginBottom: 8
-          }}>
-          <Cat name='login' onCatPress={() => false} />
-          <Cat name='to' onCatPress={() => false} />
-          <Cat name='rcrd' onCatPress={() => false} />
-        </View>
-
-        <TextInput
-          style={styles.input}
-          placeholder='email@email.com'
-          keyboardType='email-address'
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          />
-
-        <TextInput
-          style={styles.input}
-          placeholder='password'
-          secureTextEntry
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          />
-
-        <View
-          style={{
-            marginBottom: 20
-          }}>
-          <TouchableOpacity onPress={() => this.autoLogin()}>
-            <Text>Auto login as dev@rcrd.org</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-  }
-}
-
 class SimpleNavigationApp extends Component {
-  render() {
 
-    var initialRoute = { index: 0}
-    if (User.isLoggedIn) {
-      initialRoute = { index: 1 }
-    }
-
+  render () {
     return (
       <Navigator
-        initialRoute={initialRoute}
+        initialRoute={{ initialLoading: true }}
         renderScene={(route, navigator) => {
-          if (route.index === 0) {
+          if (route.initialLoading) {
+            return (
+              <LoadingPage
+                loggedIn={() => {
+                  navigator.replace({ index: 1 })
+                }}
+                loggedOut={() => {
+                  navigator.replace({ index: 0 })
+                }}
+                />
+            )
+          } else if (route.index === 0) {
             return (
               <LoginPage
                 loginSuccess={() => {
@@ -286,13 +205,16 @@ class SimpleNavigationApp extends Component {
                     catName: catName
                   })
                 }}
+                logout={() => navigator.replace({index: 0})}
                />
             )
           } else {
             return (
               <CatPage
                 route={route}
-                navigateBack={() => {navigator.pop(); console.log('yas');}}
+                navigateBack={() => {
+                  navigator.pop()
+                }}
                 />
             )
           }
