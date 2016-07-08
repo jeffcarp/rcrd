@@ -7,15 +7,24 @@
 import React, { Component, PropTypes } from 'react'
 import {
   AppRegistry,
+  AsyncStorage,
   ListView,
   Navigator,
+  StatusBar,
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   View
 } from 'react-native'
 import Cat from './native/cat'
 import Record from './native/record'
+import api from './lib/api'
+import styles from './native/styles'
+
+const User = {
+  isLoggedIn: false
+}
 
 class AwesomeProject extends Component {
 
@@ -34,27 +43,17 @@ class AwesomeProject extends Component {
   }
 
   componentWillMount () {
-    window.fetch('http://localhost:8000/api/records', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        operation: 'list',
-        access_token: '0fdf2f89b058cc301a8ea8829c94f4c05c3d7d23ea1917e4'
+    api.fetchLatestRecords()
+      .then((records) => {
+/*
+TODO
+        this.setState({
+          records: records,
+          dataSource: this.state.dataSource.cloneWithRows(records)
+        })
+*/
       })
-    })
-    .then((response) => response.json())
-    .then((records) => {
-      this.setState({
-        records: records,
-        dataSource: this.state.dataSource.cloneWithRows(records)
-      })
-    })
-    .catch((error) => {
-      console.warn(error)
-    })
+      .catch((error) => console.warn(error))
   }
 
   _onPressButton () {
@@ -71,8 +70,9 @@ class AwesomeProject extends Component {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           backgroundColor: '#F5FCFF',
-          paddingTop: 30
+          paddingTop: 20
         }}>
+        <StatusBar barStyle='default' />
         <View
           style={{
             flex: 1,
@@ -132,66 +132,172 @@ class AwesomeProject extends Component {
   }
 }
 
-class SimpleNavigationApp extends Component {
+class CatPage extends Component {
   render() {
     return (
-      <Navigator
-        initialRoute={{ title: 'My Initial Scene', index: 0 }}
-        renderScene={(route, navigator) => {
-          //if (route.index === 0) {
-            return (
-              <AwesomeProject
-                  navigateForward={() => {
-                    console.log('navigate forward')
-                    const nextIndex = route.index + 1
-                    navigator.push({
-                      title: 'Scene ' + nextIndex,
-                      index: nextIndex
-                    })
-                  }}
-                 />
-            )
-          //}
-/*
-          <MyScene
-            title={route.title}
-            onForward={ () => {
-              const nextIndex = route.index + 1;
-              navigator.push({
-                title: 'Scene ' + nextIndex,
-                index: nextIndex,
-              });
-            }}
-            onBack={() => {
-              if (route.index > 0) {
-                navigator.pop();
-              }
-            }}
-          />
-*/
-        }}
-      />
+      <View
+        style={{
+          backgroundColor: '#F5FCFF',
+          marginTop: 20,
+          flexDirection: 'column',
+          padding: 8,
+          flex: 1
+        }}>
+        <StatusBar barStyle='default' />
+
+        <View
+          style={{
+            marginBottom: 20
+          }}>
+          <TouchableOpacity onPress={this.props.navigateBack}>
+            <Text
+              style={{
+              }}>
+              Back
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start'
+          }}>
+          <Cat name={this.props.route.catName} onCatPress={() => false} />
+        </View>
+      </View>
     )
   }
 }
 
-class MyScene extends Component {
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    onForward: PropTypes.func.isRequired,
-    onBack: PropTypes.func.isRequired,
+class LoginPage extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      email: '',
+      password: ''
+    }
   }
+
+  autoLogin() {
+    console.log('autologin')
+    this.setState({
+      email: 'dev@rcrd.org',
+      password: 'dev'
+    })
+
+    setTimeout(() => this.login(), 500)
+  }
+
+  login() {
+    //this.setState({ loading: true })
+    console.log('login')
+    api.login({
+      email: this.state.email,
+      password: this.state.password
+    }).then((response) => {
+      console.log(response)
+      //this.setState({ loading: false })
+      AsyncStorage.setItem('email', response.user.id)
+      AsyncStorage.setItem('time_zone', response.user.time_zone)
+      AsyncStorage.setItem('access_token', response.access_token.id)
+      AsyncStorage.setItem('expiration', response.access_token.expiration)
+      console.log('we good')
+      User.isLoggedIn = true
+      // navigate
+      this.props.loginSuccess()
+    })
+  }
+
   render() {
     return (
-      <View>
-        <Text>Current Scene: { this.props.title }</Text>
-        <TouchableHighlight onPress={this.props.onForward}>
-          <Text>Tap me to load the next scene</Text>
-        </TouchableHighlight>
-        <TouchableHighlight onPress={this.props.onBack}>
-          <Text>Tap me to go back</Text>
-        </TouchableHighlight>
+      <View style={styles.basicPage}>
+        <StatusBar barStyle='default' />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            marginBottom: 8
+          }}>
+          <Cat name='login' onCatPress={() => false} />
+          <Cat name='to' onCatPress={() => false} />
+          <Cat name='rcrd' onCatPress={() => false} />
+        </View>
+
+        <TextInput
+          style={styles.input}
+          placeholder='email@email.com'
+          keyboardType='email-address'
+          onChangeText={(email) => this.setState({email})}
+          value={this.state.email}
+          />
+
+        <TextInput
+          style={styles.input}
+          placeholder='password'
+          secureTextEntry
+          onChangeText={(password) => this.setState({password})}
+          value={this.state.password}
+          />
+
+        <View
+          style={{
+            marginBottom: 20
+          }}>
+          <TouchableOpacity onPress={() => this.autoLogin()}>
+            <Text>Auto login as dev@rcrd.org</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+    )
+  }
+}
+
+class SimpleNavigationApp extends Component {
+  render() {
+
+    var initialRoute = { index: 0}
+    if (User.isLoggedIn) {
+      initialRoute = { index: 1 }
+    }
+
+    return (
+      <Navigator
+        initialRoute={initialRoute}
+        renderScene={(route, navigator) => {
+          if (route.index === 0) {
+            return (
+              <LoginPage
+                loginSuccess={() => {
+                  navigator.push({ index: 1 })
+                }}
+                />
+            )
+          } else if (route.index === 1) {
+            return (
+              <AwesomeProject
+                navigateForward={(catName) => {
+                  console.log('navigate forward')
+                  const nextIndex = route.index + 1
+                  navigator.push({
+                    title: 'Scene ' + nextIndex,
+                    index: nextIndex,
+                    catName: catName
+                  })
+                }}
+               />
+            )
+          } else {
+            return (
+              <CatPage
+                route={route}
+                navigateBack={() => {navigator.pop(); console.log('yas');}}
+                />
+            )
+          }
+        }}
+      />
     )
   }
 }

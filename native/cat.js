@@ -3,7 +3,7 @@ import React from 'react'
 import { Text, TouchableOpacity } from 'react-native'
 
 export default (props) => (
-  <TouchableOpacity onPress={props.onCatPress}>
+  <TouchableOpacity onPress={() => props.onCatPress(props.name)}>
     <Text
       style={{
         color: 'white',
