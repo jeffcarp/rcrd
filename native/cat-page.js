@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
-  Component,
   StatusBar,
   Text,
   TouchableOpacity,
@@ -21,16 +20,9 @@ export default class CatPage extends Component {
         }}>
         <StatusBar barStyle='default' />
 
-        <View
-          style={{
-            marginBottom: 20
-          }}>
+        <View style={{ marginBottom: 20 }}>
           <TouchableOpacity onPress={this.props.navigateBack}>
-            <Text
-              style={{
-              }}>
-              Back
-            </Text>
+            <Text>Back</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -38,7 +30,7 @@ export default class CatPage extends Component {
             flexDirection: 'row',
             justifyContent: 'flex-start'
           }}>
-          <Cat name={this.props.route.catName} onCatPress={() => false} />
+          <Cat name={this.props.catName} onCatPress={() => false} />
         </View>
       </View>
     )

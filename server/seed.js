@@ -9,7 +9,7 @@ function seed (num) {
   for (var i = 0; i < num; i++) {
     day = String(util.rand(31))
     record = {
-      raw: randomWords({ min: 3, max: 10 }).join(', '),
+      raw: (new Array(new Set(randomWords({ min: 3, max: 10 })))).join(', '),
       time: `2016-04-${day}T19:02:24Z`,
       time_zone: 'America/Los_Angeles'
     }

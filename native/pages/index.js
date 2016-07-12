@@ -1,7 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
-  AsyncStorage,
-  Component,
   ListView,
   StatusBar,
   Text,
@@ -9,8 +7,8 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-import Record from './record'
-import api from '../lib/api'
+import Record from '../record'
+import api from '../api'
 
 export default class IndexPage extends Component {
 
@@ -29,18 +27,18 @@ export default class IndexPage extends Component {
   }
 
   componentWillMount () {
-    AsyncStorage.getItem('access_token')
-      .then((access_token) => api.fetchLatestRecords(access_token))
-      .then((records) => {
-        this.setState({
-          records: records,
-          dataSource: this.state.dataSource.cloneWithRows(records)
-        })
+    console.log('ok')
+/*
+    api.fetchLatestRecords().then((records) => {
+      this.setState({
+        records: records,
+        dataSource: this.state.dataSource.cloneWithRows(records)
       })
-      .catch((err) => {
-        console.log(err)
-        this.props.logout()
-      })
+    }).catch((err) => {
+      console.log(err)
+      this.props.logout()
+    })
+*/
   }
 
   _onPressButton () {
@@ -73,7 +71,7 @@ export default class IndexPage extends Component {
               padding: 4,
               marginBottom: 10
             }}
-            placeholder='One, two, three'
+            placeholder='wtfOne, two, three'
             onChangeText={(text) => this.setState({text})}
             value={this.state.text}
             />

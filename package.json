@@ -15,7 +15,7 @@
     "predeploy-browser": "npm run build",
     "deploy-browser": "node scripts/deploy/app.js",
     "deploy": "npm run deploy-lambda && npm run deploy-browser",
-    "react-native:start": "react-native start"
+    "react-native:start": "node_modules/react-native/packager/packager.sh --root ./native"
   },
   "repository": {
     "type": "git",
@@ -54,9 +54,9 @@
     "pluralize": "^1.2.1",
     "proxyquire": "^1.7.3",
     "random-words": "0.0.1",
-    "react": "15.2.0",
+    "react": "^15.2.0",
     "react-dom": "^15.2.0",
-    "react-native": "0.28.0",
+    "react-native": "^0.28.0",
     "react-router-component": "^0.35.0",
     "request": "^2.69.0",
     "sinon": "^1.17.2",

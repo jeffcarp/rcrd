@@ -48,6 +48,8 @@ export default class LoginPage extends Component {
         console.log('we good')
         this.props.loginSuccess()
       })
+    }).catch((err) => {
+      console.warn(err)
     })
   }
 
