@@ -1,7 +1,5 @@
 const AWS = require('aws-sdk')
-const crypto = require('crypto')
 const doc = require('dynamodb-doc')
-const moment = require('moment-timezone')
 const async = require('async')
 
 AWS.config.update({region: 'us-east-1'})
@@ -15,7 +13,7 @@ dynamo.scan({
 
   var records = data.Items
 
-  async.mapLimit(records, 4,function (record, callback) {
+  async.mapLimit(records, 4, function (record, callback) {
     console.log('[begin] ', record.time, record.raw, record.user_id)
     record.user_id = 'gcarpenterv@gmail.com'
     dynamo.putItem({

@@ -17,7 +17,8 @@ function createRecord (dynamo, params, context, userID) {
 
   if (params.id) { // Updating
     newRecord = {
-      id: params.id
+      id: params.id,
+      user_id: userID
     }
 
     if (params.user_id) return context.fail('Cannot update user_id')
@@ -49,6 +50,7 @@ function createRecord (dynamo, params, context, userID) {
 
     newRecord = {
       id: id,
+      user_id: userID,
       raw: params.raw,
       time: params.time,
       time_zone: params.time_zone
