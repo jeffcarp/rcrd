@@ -17,12 +17,13 @@ test('deleteRecord fails with no access token', function (t) {
   })
 })
 
-test('deleteRecord actually deletes a record', function (t) {
+test('deleteRecord deletes a record', function (t) {
   t.falsy(dynamoDocStub._get('rcrd-records', expectedID), 'a record does not exist')
   dynamoDocStub._set('rcrd-records', {
     id: expectedID,
     raw: 'yas',
     time: '2016-05-22T18:19:19Z',
+    user_id: 'hi@jeff.is',
     time_zone: 'America/Los_Angeles'
   })
   t.truthy(dynamoDocStub._get('rcrd-records', expectedID), 'a record now exists')
@@ -31,9 +32,31 @@ test('deleteRecord actually deletes a record', function (t) {
     operation: 'record.delete',
     id: expectedID,
     access_token: 'some_bs_access_token'
-  }, (status, arg) => {
+  }, (status, data) => {
+    console.log(status, data)
     t.is(status, 'succeed')
     t.falsy(dynamoDocStub._get('rcrd-records', expectedID), 'a record was deleted')
+    t.pass()
+  })
+})
+
+test('deleteRecord will not delete a record you do not own', function (t) {
+  dynamoDocStub._set('rcrd-records', {
+    id: expectedID,
+    raw: 'yas',
+    user_id: 'hi2@jeff.is',
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
+  })
+
+  lambdaTest({
+    operation: 'record.delete',
+    id: expectedID,
+    access_token: 'some_bs_access_token'
+  }, (status, data) => {
+    console.log(status, data)
+    t.is(status, 'fail')
+    t.truthy(dynamoDocStub._get('rcrd-records', expectedID), 'record still exists')
     t.pass()
   })
 })

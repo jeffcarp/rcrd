@@ -2,7 +2,7 @@
 
 var util = require('./util')
 
-function updateRecord (dynamo, params, context) {
+function updateRecord (dynamo, params, context, userID) {
   if (!params.id || !params.raw) {
     return context.fail('Missing param')
   }

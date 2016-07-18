@@ -1,23 +1,44 @@
 'use strict'
 
 var crypto = require('crypto')
-var util = require('./util')
 
-function createRecord (dynamo, params, context) {
+function _createRecord (dynamo, newRecord, context) {
+  dynamo.putItem({
+    'TableName': 'rcrd-records',
+    'Item': newRecord
+  }, function (err) {
+    if (err) return context.fail(err)
+    context.succeed(newRecord)
+  })
+}
+
+function createRecord (dynamo, params, context, userID) {
   var newRecord
-  if (params.id) {
-    // Updating
 
+  if (params.id) { // Updating
     newRecord = {
       id: params.id
     }
 
+    if (params.user_id) return context.fail('Cannot update user_id')
+
     if (params.raw) newRecord.raw = params.raw
     if (params.time) newRecord.time = params.time
     if (params.time_zone) newRecord.time_zone = params.time_zone
-  } else {
-    // Creating
 
+    dynamo.getItem({
+      'TableName': 'rcrd-records',
+      'Key': {id: params.id}
+    }, function (err, data) {
+      if (err) {
+        return context.fail(err)
+      } else if (data.Item.user_id !== userID) {
+        return context.fail('Insufficient privileges')
+      } else {
+        _createRecord(dynamo, newRecord, context)
+      }
+    })
+  } else { // Creating
     if (!params.raw || !params.time || !params.time_zone) {
       return context.fail('Missing param')
     }
@@ -32,64 +53,9 @@ function createRecord (dynamo, params, context) {
       time: params.time,
       time_zone: params.time_zone
     }
+
+    _createRecord(dynamo, newRecord, context)
   }
-
-  if (params.raw) {
-    var cats = util.catsFromRaw(params.raw)
-    if (util.hasDupes(cats.map(util.sansMagnitude))) {
-      return context.fail('Records cannot have duplicate cats.')
-    }
-  }
-
-  dynamo.putItem({
-    'TableName': 'rcrd-records',
-    'Item': newRecord
-  }, function (err) {
-    if (err) return context.fail(err)
-
-    dynamo.scan({
-      TableName: 'rcrd-records'
-    }, function (err, data) {
-      if (err) return context.fail(err)
-
-      var records = data.Items
-      var catNumbers = {}
-
-      util.allCats(records).forEach(function (name) {
-        name = util.sansMagnitude(name)
-        if (catNumbers[name]) {
-          catNumbers[name] += 1
-        } else {
-          catNumbers[name] = 1
-        }
-      })
-
-      var catNumberArray = []
-      for (var name in catNumbers) {
-        catNumberArray.push({name: name, num: catNumbers[name]})
-      }
-
-      catNumberArray.sort(function (a, b) {
-        return b.num - a.num
-      })
-
-      var top20Cats = catNumberArray
-        .map(function (catNum) { return catNum.name })
-        .slice(0, 20)
-
-      dynamo.putItem({
-        TableName: 'rcrd-view-data',
-        Item: {
-          id: '2|top-20-cats',
-          cats: top20Cats
-        }
-      }, function (err) {
-        if (err) return context.fail(err)
-
-        context.succeed(newRecord)
-      })
-    })
-  })
 }
 
 module.exports = createRecord

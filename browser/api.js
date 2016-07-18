@@ -99,33 +99,6 @@ API.getSessions = function (callback) {
   }, callback)
 }
 
-API.viewData = function (id, callback) {
-  // hard coded prototyping, will change
-  var userID = '2'
-  var fullID = userID + '|' + id
-
-  APIrequest({
-    operation: 'view-data',
-    id: fullID,
-    access_token: User.access_token()
-  }, callback)
-}
-
-API.viewDataCached = function (id, callback) {
-  // hard coded prototyping, will change
-  var key = '2|' + id
-
-  var cached = store.get(key)
-  if (cached) {
-    callback(null, cached)
-  }
-
-  API.viewData(id, function (err, data) {
-    if (!err) store.set(key, data)
-    callback(err, data)
-  })
-}
-
 API.last90Days = function (callback) {
   var key = '2|last-90'
 

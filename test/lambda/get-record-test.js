@@ -21,6 +21,7 @@ test('getRecord gets a record', function (t) {
   const expectedRecord = {
     id: expectedID,
     raw: 'yas',
+    user_id: 'hi@jeff.is',
     time: '2016-05-22T18:19:19Z',
     time_zone: 'America/Los_Angeles'
   }
@@ -38,6 +39,27 @@ test('getRecord gets a record', function (t) {
     t.is(record.raw, expectedRecord.raw)
     t.is(record.time, expectedRecord.time)
     t.is(record.time_zone, expectedRecord.time_zone)
+    t.pass()
+  })
+})
+
+test('record.get will not get a record you do not own', function (t) {
+  const expectedRecord = {
+    id: expectedID,
+    raw: 'yas',
+    user_id: 'hi2@jeff.is',
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
+  }
+  dynamoDocStub._set('rcrd-records', expectedRecord)
+
+  lambdaTest({
+    operation: 'record.get',
+    id: expectedID,
+    access_token: 'some_bs_access_token'
+  }, (status, data) => {
+    console.log(data)
+    t.is(status, 'fail')
     t.pass()
   })
 })

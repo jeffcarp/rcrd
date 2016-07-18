@@ -4,7 +4,7 @@ function timeFromRecord (record) {
   return moment.tz(record.time, record.time_zone)
 }
 
-function getRecordsLast90Days (dynamo, params, context) {
+function getRecordsLast90Days (dynamo, params, context, userID) {
   dynamo.scan({
     TableName: 'rcrd-records'
   }, function (err, data) {
@@ -14,7 +14,8 @@ function getRecordsLast90Days (dynamo, params, context) {
     const ninetyDaysAgo = moment().subtract(90, 'days')
 
     const recordsLast90Days = records.filter((record) => (
-      timeFromRecord(record).isAfter(ninetyDaysAgo)
+      timeFromRecord(record).isAfter(ninetyDaysAgo) &&
+      record.user_id === userID
     ))
 
     context.succeed(recordsLast90Days)

@@ -29,16 +29,6 @@ var Index = React.createClass({
       }
     })
 
-    /*
-    TODO: restore with last90
-    API.viewDataCached('top-20-cats', function (err, data) {
-      if (err) return new Error(err)
-      if (data.Item && data.Item.cats && data.Item.cats.length) {
-        this.setState({ commonCats: data.Item.cats })
-      }
-    }.bind(this))
-    */
-
     bus.on('record-created-or-updated', () => this.refreshRecords())
   },
 

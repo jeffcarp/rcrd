@@ -1,9 +1,8 @@
-var moment = require('moment')
-var React = require('react')
-
+'use strict'
 var API = require('./api')
 var bus = require('./bus')()
-var util = require('./util')
+var moment = require('moment')
+var React = require('react')
 var User = require('./services/user')
 
 var Editor = React.createClass({
@@ -136,12 +135,6 @@ var Editor = React.createClass({
   onSubmit: function (e) {
     e.preventDefault()
     var self = this
-
-    var cats = util.catsFromRaw(this.state.raw)
-    if (util.hasDupes(cats)) {
-      bus.emit('notification', 'Cannot create record with duplicate cats.')
-      return
-    }
 
     this.setState({
       loading: true

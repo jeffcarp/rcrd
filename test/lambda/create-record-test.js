@@ -25,7 +25,6 @@ test('cannot create a record without an id', function (t) {
 test('createRecord fails with no access token', function (t) {
   lambdaTest({
     operation: 'create',
-    id: expectedID,
     raw: 'test, raw'
   }, function (status, arg) {
     t.is(status, 'fail', 'status is fail')
@@ -39,70 +38,15 @@ test('createRecord fails with no access token', function (t) {
 test('createRecord adds a record', (t) => {
   lambdaTest({
     operation: 'create',
-    id: expectedID,
     raw: 'test, raw',
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles',
     access_token: 'some_bs_access_token'
-  }, (status, arg) => {
+  }, (status, record) => {
     t.is(status, 'succeed')
-    let record = dynamoDocStub._get('rcrd-records', expectedID)
     t.truthy(record, 'a record now exists')
-    t.is(record.id, expectedID)
+    t.truthy(record.id)
     t.is(record.raw, 'test, raw')
-    t.pass()
-  })
-})
-
-test('createRecord creates "top-20-cats" view data if not exists', (t) => {
-  const viewDatumID = '2|top-20-cats'
-
-  t.falsy(dynamoDocStub._get('rcrd-view-data', viewDatumID))
-
-  lambdaTest({
-    operation: 'create',
-    id: expectedID,
-    raw: 'test, raw',
-    access_token: 'some_bs_access_token'
-  }, (status, arg) => {
-    t.is(status, 'succeed')
-
-    const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
-    t.truthy(viewDatum, 'a view datum exists')
-    t.is(viewDatum.id, viewDatumID)
-    t.deepEqual(viewDatum.cats, [ 'test', 'raw' ])
-
-    t.pass()
-  })
-})
-
-test('createRecord updates "top-20-cats" view data if exists', (t) => {
-  const viewDatumID = '2|top-20-cats'
-
-  dynamoDocStub._set('rcrd-records', {
-    id: '1',
-    raw: 'yas, nas'
-  })
-  dynamoDocStub._set('rcrd-records', {
-    id: '2',
-    raw: 'yas'
-  })
-  dynamoDocStub._set('rcrd-view-data', {
-    id: viewDatumID,
-    cats: ['yas', 'nas']
-  })
-
-  lambdaTest({
-    operation: 'create',
-    id: expectedID,
-    raw: 'test, raw',
-    access_token: 'some_bs_access_token'
-  }, (status, arg) => {
-    t.is(status, 'succeed')
-
-    const viewDatum = dynamoDocStub._get('rcrd-view-data', viewDatumID)
-    t.truthy(viewDatum, 'a view datum exists')
-    t.is(viewDatum.id, viewDatumID)
-    t.deepEqual(viewDatum.cats, [ 'yas', 'nas', 'test', 'raw' ])
-
     t.pass()
   })
 })
@@ -112,33 +56,55 @@ test('can create a record with UTF-8 characters', (t) => {
 
   lambdaTest({
     operation: 'create',
-    id: expectedID,
     raw: raw,
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles',
     access_token: 'some_bs_access_token'
-  }, (status, arg) => {
+  }, (status, record) => {
     t.is(status, 'succeed')
-    const record = dynamoDocStub._get('rcrd-records', expectedID)
     t.truthy(record, 'a record now exists')
-    t.is(record.id, expectedID)
+    t.truthy(record.id)
     t.is(record.raw, raw)
     t.pass()
   })
 })
 
-test('cannot create a record with duplicate plain cats', function (t) {
+test('updates a record', (t) => {
+  dynamoDocStub._set('rcrd-records', {
+    id: expectedID,
+    raw: 'yas',
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles',
+    user_id: 'hi@jeff.is'
+  })
+
   lambdaTest({
     operation: 'create',
     id: expectedID,
-    raw: 'test, raw, test',
+    raw: 'run, great, 13 miles, phew',
     access_token: 'some_bs_access_token'
-  }, (status, arg) => {
-    t.is(status, 'fail')
-    t.falsy(dynamoDocStub._get(expectedID), 'a record was not created')
+  }, (status, record) => {
+    t.is(status, 'succeed')
+    t.is(record.id, expectedID)
+    t.is(record.raw, 'run, great, 13 miles, phew')
+
+    const dbRecord = dynamoDocStub._get('rcrd-records', expectedID)
+    t.is(dbRecord.id, expectedID)
+    t.is(dbRecord.raw, 'run, great, 13 miles, phew')
+
     t.pass()
   })
 })
 
-test('cannot create a record with duplicate cats with mags', (t) => {
+test('cannot update records that you do not own', (t) => {
+  dynamoDocStub._set('rcrd-records', {
+    id: expectedID,
+    raw: 'yas',
+    time: '2016-05-22T18:19:19Z',
+    user_id: 'hi2@jeff.is',
+    time_zone: 'America/Los_Angeles'
+  })
+
   lambdaTest({
     operation: 'create',
     id: expectedID,
@@ -146,8 +112,34 @@ test('cannot create a record with duplicate cats with mags', (t) => {
     access_token: 'some_bs_access_token'
   }, (status, arg) => {
     t.is(status, 'fail')
+    const record = dynamoDocStub._get('rcrd-records', expectedID)
+    t.is(record.id, expectedID)
+    t.is(record.raw, 'yas')
+    t.pass()
+  })
+})
 
-    t.falsy(dynamoDocStub._get(expectedID), 'a record was not created')
+test('cannot update user_id of a record', (t) => {
+  dynamoDocStub._set('rcrd-records', {
+    id: expectedID,
+    raw: 'yas',
+    user_id: 'hi@jeff.is',
+    time: '2016-05-22T18:19:19Z',
+    time_zone: 'America/Los_Angeles'
+  })
+
+  lambdaTest({
+    operation: 'create',
+    id: expectedID,
+    raw: 'run, great, 13 miles, phew',
+    user_id: 'hi2@jeff.is',
+    access_token: 'some_bs_access_token'
+  }, (status, data) => {
+    t.is(status, 'fail')
+    const dbRecord = dynamoDocStub._get('rcrd-records', expectedID)
+    t.is(dbRecord.id, expectedID)
+    t.is(dbRecord.raw, 'yas')
+    t.is(dbRecord.user_id, 'hi@jeff.is')
     t.pass()
   })
 })
