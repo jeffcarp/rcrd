@@ -11,6 +11,7 @@ var listRecordsWithCat = require('./list-records-with-cat')
 var updateRecord = require('./update-record')
 var validateAccessToken = require('./validate-access-token')
 var viewData = require('./view-data')
+var registerAccount = require('./register-account')
 
 var dynamo = new doc.DynamoDB()
 
@@ -19,6 +20,8 @@ exports.handler = function (params, context) {
     getAccessToken(dynamo, params, context)
   } else if (params.operation === 'generate-graphs') {
     generateGraphs(dynamo, params, context)
+  } else if (params.operation === 'account.register') {
+    registerAccount(dynamo, params, context)
   } else {
     validateAccessToken(params.access_token, dynamo, context, function (err, userID) {
       if (err) return context.fail(err)

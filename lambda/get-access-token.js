@@ -1,5 +1,6 @@
 'use strict'
 
+var createAccessToken = require('./create-access-token')
 var crypto = require('crypto')
 
 module.exports = function getAccessToken (dynamo, params, context) {
@@ -11,38 +12,12 @@ module.exports = function getAccessToken (dynamo, params, context) {
     Key: { id: params.email }
   }, function (err, data) {
     if (err) return context.fail(err)
-
     var user = data.Item
-
     if (!user) return context.fail('User not found')
-
     var suppliedPassHash = crypto.createHash('sha256').update(params.secret_key).digest('base64')
+
     if (suppliedPassHash === user.hash) {
-      var buffer = crypto.randomBytes(24)
-
-      var expirationDate = new Date()
-      expirationDate.setDate(expirationDate.getDate() + 30)
-
-      var newAccessToken = {
-        id: buffer.toString('hex'),
-        expiration: expirationDate.toISOString(),
-        user_id: user.id
-      }
-
-      dynamo.putItem({
-        TableName: 'rcrd-access-tokens',
-        Item: newAccessToken
-      }, function (err, data) {
-        if (err) return context.fail(err)
-
-        context.succeed({
-          user: {
-            id: user.id,
-            time_zone: user.time_zone
-          },
-          access_token: newAccessToken
-        })
-      })
+      createAccessToken(dynamo, user, context)
     } else {
       context.fail('authentication failed')
     }
