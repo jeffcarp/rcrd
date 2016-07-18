@@ -18,14 +18,16 @@ function registerAccount (dynamo, params, context) {
 
     var passHash = crypto.createHash('sha256').update(params.password).digest('base64')
 
+    var newUser = {
+      id: params.email,
+      hash: passHash,
+      time_zone: 'America/Los_Angeles'
+    }
+
     dynamo.putItem({
       TableName: 'rcrd-users',
-      Item: {
-        id: params.email,
-        hash: passHash,
-        time_zone: 'America/Los_Angeles'
-      }
-    }, function (err, newUser) {
+      Item: newUser
+    }, function (err) {
       if (err) return context.fail(err)
       createAccessToken(dynamo, newUser, context)
     })
