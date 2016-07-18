@@ -47,6 +47,7 @@ test('createRecord adds a record', (t) => {
     t.truthy(record, 'a record now exists')
     t.truthy(record.id)
     t.is(record.raw, 'test, raw')
+    t.is(record.user_id, 'hi@jeff.is')
     t.pass()
   })
 })
@@ -87,10 +88,12 @@ test('updates a record', (t) => {
     t.is(status, 'succeed')
     t.is(record.id, expectedID)
     t.is(record.raw, 'run, great, 13 miles, phew')
+    t.is(record.user_id, 'hi@jeff.is')
 
     const dbRecord = dynamoDocStub._get('rcrd-records', expectedID)
     t.is(dbRecord.id, expectedID)
     t.is(dbRecord.raw, 'run, great, 13 miles, phew')
+    t.is(dbRecord.user_id, 'hi@jeff.is')
 
     t.pass()
   })
