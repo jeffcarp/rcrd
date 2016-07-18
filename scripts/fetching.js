@@ -11,8 +11,8 @@ fetching.getLocalCopy = (cb) => {
   dynamo.scan({
     'TableName': 'rcrd-records'
   }, function (err, data) {
-    if (err) return console.error(err)
-    console.log(JSON.stringify(data.Items))
+    if (err) cb(err)
+    else cb(null, data.Items)
   })
 }
 

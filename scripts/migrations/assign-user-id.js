@@ -15,16 +15,15 @@ dynamo.scan({
 
   var records = data.Items
 
-  var record = records[0]
-  //async.everyLimit(records, function (record, callback) {
-    console.log('[begin] ', record.raw, record.time, record.user_id)
+  async.mapLimit(records, 4,function (record, callback) {
+    console.log('[begin] ', record.time, record.raw, record.user_id)
     record.user_id = 'gcarpenterv@gmail.com'
     dynamo.putItem({
       'TableName': 'rcrd-records',
       'Item': record
-    }, function (err, data) {
-      // callback(err)
+    }, function (err) {
+      console.log('[end  ] ', record.time, record.raw)
+      callback(err)
     })
-
-  //], 4)
+  })
 })

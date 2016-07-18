@@ -29,6 +29,7 @@
   "homepage": "https://github.com/jeffcarp/rcrd-dynamo#readme",
   "devDependencies": {
     "adm-zip": "^0.4.7",
+    "async": "^2.0.0",
     "ava": "^0.14.0",
     "aws-sdk": "^2.2.33",
     "babel-cli": "^6.9.0",
