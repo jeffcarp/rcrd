@@ -22,7 +22,7 @@ User.expiration = function () {
 
 User.logout = function () {
   window.localStorage.clear()
-  window.location = '/login'
+  window.location = '/'
 }
 
 module.exports = User
