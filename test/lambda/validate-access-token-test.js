@@ -1,6 +1,6 @@
 'use strict'
 import test from 'ava'
-import lambdaTest from '../support/lambda-test'
+import lambdaTest from '../support/lambda'
 
 test('expired tokens are rejected', function (t) {
   lambdaTest({

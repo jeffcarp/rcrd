@@ -2,7 +2,7 @@
 
 import test from 'ava'
 const dynamoDocStub = require('test-lambda').dynamo
-import lambdaTest from '../support/lambda-test'
+import lambdaTest from '../support/lambda'
 
 const expectedID = '7056e94d4dd347c0408f8f6b661397af029363c54cf81af465c1d469f435f1b0'
 

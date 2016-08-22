@@ -4,13 +4,39 @@
     <meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <title>rcrd</title>
     <link rel="stylesheet" type="text/css" href="/static/style.css" />
-    <script async src="/static/index.js"></script>
   </head>
   <body>
     <div id="container">
-      <div id="loading">
+
+      <div id="logged-in" style="display:none;">
         Loading...
       </div>
+
+      <div id="logged-out" style="display:none;">
+        <h1><img src="/static/rcrd-logo.png" width="103.5" height="54" /></h1>
+        <h4>The easiest way to track things you've done.</h4>
+        <a href="/login">Login</a>
+      </div>
+
     </div>
+
+    <script>
+      function _accessTokenExists () {
+        return document.cookie.indexOf('access_token') !== -1
+      }
+      function _pathIsRoot () {
+        return location.pathname === '/'
+      }
+
+      if (_accessTokenExists() || !_pathIsRoot()) {
+        var script = document.createElement('script')
+        script.src = '/static/index.js'
+        document.body.appendChild(script)
+        document.getElementById('logged-in').style.display = 'block'
+      } else {
+        document.getElementById('logged-out').style.display = 'block'
+      }
+
+    </script>
   </body>
 </html>

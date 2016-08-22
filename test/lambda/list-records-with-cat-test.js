@@ -1,7 +1,7 @@
 'use strict'
 import test from 'ava'
 const dynamoDocStub = require('test-lambda').dynamo
-import lambdaTest from '../support/lambda-test'
+import lambdaTest from '../support/lambda'
 
 test('listRecordsWithCat fails without params.catName', function (t) {
   dynamoDocStub._set('rcrd-records', {

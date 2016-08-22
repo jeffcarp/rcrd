@@ -1,6 +1,6 @@
 'use strict'
 const dynamoDocStub = require('test-lambda').dynamo
-import lambdaTest from '../support/lambda-test'
+import lambdaTest from '../support/lambda'
 import test from 'ava'
 
 test('getSessions gets a user\'s sessions', function (t) {

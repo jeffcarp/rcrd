@@ -17,6 +17,7 @@ const lambda = proxyquire('../lambda/index', {
 const FAKE_LATENCY_MS = 0
 
 if (process.env.API === 'local') {
+  // Inject global localAPI variable
   let tmpIndex = index.split('\n')
   const JSindex = tmpIndex.reduce((acc, cur, i) => {
     return cur.indexOf('index.js') !== -1 ? i : acc
@@ -26,11 +27,13 @@ if (process.env.API === 'local') {
   index = tmpIndex.join('\n')
 }
 
+// TODO: Verify existence of built files on startup?
+
 app.get('/', (req, res) => res.send(index))
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use(express.static('.'))
+app.use(express.static(path.resolve(__dirname, '..')))
 
 app.post('/api/*', function (req, res) {
   context.callback = function (status, data) {

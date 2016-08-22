@@ -1,7 +1,7 @@
 'use strict'
 import test from 'ava'
 const dynamoDocStub = require('test-lambda').dynamo
-import lambdaTest from '../support/lambda-test'
+import lambdaTest from '../support/lambda'
 
 test('fails without params.email', (t) => {
   lambdaTest({
