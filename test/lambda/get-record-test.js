@@ -58,7 +58,6 @@ test('record.get will not get a record you do not own', function (t) {
     id: expectedID,
     access_token: 'some_bs_access_token'
   }, (status, data) => {
-    console.log(data)
     t.is(status, 'fail')
     t.pass()
   })

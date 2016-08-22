@@ -33,7 +33,6 @@ test('deleteRecord deletes a record', function (t) {
     id: expectedID,
     access_token: 'some_bs_access_token'
   }, (status, data) => {
-    console.log(status, data)
     t.is(status, 'succeed')
     t.falsy(dynamoDocStub._get('rcrd-records', expectedID), 'a record was deleted')
     t.pass()
@@ -54,7 +53,6 @@ test('deleteRecord will not delete a record you do not own', function (t) {
     id: expectedID,
     access_token: 'some_bs_access_token'
   }, (status, data) => {
-    console.log(status, data)
     t.is(status, 'fail')
     t.truthy(dynamoDocStub._get('rcrd-records', expectedID), 'record still exists')
     t.pass()
