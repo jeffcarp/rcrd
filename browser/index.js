@@ -2,13 +2,11 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var Router = require('react-router-component')
 
-var User = require('./services/user')
-var Header = require('./header')
-
 var Account = require('./routes/account')
 var Authentication = require('./routes/authentication')
 var CatPage = require('./routes/cat')
 var CatRecordsPage = require('./routes/cat-records')
+var Header = require('./header')
 var Index = require('./routes/index')
 var RecordPage = require('./routes/record')
 var NotFoundPage = require('./routes/not-found-page')
@@ -38,8 +36,4 @@ var Root = React.createClass({
   }
 })
 
-if (!User.isLoggedIn() && window.location.pathname !== '/login') {
-  window.location = '/login'
-} else {
-  ReactDOM.render(<Root />, document.getElementById('container'))
-}
+ReactDOM.render(<Root />, document.getElementById('container'))

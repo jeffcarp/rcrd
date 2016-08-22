@@ -20,7 +20,7 @@ if (process.env.API === 'local') {
   // Inject global localAPI variable
   let tmpIndex = index.split('\n')
   const JSindex = tmpIndex.reduce((acc, cur, i) => {
-    return cur.indexOf('index.js') !== -1 ? i : acc
+    return cur.indexOf('<script>') !== -1 ? i : acc
   })
   const localAPIJS = '<script>window.localAPI = true</script>'
   tmpIndex.splice(JSindex, 0, localAPIJS)

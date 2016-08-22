@@ -22,7 +22,10 @@
 
     <script>
       function _accessTokenExists () {
-        return document.cookie.indexOf('access_token') !== -1
+        // TODO: this is a hack for testing
+        // Eventually we should move to cookies for access_token
+        window.localStorage = window.localStorage || {}
+        return 'access_token' in window.localStorage
       }
       function _pathIsRoot () {
         return location.pathname === '/'

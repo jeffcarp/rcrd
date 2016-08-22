@@ -45,7 +45,7 @@ var Header = React.createClass({
       } else {
         return (
           <nav className={classes}>
-            <b>rcrd</b>
+            <b><a href='/'>rcrd</a></b>
             <span className='right'><Link href='/login'> login </Link></span>
           </nav>
         )
