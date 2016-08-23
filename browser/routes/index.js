@@ -66,7 +66,7 @@ var Index = React.createClass({
       <div>
         <div className='small-section'>
           <div className='adder'>
-            <Editor focus />
+            <Editor />
           </div>
         </div>
         <Charts last90Days={this.state.last90Days} />
