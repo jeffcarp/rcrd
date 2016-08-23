@@ -20,9 +20,10 @@ User.expiration = function () {
   return window.localStorage.expiration
 }
 
-User.logout = function () {
+User.logout = function (options) {
+  options = options || {}
   window.localStorage.clear()
-  window.location = '/'
+  window.location = options.path || '/'
 }
 
 module.exports = User
