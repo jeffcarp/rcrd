@@ -13,7 +13,7 @@
     "predeploy-lambda": "npm test",
     "deploy-lambda": "node scripts/deploy/lambda.js",
     "predeploy-browser": "npm run build",
-    "deploy-browser": "node scripts/deploy/app.js",
+    "deploy-browser": "node scripts/deploy/www.js",
     "deploy": "npm run deploy-lambda && npm run deploy-browser",
     "react-native:start": "node_modules/react-native/packager/packager.sh --root ./native"
   },

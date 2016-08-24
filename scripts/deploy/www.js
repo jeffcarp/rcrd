@@ -18,6 +18,7 @@ files.forEach(function (file) {
   var filePath = file[0]
   var contentType = file[1]
 
+  // TODO: This breaks image uploads
   var str = fs.readFileSync(filePath, 'utf-8')
   var params = {
     Key: filePath,
