@@ -16,7 +16,7 @@ function listRecords (dynamo, params, context) {
       return (new Date(b.time)) - (new Date(a.time))
     })
 
-    context.succeed(records.slice(0, 50))
+    context.succeed(records)
   })
 }
 
